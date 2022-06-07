@@ -11,12 +11,14 @@ Object based railway traject
 """
 
 import csv
+import random
+
 
 class Station():
     "Station Object"
     def __init__(self, name, xcor, ycor):
         self.name = name
-        self.connections = []
+        self.connections = {}
         self.visited = 0
         self.xcor = xcor
         self.ycor = ycor
@@ -30,15 +32,17 @@ class Model():
         self.score = 0
     
     def fraction_visited(self):
+        "calculated fraction of visited stations"
         pass
     
     def quality_score(self):
+        "calculate quality score of model"
         pass
         # return p * 10000 - (T * 100 + Min)
 
     
     def load_stations(self):
-
+        "load the stations from database"
         with open(f"data_holland/StationsHolland.csv") as f:
 
             csv_reader = csv.reader(f, delimiter=',')
@@ -53,40 +57,73 @@ class Model():
             f.close()
 
     def add_connections(self):
+        "add the connections of the stations"
 
         with open(f"data_holland/ConnectiesHolland.csv") as f:
 
             csv_reader = csv.reader(f, delimiter = ',')
             next(csv_reader)
+
             all_lines = []
-
-            for row in csv_reader:
-                all_lines.append(row)
-
+            for lines in csv_reader:
+                all_lines.append(lines)
 
             for station in self.stations:
                 for connection in all_lines:
-                    
                     station_name = connection[0]
                     connection_name = connection[1]
                     distance = connection[2]
-
                     if station.name == station_name:
-                        station.connections.append({connection_name: distance})
+                        
+                        for i in range(len(self.stations)):
+                            if connection_name == self.stations[i].name:
+                                station.connections[self.stations[i]] = distance
 
                     if station.name == connection_name:
-                        station.connections.append({station_name: distance})
+                        station.connections[station] = distance
+
+                    
+
+    def make_traject(self):
+
+        visited_stations = []
+        station = random.choice(self.stations)
+
+
+        visited_stations.append(station.name)
+        station.visited += 1
+
+        traject_length = random.randint(3, 12)
+
+        for i in range(traject_length):
+            station = random.choice(list(station.connections.items()))[0]
+            print(station.name)
+            visited_stations.append(station.name)
+        
+        print(visited_stations)
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     station = Model()
+
     station.load_stations()
     station.add_connections()
+    station.make_traject()
 
-    for s in station.stations:
-        print(s.name)
-        for connection in s.connections:
-            for distance in connection.values():
-                print(distance)
+
+
+    # "get the keys and values of the connections"
+    # for s in station.stations:
+    #     print(s.name)
+    #     for connection in s.connections:
+    #         for distance in connection.values():
+    #             print(distance)
 
 
 
