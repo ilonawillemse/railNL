@@ -101,7 +101,7 @@ class Model():
                     if station.name == connection_name:
                         station.connections.append({station_name: distance})
 
-    def output_generate(self, traject, score):
+    def output_generate(self, traject, self.quality_score()):
         data = ['train', traject]
         with open('output.csv', 'w') as output_file:
             writer = csv.writer(output_file)
