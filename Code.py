@@ -80,14 +80,21 @@ class Model():
                     if station.name == connection_name:
                         station.connections.append({station_name: distance})
 
+    def output_generate(self, traject, score):
+        data = ['train', traject]
+        with open('output.csv', 'w') as output_file:
+            writer = csv.writer(output_file)
+            writer.writerow(['train', 'stations'])
+            writer.writerow(data)
+            writer.writerow(['score', score])
+
 
 
 if __name__ == "__main__":
     station = Model()
     station.load_stations()
     station.add_connections()
-
-    # print(station.stations[0].name)
+    
 
     "get the keys and values of the connections"
     for s in station.stations:
