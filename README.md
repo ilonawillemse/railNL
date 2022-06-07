@@ -3,8 +3,11 @@ railNL programmeertheorie
 
 by Wesley, Anouk & Ilona
 
+<<<<<<< HEAD
 x
 
+=======
+>>>>>>> 3d8dfdfa25da6a14be6053df39cc94ba4553cedc
 # project, part 1:
 ```
 118 trainstaions, 22 important intercitystations (see scv)

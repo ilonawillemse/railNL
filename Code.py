@@ -22,6 +22,9 @@ class Station():
         self.visited = 0
         self.xcor = xcor
         self.ycor = ycor
+
+    def is_visited(self):
+        self.visited += 1
         
 
 class Model():
@@ -30,15 +33,33 @@ class Model():
         self.stations = []
         self.traject = {}
         self.score = 0
+        self.time = 0
     
     def fraction_visited(self):
         "calculated fraction of visited stations"
-        pass
-    
+        counter = 0
+        for station in self.stations:
+            if station.visited == 0:
+                counter += 1
+
+        self.fraction = counter / len(self.stations)
+        print(self.fraction)
+
+
+    def add_time(self):
+        for s in self.stations:
+            for connection in s.connections:
+                for key, value in connection.items():
+                    self.time += int(value)
+
+
     def quality_score(self):
         "calculate quality score of model"
-        pass
-        # return p * 10000 - (T * 100 + Min)
+        # hardcode number of trajects
+        T = 1
+        quality = self.fraction * 10000 - (T * 100 + self.time)
+        print(quality)
+        return quality
 
     
     def load_stations(self):
@@ -102,10 +123,13 @@ class Model():
         
         print(visited_stations)
 
-
-
-
-
+    def output_generate(self, traject, score):
+        data = ['train', traject]
+        with open('output.csv', 'w') as output_file:
+            writer = csv.writer(output_file)
+            writer.writerow(['train', 'stations'])
+            writer.writerow(data)
+            writer.writerow(['score', score])
 
 
 
