@@ -20,6 +20,9 @@ class Station():
         self.visited = 0
         self.xcor = xcor
         self.ycor = ycor
+
+    def is_visited(self):
+        self.visited += 1
         
 
 class Model():
@@ -36,6 +39,7 @@ class Model():
     def quality_score(self):
         "calculate quality score of model"
         pass
+        T = 1
         # return p * 10000 - (T * 100 + Min)
 
     
