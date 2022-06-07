@@ -30,15 +30,17 @@ class Model():
         self.score = 0
     
     def fraction_visited(self):
+        "calculated fraction of visited stations"
         pass
     
     def quality_score(self):
+        "calculate quality score of model"
         pass
         # return p * 10000 - (T * 100 + Min)
 
     
     def load_stations(self):
-
+        "load the stations from database"
         with open(f"data_holland/StationsHolland.csv") as f:
 
             csv_reader = csv.reader(f, delimiter=',')
@@ -53,6 +55,7 @@ class Model():
             f.close()
 
     def add_connections(self):
+        "add the connections of the stations"
 
         with open(f"data_holland/ConnectiesHolland.csv") as f:
 
@@ -86,7 +89,7 @@ if __name__ == "__main__":
 
     # print(station.stations[0].name)
 
-
+    "get the keys and values of the connections"
     for s in station.stations:
         for connection in s.connections:
             for key, value in connection.items():
