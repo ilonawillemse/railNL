@@ -84,21 +84,12 @@ if __name__ == "__main__":
     station.load_stations()
     station.add_connections()
 
-    print(station.stations[0].name)
-
-
-    # for connection in station.stations[0].connections:
-    #     for distance in connection.values():
-    #         print(distance)
+    # print(station.stations[0].name)
 
 
     for s in station.stations:
-        print(s.name)
         for connection in s.connections:
-            for distance in connection.values():
-                print(distance)
-
-
-
-dict = {'a': 1}
-
+            for key, value in connection.items():
+                print(key, value)
+                # print(key)
+                # print(value)
