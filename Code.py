@@ -34,3 +34,14 @@ class Model():
         pass
         # return p * 10000 - (T * 100 + Min)
 
+    
+    def load_stations(self):
+        with open(f"data_holland/StationsNationaal.csv") as f:
+            while True:
+                line = f.readline()
+                line = line.split(",")
+
+if __name__ == "__main__":
+    station = Model()
+    print(station.stations)
+
