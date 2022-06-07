@@ -3,7 +3,6 @@ railNL programmeertheorie
 
 by Wesley, Anouk & Ilona
 
-
 # project, part 1:
 ```
 118 trainstaions, 22 important intercitystations (see scv)
@@ -14,4 +13,6 @@ make trainconnections of North and South Holland, max of 7 trajects within a tim
 K = p * 10000 - (T * 100 + Min)
 
 try to get K as high as possible
+
+trial, what will happen
 ```
