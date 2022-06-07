@@ -58,9 +58,25 @@ class Model():
 
             csv_reader = csv.reader(f, delimiter = ',')
             next(csv_reader)
+            all_lines = []
 
             for row in csv_reader:
-                print(row)
+                all_lines.append(row)
+
+
+            for station in self.stations:
+                for connection in all_lines:
+                    
+                    station_name = connection[0]
+                    connection_name = connection[1]
+                    distance = connection[2]
+
+                    if station.name == station_name:
+                        station.connections.append({connection_name: distance})
+
+                    if station.name == connection_name:
+                        station.connections.append({station_name: distance})
+
 
 
 if __name__ == "__main__":
@@ -68,6 +84,21 @@ if __name__ == "__main__":
     station.load_stations()
     station.add_connections()
 
+    print(station.stations[0].name)
 
 
+    # for connection in station.stations[0].connections:
+    #     for distance in connection.values():
+    #         print(distance)
+
+
+    for s in station.stations:
+        print(s.name)
+        for connection in s.connections:
+            for distance in connection.values():
+                print(distance)
+
+
+
+dict = {'a': 1}
 
