@@ -77,8 +77,6 @@ class Model():
                     if station.name == connection_name:
                         station.connections.append({station_name: distance})
 
-
-
 if __name__ == "__main__":
     station = Model()
     station.load_stations()
