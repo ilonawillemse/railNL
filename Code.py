@@ -57,6 +57,7 @@ class Model():
         T = 1
         quality = self.fraction * 10000 - (T * 100 + self.time)
         print(quality)
+        return quality
 
     
     def load_stations(self):
