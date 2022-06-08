@@ -124,13 +124,8 @@ class Model():
         
         print(visited_stations)
 
-<<<<<<< HEAD
 
     def output_generate(self, traject):
-=======
-    def output_generate(self, traject, self.quality_score()):
-        data = ['train', traject]
->>>>>>> b50eb2a2110ec25f00e11fc10370bf393d69294b
         with open('output.csv', 'w') as output_file:
             writer = csv.writer(output_file)
             writer.writerow(['train', 'stations'])
