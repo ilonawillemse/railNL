@@ -35,7 +35,7 @@ class Model():
         self.time = 0
         self.quality = 0
         self.fraction = 0
-        self.number_traject = 3
+        self.number_traject = 15
     
 
     def fraction_visited(self):
@@ -114,7 +114,6 @@ class Model():
                 new_station = new_choice[0]
                 new_distance = new_choice[1]
 
-
                 counter = 0
 
                 while new_station in visited_stations and counter < 100:
@@ -151,7 +150,6 @@ class Model():
             writer = csv.writer(output_file)
             writer.writerow(['train', 'stations'])
 
-            # print(self.traject)
             for i in range(len(self.traject)):
                 self.traject[i] = self.get_name(self.traject[i])
                 data = [f'train_{i+1}', self.traject[i]]
@@ -170,3 +168,5 @@ if __name__ == "__main__":
     station.fraction_visited()
     station.quality_score()
     station.output_generate()
+
+
