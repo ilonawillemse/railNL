@@ -1,5 +1,3 @@
 train,stations
-train_1,"['Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Amsterdam Zuid', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Schiphol Airport']"
-train_2,"['Schiphol Airport', 'Leiden Centraal', 'Schiphol Airport', 'Leiden Centraal', 'Schiphol Airport', 'Leiden Centraal', 'Heemstede-Aerdenhout']"
-train_3,"['Alkmaar', 'Hoorn', 'Alkmaar', 'Den Helder']"
-score,4392.545
+train_1,"['Beverwijk', 'Zaandam', 'Hoorn', 'Alkmaar', 'Hoorn', 'Zaandam', 'Castricum', 'Zaandam', 'Hoorn']"
+score,7573.273

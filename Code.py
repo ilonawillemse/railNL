@@ -36,7 +36,7 @@ class Model():
         self.time = 0
         self.quality = 0
         self.fraction = 0
-        self.number_traject = 3
+        self.number_traject = 1
     
 
     def fraction_visited(self):
@@ -51,9 +51,22 @@ class Model():
 
 
     def add_time(self):
-        for s in self.stations:
-            for _ , value in s.connections.items():
-                self.time += int(value)
+        # print(self.traject)
+        time = {}
+        # print(self.traject)
+        for i in range(len(self.traject)):
+            # print(i)
+
+            for s in self.traject:
+                # print(s[i].connections.items())
+            
+                for _ , value in s[i].connections.items():
+                    # print()
+                    # print(value)
+                    self.time += int(value)
+            
+            time[f'train_{i+1}'] = int(self.time)
+        # print(time)
 
 
     def quality_score(self):
@@ -102,7 +115,6 @@ class Model():
                             if connection_name == self.stations[i].name:
                                 station.connections[self.stations[i]] = distance
                                 self.stations[i].connections[station] = distance
-
                     
 
     def make_traject(self):
@@ -110,7 +122,7 @@ class Model():
         for _ in range(self.number_traject):
             visited_stations = []
             station = random.choice(self.stations)
-            visited_stations.append(station.name)
+            visited_stations.append(station)
             station.visited += 1
 
             traject_length = random.randint(3, 12)
@@ -119,7 +131,7 @@ class Model():
                 connections = list(station.connections.keys())
                 new_station = random.choice(connections)
                 station = new_station
-                visited_stations.append(station.name)
+                visited_stations.append(station)
                 station.visited += 1
             
             self.traject.append(visited_stations)    
@@ -127,12 +139,20 @@ class Model():
         print(self.traject)
 
 
+    def get_name(self, list):
+        for i in range(len(list)):
+            list[i] = list[i].name
+        return list
+
+
     def output_generate(self):
+        # hier moeten nog namen komen ipv objecten
         with open('output.csv', 'w') as output_file:
             writer = csv.writer(output_file)
             writer.writerow(['train', 'stations'])
 
             for i in range(len(self.traject)):
+                self.traject[i] = self.get_name(self.traject[i])
                 data = [f'train_{i+1}', self.traject[i]]
                 writer.writerow(data)
             
