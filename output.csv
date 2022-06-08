@@ -1,5 +1,5 @@
 train,stations
-train_1,"['Beverwijk, Castricum, Alkmaar']"
-train_2,"['Den Haag', 'Rotterdam']"
-train_3,['Amsterdam']
-score,7119.818
+train_1,"['Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Schiphol Airport', 'Leiden Centraal', 'Alphen a/d Rijn']"
+train_2,"['Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Schiphol Airport', 'Leiden Centraal', 'Heemstede-Aerdenhout', 'Haarlem']"
+train_3,"['Zaandam', 'Castricum', 'Beverwijk', 'Haarlem']"
+score,4245.455
