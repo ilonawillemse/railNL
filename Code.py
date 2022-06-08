@@ -34,7 +34,10 @@ class Model():
         self.traject = {}
         self.score = 0
         self.time = 0
+        self.quality = 0
+        self.fraction = 0
     
+
     def fraction_visited(self):
         "calculated fraction of visited stations"
         counter = 0
@@ -48,17 +51,16 @@ class Model():
 
     def add_time(self):
         for s in self.stations:
-            for key, value in s.connections.items():
+            for _ , value in s.connections.items():
                 self.time += int(value)
 
 
     def quality_score(self):
         "calculate quality score of model"
         # hardcode number of trajects
-        T = 1
-        quality = self.fraction * 10000 - (T * 100 + self.time)
-        print(quality)
-        return quality
+        T = 3
+        self.quality = self.fraction * 10000 - (T * 100 + self.time)
+        return self.quality
 
     
     def load_stations(self):
@@ -75,6 +77,7 @@ class Model():
                 self.stations.append(Station(name, xcor, ycor))
             
             f.close()
+
 
     def add_connections(self):
         "add the connections of the stations"
@@ -101,7 +104,6 @@ class Model():
 
                     if station.name == connection_name:
                         station.connections[station] = distance
-
                     
 
     def make_traject(self):
@@ -115,21 +117,24 @@ class Model():
 
         traject_length = random.randint(3, 12)
 
-        for i in range(traject_length):
+        for _ in range(traject_length):
             station = random.choice(list(station.connections.items()))[0]
             print(station.name)
             visited_stations.append(station.name)
         
         print(visited_stations)
 
-    def output_generate(self, traject, score):
-        data = ['train', traject]
+
+    def output_generate(self, traject):
         with open('output.csv', 'w') as output_file:
             writer = csv.writer(output_file)
             writer.writerow(['train', 'stations'])
-            writer.writerow(data)
-            writer.writerow(['score', score])
 
+            for i in range(len(traject)):
+                data = [f'train_{i+1}', traject[i]]
+                writer.writerow(data)
+            
+            writer.writerow(['score', format(self.quality, '.3f')])
 
 
 if __name__ == "__main__":
@@ -148,3 +153,7 @@ if __name__ == "__main__":
     #     for connection in s.connections:
     #         for distance in connection.values():
     #             print(distance)
+    station.fraction_visited()
+    station.quality_score()
+    u = ['Beverwijk, Castricum, Alkmaar'], ['Den Haag', 'Rotterdam'], ['Amsterdam']
+    station.output_generate(u)
