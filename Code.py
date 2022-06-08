@@ -98,9 +98,7 @@ class Model():
                         for i in range(len(self.stations)):
                             if connection_name == self.stations[i].name:
                                 station.connections[self.stations[i]] = distance
-
-                    if station.name == connection_name:
-                        station.connections[station] = distance
+                                self.stations[i].connections[station] = distance
 
                     
 
@@ -108,27 +106,21 @@ class Model():
 
         visited_stations = []
         station = random.choice(self.stations)
-
-
         visited_stations.append(station.name)
         station.visited += 1
 
         traject_length = random.randint(3, 12)
 
         for i in range(traject_length):
-            station = random.choice(list(station.connections.items()))[0]
-            print(station.name)
+            connections = list(station.connections.keys())
+            new_station = random.choice(connections)
+            station = new_station
             visited_stations.append(station.name)
-        
+            station.visited += 1
+            
         print(visited_stations)
 
-    def output_generate(self, traject, self.quality_score()):
-        data = ['train', traject]
-        with open('output.csv', 'w') as output_file:
-            writer = csv.writer(output_file)
-            writer.writerow(['train', 'stations'])
-            writer.writerow(data)
-            writer.writerow(['score', score])
+
 
 
 
@@ -139,12 +131,5 @@ if __name__ == "__main__":
     station.add_connections()
     station.make_traject()
 
-
-    station.add_time()
-
-    # "get the keys and values of the connections"
-    # for s in station.stations:
-    #     print(s.name)
-    #     for connection in s.connections:
-    #         for distance in connection.values():
-    #             print(distance)
+    print(station.stations[20].name)
+    print(list(station.stations[20].connections.keys())[0].name)
