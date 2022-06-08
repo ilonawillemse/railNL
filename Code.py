@@ -120,16 +120,19 @@ class Model():
 
             counter = 0
 
-            while new_station in visited_stations and counter < 1000:
+            while new_station in visited_stations and counter < 100:
                 new_station = random.choice(connections)
                 counter += 1
 
+            if counter == 100:
+                break
 
             station = new_station
             visited_stations.append(station)
             station.visited += 1
             
-        print(visited_stations)
+        for i in range(len(visited_stations)):
+            print(visited_stations[i].name)
 
 
     def output_generate(self, traject):
