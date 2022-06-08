@@ -48,9 +48,8 @@ class Model():
 
     def add_time(self):
         for s in self.stations:
-            for connection in s.connections:
-                for key, value in connection.items():
-                    self.time += int(value)
+            for key, value in s.connections.items():
+                self.time += int(value)
 
 
     def quality_score(self):
@@ -141,6 +140,7 @@ if __name__ == "__main__":
     station.make_traject()
 
 
+    station.add_time()
 
     # "get the keys and values of the connections"
     # for s in station.stations:
@@ -148,6 +148,3 @@ if __name__ == "__main__":
     #     for connection in s.connections:
     #         for distance in connection.values():
     #             print(distance)
-
-
-
