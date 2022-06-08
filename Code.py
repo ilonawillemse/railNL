@@ -114,7 +114,7 @@ class Model():
 
         traject_length = random.randint(3, 12)
 
-        for i in range(traject_length):
+        for _ in range(traject_length):
             connections = list(station.connections.keys())
             new_station = random.choice(connections)
             station = new_station
