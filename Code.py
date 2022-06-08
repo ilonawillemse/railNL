@@ -34,7 +34,10 @@ class Model():
         self.traject = {}
         self.score = 0
         self.time = 0
+        self.quality = 0
+        self.fraction = 0
     
+
     def fraction_visited(self):
         "calculated fraction of visited stations"
         counter = 0
@@ -48,17 +51,16 @@ class Model():
 
     def add_time(self):
         for s in self.stations:
-            for key, value in s.connections.items():
+            for _ , value in s.connections.items():
                 self.time += int(value)
 
 
     def quality_score(self):
         "calculate quality score of model"
         # hardcode number of trajects
-        T = 1
-        quality = self.fraction * 10000 - (T * 100 + self.time)
-        print(quality)
-        return quality
+        T = 3
+        self.quality = self.fraction * 10000 - (T * 100 + self.time)
+        return self.quality
 
     
     def load_stations(self):
@@ -75,6 +77,7 @@ class Model():
                 self.stations.append(Station(name, xcor, ycor))
             
             f.close()
+
 
     def add_connections(self):
         "add the connections of the stations"
@@ -121,7 +124,16 @@ class Model():
         print(visited_stations)
 
 
+    def output_generate(self, traject):
+        with open('output.csv', 'w') as output_file:
+            writer = csv.writer(output_file)
+            writer.writerow(['train', 'stations'])
 
+            for i in range(len(traject)):
+                data = [f'train_{i+1}', traject[i]]
+                writer.writerow(data)
+            
+            writer.writerow(['score', format(self.quality, '.3f')])
 
 
 if __name__ == "__main__":
@@ -131,5 +143,16 @@ if __name__ == "__main__":
     station.add_connections()
     station.make_traject()
 
-    print(station.stations[20].name)
-    print(list(station.stations[20].connections.keys())[0].name)
+
+    station.add_time()
+
+    # "get the keys and values of the connections"
+    # for s in station.stations:
+    #     print(s.name)
+    #     for connection in s.connections:
+    #         for distance in connection.values():
+    #             print(distance)
+    station.fraction_visited()
+    station.quality_score()
+    u = ['Beverwijk, Castricum, Alkmaar'], ['Den Haag', 'Rotterdam'], ['Amsterdam']
+    station.output_generate(u)

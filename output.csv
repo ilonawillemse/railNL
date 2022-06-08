@@ -1,3 +1,5 @@
-train,stations
-train,"[Beverwijk, Castricum, Alkmaar]"
-score,10
+train,stations
+train_1,"['Beverwijk, Castricum, Alkmaar']"
+train_2,"['Den Haag', 'Rotterdam']"
+train_3,['Amsterdam']
+score,6665.273
