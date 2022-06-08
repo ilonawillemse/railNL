@@ -2,4 +2,4 @@ train,stations
 train_1,"['Beverwijk, Castricum, Alkmaar']"
 train_2,"['Den Haag', 'Rotterdam']"
 train_3,['Amsterdam']
-score,6210.727
+score,5301.636
