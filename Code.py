@@ -36,7 +36,6 @@ class Model():
         self.time = 0
         self.quality = 0
         self.fraction = 0
-        self.number_traject = 3
     
 
     def fraction_visited(self):
@@ -47,7 +46,7 @@ class Model():
                 counter += 1
 
         self.fraction = counter / len(self.stations)
-        # print(self.fraction)
+        print(self.fraction)
 
 
     def add_time(self):
@@ -59,7 +58,8 @@ class Model():
     def quality_score(self):
         "calculate quality score of model"
         # hardcode number of trajects
-        self.quality = self.fraction * 10000 - (self.number_traject * 100 + self.time)
+        T = 3
+        self.quality = self.fraction * 10000 - (T * 100 + self.time)
         return self.quality
 
     
@@ -106,34 +106,39 @@ class Model():
                     
 
     def make_traject(self):
-        self.traject = []
-        for _ in range(self.number_traject):
-            visited_stations = []
-            station = random.choice(self.stations)
-            visited_stations.append(station.name)
-            station.visited += 1
 
-            traject_length = random.randint(3, 12)
+        visited_stations = []
+        station = random.choice(self.stations)
+        visited_stations.append(station)
+        station.visited += 1
 
-            for _ in range(traject_length):
-                connections = list(station.connections.keys())
+        traject_length = random.randint(3, 12)
+
+        for _ in range(traject_length):
+            connections = list(station.connections.keys())
+            new_station = random.choice(connections)
+
+            counter = 0
+
+            while new_station in visited_stations and counter < 1000:
                 new_station = random.choice(connections)
-                station = new_station
-                visited_stations.append(station.name)
-                station.visited += 1
+                counter += 1
+
+
+            station = new_station
+            visited_stations.append(station)
+            station.visited += 1
             
-            self.traject.append(visited_stations)    
-        # print(visited_stations)
-        print(self.traject)
+        print(visited_stations)
 
 
-    def output_generate(self):
+    def output_generate(self, traject):
         with open('output.csv', 'w') as output_file:
             writer = csv.writer(output_file)
             writer.writerow(['train', 'stations'])
 
-            for i in range(len(self.traject)):
-                data = [f'train_{i+1}', self.traject[i]]
+            for i in range(len(traject)):
+                data = [f'train_{i+1}', traject[i]]
                 writer.writerow(data)
             
             writer.writerow(['score', format(self.quality, '.3f')])
@@ -145,6 +150,8 @@ if __name__ == "__main__":
     station.load_stations()
     station.add_connections()
     station.make_traject()
+
+
     station.add_time()
 
     # "get the keys and values of the connections"
@@ -153,7 +160,7 @@ if __name__ == "__main__":
     #     for connection in s.connections:
     #         for distance in connection.values():
     #             print(distance)
-
     station.fraction_visited()
     station.quality_score()
-    station.output_generate()
+    u = ['Beverwijk, Castricum, Alkmaar'], ['Den Haag', 'Rotterdam'], ['Amsterdam']
+    station.output_generate(u)
