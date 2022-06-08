@@ -22,9 +22,6 @@ class Station():
         self.visited = 0
         self.xcor = xcor
         self.ycor = ycor
-
-    def is_visited(self):
-        self.visited += 1
         
 
 class Model():
@@ -32,25 +29,29 @@ class Model():
     def __init__(self):
         self.stations = []
         self.score = 0
-        self.time = 0
         self.quality = 0
         self.fraction = 0
+<<<<<<< HEAD
         self.number_traject = 15
+=======
+        self.number_traject = random.randint(1,4)
+        self.total_time = 0
+>>>>>>> 68b57d26359b9210c4255edc0dcb1f570ec19265
     
 
     def fraction_visited(self):
         "calculated fraction of visited stations"
-        counter = 0
+        visited_stations = 0
         for station in self.stations:
-            if station.visited == 0:
-                counter += 1
+            if station.visited != 0:
+                visited_stations += 1
 
-        self.fraction = counter / len(self.stations)
-
+        self.fraction = visited_stations / len(self.stations)
 
     def quality_score(self):
         "calculate quality score of model"
-        self.quality = self.fraction * 10000 - (self.number_traject * 100 + self.time)
+        self.fraction_visited()
+        self.quality = self.fraction * 10000 - (self.number_traject * 100 + self.total_time)
         return self.quality
 
     
@@ -97,7 +98,9 @@ class Model():
 
     def make_traject(self):
         self.traject = []
-        time = {}
+        time_dict = {}
+        self.total_time = 0
+        time = 0
 
         for i in range(self.number_traject):
             visited_stations = []
@@ -105,7 +108,7 @@ class Model():
             visited_stations.append(station)
             station.visited += 1
 
-            traject_length = random.randint(3, 12)
+            traject_length = random.randint(1, 30)
 
             for _ in range(traject_length):
                 connections = list(station.connections.items())
@@ -125,7 +128,7 @@ class Model():
                 if counter == 100:
                     break
 
-                self.time += int(new_distance)
+                time += int(new_distance)
 
                 station = new_station
                 visited_stations.append(station)
@@ -133,10 +136,13 @@ class Model():
             
             self.traject.append(visited_stations)  
 
-            time[f'train_{i+1}'] = int(self.time)
-            self.time = 0
+            time_dict[f'train_{i+1}'] = int(time)
+            self.total_time += time
+            time = 0
 
-        print(time)
+        print(time_dict)
+        # print(self.total_time)
+
 
 
     def get_name(self, list):
@@ -165,7 +171,6 @@ if __name__ == "__main__":
     station.add_connections()
     station.make_traject()
 
-    station.fraction_visited()
     station.quality_score()
     station.output_generate()
 
