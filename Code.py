@@ -29,14 +29,10 @@ class Model():
     def __init__(self):
         self.stations = []
         self.score = 0
-        self.quality = 0
         self.fraction = 0
-<<<<<<< HEAD
-        self.number_traject = 15
-=======
-        self.number_traject = random.randint(1,4)
+        self.number_traject = 1
         self.total_time = 0
->>>>>>> 68b57d26359b9210c4255edc0dcb1f570ec19265
+        self.traject = []
     
 
     def fraction_visited(self):
@@ -51,8 +47,9 @@ class Model():
     def quality_score(self):
         "calculate quality score of model"
         self.fraction_visited()
-        self.quality = self.fraction * 10000 - (self.number_traject * 100 + self.total_time)
-        return self.quality
+        self.score = self.fraction * 10000 - (self.number_traject * 100 + self.total_time)
+        return self.score
+
 
     
     def load_stations(self):
@@ -96,51 +93,87 @@ class Model():
                                 self.stations[i].connections[station] = distance
                     
 
-    def make_traject(self):
-        self.traject = []
-        time_dict = {}
-        self.total_time = 0
+    def make_traject(self, station):
         time = 0
+        visited_stations = []
+        visited_stations.append(station)
 
-        for i in range(self.number_traject):
-            visited_stations = []
-            station = random.choice(self.stations)
-            visited_stations.append(station)
-            station.visited += 1
+        while time <= 120:
+            connections = list(station.connections.items())
 
-            traject_length = random.randint(1, 30)
+            new_choice = self.choose_connection(connections)
+            new_station = new_choice[0]
+            new_distance = new_choice[1]
 
-            for _ in range(traject_length):
-                connections = list(station.connections.items())
+            counter = 0
 
-                new_choice = random.choice(connections)
+            while new_station in visited_stations and counter < 100:
+                new_choice = self.choose_connection(connections)
                 new_station = new_choice[0]
                 new_distance = new_choice[1]
+                counter += 1
 
-                counter = 0
+            if counter == 100:
+                break
 
-                while new_station in visited_stations and counter < 100:
-                    new_choice = random.choice(connections)
-                    new_station = new_choice[0]
-                    new_distance = new_choice[1]
-                    counter += 1
+            time += int(new_distance)
 
-                if counter == 100:
-                    break
+            if time > 120:
+                 time -= int(new_distance)
+                 break        
 
-                time += int(new_distance)
+            station = new_station
+            visited_stations.append(station)
+        
+        return visited_stations, time
 
-                station = new_station
-                visited_stations.append(station)
-                station.visited += 1
+
+
+
+        # time_dict = {}
+        # time = 0
+
+        # for i in range(self.number_traject):
+        #     visited_stations = []
+        #     station = random.choice(self.stations)
+        #     visited_stations.append(station)
+        #     station.visited += 1
+
+        #     while time <= 120:
+        #         connections = list(station.connections.items())
+
+        #         new_choice = random.choice(connections)
+        #         new_station = new_choice[0]
+        #         new_distance = new_choice[1]
+
+        #         counter = 0
+
+        #         while new_station in visited_stations and counter < 100:
+        #             new_choice = random.choice(connections)
+        #             new_station = new_choice[0]
+        #             new_distance = new_choice[1]
+        #             counter += 1
+
+        #         if counter == 100:
+        #             break
+
+        #         time += int(new_distance)
+
+        #         if time > 120:
+        #             time -= int(new_distance)
+        #             break
+
+        #         station = new_station
+        #         visited_stations.append(station)
+        #         station.visited += 1
             
-            self.traject.append(visited_stations)  
+        #     self.traject.append(visited_stations)  
 
-            time_dict[f'train_{i+1}'] = int(time)
-            self.total_time += time
-            time = 0
+        #     time_dict[f'train_{i+1}'] = int(time)
+        #     self.total_time += time
+        #     time = 0
 
-        print(time_dict)
+        # print(time_dict)
         # print(self.total_time)
 
 
@@ -161,7 +194,48 @@ class Model():
                 data = [f'train_{i+1}', self.traject[i]]
                 writer.writerow(data)
             
-            writer.writerow(['score', format(self.quality, '.3f')])
+            writer.writerow(['score', format(self.score, '.3f')])
+
+    def choose_starting(self):
+        station = random.choice(self.stations)
+        return station
+    
+    def choose_connection(self, connections):
+        return random.choice(connections)
+    
+    def set_visited(self, latest_traject, operator):
+        for station in latest_traject:
+            if operator == '+':
+                station.visited += 1
+            else:
+                station.visited -= 1
+
+    def run(self):
+        station = self.choose_starting()
+        latest_traject, time = self.make_traject(station)
+        self.traject.append(latest_traject)
+        self.total_time += time
+        self.set_visited(latest_traject, '+')
+
+        for i in range(6):
+            current_score = self.quality_score()
+            station = self.choose_starting()
+            latest_traject, time = self.make_traject(station)
+            self.traject.append(latest_traject)
+            self.total_time += time
+            self.set_visited(latest_traject, '+')
+
+        self.quality_score()
+        self.output_generate()
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
@@ -169,9 +243,11 @@ if __name__ == "__main__":
 
     station.load_stations()
     station.add_connections()
-    station.make_traject()
+    station.run()
+    # station.make_traject()
 
-    station.quality_score()
-    station.output_generate()
+    # station.quality_score()
+    # station.output_generate()
 
+    # print(station.fraction)
 
