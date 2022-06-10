@@ -163,6 +163,8 @@ class Model():
 
 
 if __name__ == "__main__":
+    # import plotly.graph_objects as go
+
     station = Model()
 
     station.load_stations()
@@ -171,5 +173,7 @@ if __name__ == "__main__":
 
     station.quality_score()
     station.output_generate()
+
+
 
 
