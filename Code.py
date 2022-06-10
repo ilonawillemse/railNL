@@ -12,6 +12,7 @@ Object based railway traject
 
 import csv
 import random
+import copy
 
 
 class Station():
@@ -30,9 +31,10 @@ class Model():
         self.stations = []
         self.score = 0
         self.fraction = 0
-        self.number_traject = 1
+        self.number_traject = 7
         self.total_time = 0
         self.traject = []
+        self.time_dict = {}
     
 
     def fraction_visited(self):
@@ -127,57 +129,6 @@ class Model():
         
         return visited_stations, time
 
-
-
-
-        # time_dict = {}
-        # time = 0
-
-        # for i in range(self.number_traject):
-        #     visited_stations = []
-        #     station = random.choice(self.stations)
-        #     visited_stations.append(station)
-        #     station.visited += 1
-
-        #     while time <= 120:
-        #         connections = list(station.connections.items())
-
-        #         new_choice = random.choice(connections)
-        #         new_station = new_choice[0]
-        #         new_distance = new_choice[1]
-
-        #         counter = 0
-
-        #         while new_station in visited_stations and counter < 100:
-        #             new_choice = random.choice(connections)
-        #             new_station = new_choice[0]
-        #             new_distance = new_choice[1]
-        #             counter += 1
-
-        #         if counter == 100:
-        #             break
-
-        #         time += int(new_distance)
-
-        #         if time > 120:
-        #             time -= int(new_distance)
-        #             break
-
-        #         station = new_station
-        #         visited_stations.append(station)
-        #         station.visited += 1
-            
-        #     self.traject.append(visited_stations)  
-
-        #     time_dict[f'train_{i+1}'] = int(time)
-        #     self.total_time += time
-        #     time = 0
-
-        # print(time_dict)
-        # print(self.total_time)
-
-
-
     def get_name(self, list):
         for i in range(len(list)):
             list[i] = list[i].name
@@ -203,21 +154,16 @@ class Model():
     def choose_connection(self, connections):
         return random.choice(connections)
     
-    def set_visited(self, latest_traject, operator):
-        for station in latest_traject:
+    def set_visited(self, traject, operator):
+        for station in traject:
             if operator == '+':
                 station.visited += 1
             else:
                 station.visited -= 1
 
     def run(self):
-        station = self.choose_starting()
-        latest_traject, time = self.make_traject(station)
-        self.traject.append(latest_traject)
-        self.total_time += time
-        self.set_visited(latest_traject, '+')
-
-        for i in range(6):
+        self.traject = []
+        for i in range(self.number_traject):
             current_score = self.quality_score()
             station = self.choose_starting()
             latest_traject, time = self.make_traject(station)
@@ -225,17 +171,38 @@ class Model():
             self.total_time += time
             self.set_visited(latest_traject, '+')
 
+            self.time_dict[i] = time
+
+        for i in range(len(self.traject)): # Nu dit meerdere keren doen
+            current_score = self.quality_score()
+            old_traject = copy.deepcopy(self.traject) # Dit was deepcopy self.traject[i]
+            old_time_dict = copy.deepcopy(self.time_dict)
+            old_time = copy.deepcopy(self.total_time)
+
+
+            station = self.choose_starting()
+            latest_traject, time = self.make_traject(station)
+            self.set_visited(self.traject[i], '-')
+            self.traject[i] = latest_traject
+            self.total_time -= self.time_dict[i]
+            self.time_dict[i] = time
+            self.total_time += time
+            self.set_visited(latest_traject, '+')
+            new_score = self.quality_score()
+
+            print(current_score, "cs")
+            print(new_score, "ns")
+
+            if new_score < current_score:
+                print("worse")
+                self.traject = old_traject 
+                self.time_dict = old_time_dict
+                self.total_time = old_time
+
         self.quality_score()
+        print(self.quality_score())
+
         self.output_generate()
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
@@ -243,11 +210,5 @@ if __name__ == "__main__":
 
     station.load_stations()
     station.add_connections()
+
     station.run()
-    # station.make_traject()
-
-    # station.quality_score()
-    # station.output_generate()
-
-    # print(station.fraction)
-
