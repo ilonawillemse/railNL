@@ -173,35 +173,7 @@ class Model():
 
             self.time_dict[i] = time
 
-        for i in range(len(self.traject)): # Nu dit meerdere keren doen
-            current_score = self.quality_score()
-            old_traject = copy.deepcopy(self.traject) # Dit was deepcopy self.traject[i]
-            old_time_dict = copy.deepcopy(self.time_dict)
-            old_time = copy.deepcopy(self.total_time)
-
-
-            station = self.choose_starting()
-            latest_traject, time = self.make_traject(station)
-            self.set_visited(self.traject[i], '-')
-            self.traject[i] = latest_traject
-            self.total_time -= self.time_dict[i]
-            self.time_dict[i] = time
-            self.total_time += time
-            self.set_visited(latest_traject, '+')
-            new_score = self.quality_score()
-
-            print(current_score, "cs")
-            print(new_score, "ns")
-
-            if new_score < current_score:
-                print("worse")
-                self.traject = old_traject 
-                self.time_dict = old_time_dict
-                self.total_time = old_time
-
         self.quality_score()
-        print(self.quality_score())
-
         self.output_generate()
 
 
@@ -212,3 +184,8 @@ if __name__ == "__main__":
     station.add_connections()
 
     station.run()
+    for station in station.stations:
+        print(station.name)
+        print(station.visited)
+
+print()
