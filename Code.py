@@ -173,7 +173,3 @@ if __name__ == "__main__":
 
     station.quality_score()
     station.output_generate()
-
-
-
-
