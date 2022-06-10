@@ -12,7 +12,6 @@ Object based railway traject
 
 import csv
 import random
-import copy
 
 
 class Station():
@@ -141,8 +140,8 @@ class Model():
             writer.writerow(['train', 'stations'])
 
             for i in range(len(self.traject)):
-                self.traject[i] = self.get_name(self.traject[i])
-                data = [f'train_{i+1}', self.traject[i]]
+                names = self.get_name(self.traject[i])
+                data = [f'train_{i+1}', names]
                 writer.writerow(data)
             
             writer.writerow(['score', format(self.score, '.3f')])
@@ -153,62 +152,35 @@ class Model():
     
     def choose_connection(self, connections):
         return random.choice(connections)
-    
-    def set_visited(self, traject, operator):
-        for station in traject:
-            if operator == '+':
-                station.visited += 1
-            else:
-                station.visited -= 1
 
-    def run(self):
-        self.traject = []
+    def set_visited(self):
+        for station in self.stations:
+            station.visited = 0
+
+        for station in self.stations:
+            for traject in self.traject:
+                if station in traject:
+                    station.visited += 1
+    
+    def starting_trajects(self):
         for i in range(self.number_traject):
-            current_score = self.quality_score()
             station = self.choose_starting()
             latest_traject, time = self.make_traject(station)
             self.traject.append(latest_traject)
             self.total_time += time
-            self.set_visited(latest_traject, '+')
+            self.time_dict[i] = time        
 
-            self.time_dict[i] = time
+    def run(self):
+        self.starting_trajects()
 
-        for i in range(len(self.traject)): # Nu dit meerdere keren doen
-            current_score = self.quality_score()
-            old_traject = copy.deepcopy(self.traject) # Dit was deepcopy self.traject[i]
-            old_time_dict = copy.deepcopy(self.time_dict)
-            old_time = copy.deepcopy(self.total_time)
-
-
-            station = self.choose_starting()
-            latest_traject, time = self.make_traject(station)
-            self.set_visited(self.traject[i], '-')
-            self.traject[i] = latest_traject
-            self.total_time -= self.time_dict[i]
-            self.time_dict[i] = time
-            self.total_time += time
-            self.set_visited(latest_traject, '+')
-            new_score = self.quality_score()
-
-            print(current_score, "cs")
-            print(new_score, "ns")
-
-            if new_score < current_score:
-                print("worse")
-                self.traject = old_traject 
-                self.time_dict = old_time_dict
-                self.total_time = old_time
-
+        self.set_visited()  
         self.quality_score()
-        print(self.quality_score())
-
         self.output_generate()
 
 
 if __name__ == "__main__":
-    station = Model()
+    model = Model()
 
-    station.load_stations()
-    station.add_connections()
-
-    station.run()
+    model.load_stations()
+    model.add_connections()
+    model.run()
