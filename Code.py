@@ -12,7 +12,7 @@ Object based railway traject
 
 import csv
 import random
-
+import matplotlib.pyplot as plt
 
 class Station():
     "Station Object"
@@ -179,8 +179,24 @@ class Model():
 
 
 if __name__ == "__main__":
-    model = Model()
+    # model = Model()
 
-    model.load_stations()
-    model.add_connections()
-    model.run()
+    # model.load_stations()
+    # model.add_connections()
+    # model.run()
+
+    ls = []
+
+    for i in range(10):
+        model = Model()
+
+        model.load_stations()
+        model.add_connections()
+        model.run()
+        ls.append(model.score)
+        print(model.score)
+
+    plt.hist(ls)
+    plt.show()
+
+
