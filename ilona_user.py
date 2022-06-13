@@ -184,10 +184,14 @@ def visualization():
         current_station = station.stations[i]
 
         for connection in current_station.connections:
+            # print(f'connection', connection)
             connection_y_cor.append(float(current_station.xcor))
             connection_x_cor.append(float(current_station.ycor))
             connection_y_cor.append(float(connection.xcor))
             connection_x_cor.append(float(connection.ycor))
+
+        # print(connection_x_cor)
+        # print(connection_y_cor)
     
         connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, line=dict(color="grey"))
         connection_list.append(connection)

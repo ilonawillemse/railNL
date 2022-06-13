@@ -230,6 +230,6 @@ if __name__ == "__main__":
     num_bins = 100 # <- number of bins for the histogram
     plt.hist(data, num_bins)
     plt.savefig("histogramtest.png")
-    print(best_traject)
+    # print(best_traject)
     visualization(model, best_traject)
     

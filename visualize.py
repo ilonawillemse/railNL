@@ -12,6 +12,7 @@ def visualization(model, best_traject):
 
     # add the connections as lines between the stations in dots
     for i in range(len(model.stations)):
+
         y_cor.append(float(model.stations[i].xcor))
         x_cor.append(float(model.stations[i].ycor))
         name.append(model.stations[i].name)
@@ -20,12 +21,21 @@ def visualization(model, best_traject):
         connection_y_cor = []
 
         current_station = model.stations[i]
+        # print(current_station.connections)
+        # for i in range(len(current_station.connections))
+        for i, (key, value) in enumerate(current_station.connections.items()):
+            # print(value.start.xcor)
+            # print()
+            # print(key[i], value[i])
 
-        for connection in current_station.connections:
-            connection_y_cor.append(float(current_station.xcor))
-            connection_x_cor.append(float(current_station.ycor))
-            connection_y_cor.append(float(connection.xcor))
-            connection_x_cor.append(float(connection.ycor))
+        # for connection in current_station.connections:
+            connection_y_cor.append(float(value.start.xcor))
+            connection_x_cor.append(float(value.start.ycor))
+            connection_y_cor.append(float(value.end.xcor))
+            connection_x_cor.append(float(value.end.ycor))
+        
+        print(connection_y_cor)
+        print(connection_x_cor)
     
         connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, line=dict(color="grey"))
         connection_list.append(connection)
@@ -47,7 +57,7 @@ def visualization(model, best_traject):
         list_y_cor.clear()
         list_x_cor.clear()
        
-
+        # print(best_traject[i])
         while counter < 60:
             for j in range(len(best_traject[i])):
                 if counter == 60:
@@ -63,7 +73,7 @@ def visualization(model, best_traject):
                     break
 
                 list_y_cor.append(float(best_traject[i][k].xcor))
-                  list_x_cor.append(float(best_traject[i][k].ycor))
+                list_x_cor.append(float(best_traject[i][k].ycor))
                 counter += 1
         
         # create a list of lists with coordinates of the train trajects
