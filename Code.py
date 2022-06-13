@@ -23,6 +23,14 @@ class Station():
         self.visited = 0
         self.xcor = xcor
         self.ycor = ycor
+
+class Connection():
+    def __init__(self, id, station_1, station_2, visited, time):
+        self.id = id
+        self.start = station_1
+        self.end = station_2
+        self.visit = visited
+        self.duration = time
         
 
 class Model():
@@ -189,7 +197,7 @@ if __name__ == "__main__":
     all_scores = []
     highest_score = 0
     with open('histo_data.csv', 'w') as output_file:
-        for i in range(100000):
+        for i in range(30000):
             model = Model()
             model.load_stations()
             model.add_connections()
@@ -201,7 +209,7 @@ if __name__ == "__main__":
             score = model.score
             all_scores.append(score)
             writer.writerow([score])
-            print(i)
+            
     
 
 

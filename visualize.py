@@ -46,7 +46,7 @@ def visualization(model, best_traject):
         
         list_y_cor.clear()
         list_x_cor.clear()
-        print(best_traject[i], "best")
+       
 
         while counter < 30:
             for j in range(len(best_traject[i])):
