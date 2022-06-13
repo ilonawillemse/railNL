@@ -13,7 +13,7 @@ Object based railway traject
 import csv
 import random
 import matplotlib.pyplot as plt
-
+from visualize import visualization
 
 class Station():
     "Station Object"
@@ -31,7 +31,7 @@ class Model():
         self.stations = []
         self.score = 0
         self.fraction = 0
-        self.number_traject = 6
+        self.number_traject = 0
         self.total_time = 0
         self.traject = []
         self.time_dict = {}
@@ -130,9 +130,10 @@ class Model():
         return visited_stations, time
 
     def get_name(self, list):
+        names_list = []
         for i in range(len(list)):
-            list[i] = list[i].name
-        return list
+            names_list.append(list[i].name)
+        return names_list
 
 
     def output_generate(self):
@@ -164,6 +165,7 @@ class Model():
                     station.visited += 1
     
     def starting_trajects(self):
+        self.number_traject = random.randint(1,7)
         for i in range(self.number_traject):
             station = self.choose_starting()
             latest_traject, time = self.make_traject(station)
@@ -187,7 +189,7 @@ if __name__ == "__main__":
     all_scores = []
     highest_score = 0
     with open('histo_data.csv', 'w') as output_file:
-        for i in range(10000):
+        for i in range(100000):
             model = Model()
             model.load_stations()
             model.add_connections()
@@ -200,8 +202,6 @@ if __name__ == "__main__":
             all_scores.append(score)
             writer.writerow([score])
             print(i)
-           
-        print(best_traject)
     
 
 
@@ -216,6 +216,8 @@ if __name__ == "__main__":
             
             writer.writerow(['score', format(highest_score, '.3f')])
     data = all_scores
-    num_bins = 10 # <- number of bins for the histogram
+    num_bins = 100 # <- number of bins for the histogram
     plt.hist(data, num_bins)
     plt.savefig("histogramtest.png")
+    visualization(model, best_traject)
+    
