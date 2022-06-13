@@ -13,7 +13,7 @@ Object based railway traject
 import csv
 import random
 import matplotlib.pyplot as plt
-from visualize import visualization
+#from visualize import visualization
 
 class Station():
     "Station Object"
@@ -25,10 +25,10 @@ class Station():
         self.ycor = ycor
 
 class Connection():
-    def __init__(self, station_1, station_2, time, visited, id):
+    def __init__(self, station_1, station_2, time, id):
         self.start = station_1
         self.end = station_2
-        self.visit = visited
+        self.visit = 0
         self.duration = time
         self.id = id
         
@@ -48,12 +48,14 @@ class Model():
 
     def fraction_visited(self):
         "calculated fraction of visited stations"
-        visited_stations = 0
-        for station in self.stations:
-            if station.visited != 0:
-                visited_stations += 1
+        
+        visited_connections = 0
+        for connection in self.all_connections:
+            if self.all_connections[connection].visit != 0:
+                visited_connections += 1
 
-        self.fraction = visited_stations / len(self.stations)
+        self.fraction = visited_connections / len(self.all_connections)
+        
 
     def quality_score(self):
         "calculate quality score of model"
@@ -97,7 +99,7 @@ class Model():
                     if station.name == all_lines[i][0]:
                         for station2 in self.stations:
                             if station2.name == all_lines[i][1]:
-                                self.all_connections[i] = Connection(station, station2, all_lines[i][2], "no", i)
+                                self.all_connections[i] = Connection(station, station2, all_lines[i][2], i)
                                 station.connections[i] = self.all_connections[i]
                                 station2.connections[i] = self.all_connections[i]           
 
@@ -121,11 +123,13 @@ class Model():
 
             while new_station in visited_stations and counter < 100:
                 new_choice = self.choose_connection(connections)
-                if station.name != new_choice.start:
+                new_choice.visit += 1
+                if station != new_choice.start:
                     new_station = new_choice.start
                 else:
                     new_station = new_choice.end
                 counter += 1
+                
 
             if counter == 100:
                 break
@@ -138,6 +142,8 @@ class Model():
 
             station = new_station
             visited_stations.append(station)
+        
+
         
         
         return visited_stations, time
@@ -202,7 +208,7 @@ if __name__ == "__main__":
     all_scores = []
     highest_score = 0
     with open('histo_data.csv', 'w') as output_file:
-        for i in range(1):
+        for i in range(10):
             model = Model()
             model.load_stations()
             model.add_connections()
@@ -214,6 +220,7 @@ if __name__ == "__main__":
             score = model.score
             all_scores.append(score)
             writer.writerow([score])
+            print(i)
             
 
     with open('best_traject_output.csv', 'w') as output_best_file:
@@ -224,12 +231,18 @@ if __name__ == "__main__":
                 names = model.get_name(best_traject[i])
                 data = [f'train_{i+1}', names]
                 writer.writerow(data)
-            
+                            
             writer.writerow(['score', format(highest_score, '.3f')])
     data = all_scores
     num_bins = 100 # <- number of bins for the histogram
     plt.hist(data, num_bins)
     plt.savefig("histogramtest.png")
-    print(best_traject)
-    visualization(model, best_traject)
+    for station in model.stations:
+            print(station.name, "huidig")
+            for connection in station.connections:
+                print(station.connections[connection].start.name, "nieuw")
+                print(station.connections[connection].end.name, "end")
+    # print(best_traject)
+    # print(model.stations)
+   # visualization(model, best_traject)
     
