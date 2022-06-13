@@ -12,7 +12,7 @@ Object based railway traject
 
 import csv
 import random
-
+import visualize
 
 class Station():
     "Station Object"
