@@ -18,19 +18,25 @@ def visualization(model, best_traject):
 
         connection_x_cor = []
         connection_y_cor = []
+        connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, line=dict(color="lightgreen"),opacity= 0.6 ))
 
-        current_station = model.stations[i]
+    for connection in model.all_connections.values():
+        print(connection.end.name)
+        print(connection.start.name)
 
-        for connection in current_station.connections:
-            connection_y_cor.append(float(current_station.xcor))
-            connection_x_cor.append(float(current_station.ycor))
-            connection_y_cor.append(float(connection.xcor))
-            connection_x_cor.append(float(connection.ycor))
+        connection_x_cor.append(connection.start.xcor)
+        connection_y_cor.append(connection.start.ycor)
+
+        # for connection in current_station.connections:
+        #     connection_y_cor.append(float(current_station.xcor))
+        #     connection_x_cor.append(float(current_station.ycor))
+        #     connection_y_cor.append(float(connection.xcor))
+        #     connection_x_cor.append(float(connection.ycor))
     
         connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, line=dict(color="grey"))
         connection_list.append(connection)
 
-    connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, line=dict(color="lightgreen"),opacity= 0.6 ))
+
 
 
     # add moving trains to the trajects
@@ -63,7 +69,7 @@ def visualization(model, best_traject):
                     break
 
                 list_y_cor.append(float(best_traject[i][k].xcor))
-                  list_x_cor.append(float(best_traject[i][k].ycor))
+                list_x_cor.append(float(best_traject[i][k].ycor))
                 counter += 1
         
         # create a list of lists with coordinates of the train trajects

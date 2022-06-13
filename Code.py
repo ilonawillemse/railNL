@@ -13,7 +13,10 @@ Object based railway traject
 import csv
 import random
 import matplotlib.pyplot as plt
-#from visualize import visualization
+from visualize import visualization
+
+
+
 
 class Station():
     "Station Object"
@@ -143,9 +146,6 @@ class Model():
             station = new_station
             visited_stations.append(station)
         
-
-        
-        
         return visited_stations, time
 
     def get_name(self, list):
@@ -199,16 +199,11 @@ class Model():
 
                     
 
-
-            
-
-
-
-if __name__ == "__main__":
+def repeated_runs():
     all_scores = []
     highest_score = 0
     with open('histo_data.csv', 'w') as output_file:
-        for i in range(10):
+        for i in range(1000000):
             model = Model()
             model.load_stations()
             model.add_connections()
@@ -221,7 +216,6 @@ if __name__ == "__main__":
             all_scores.append(score)
             writer.writerow([score])
             print(i)
-            
 
     with open('best_traject_output.csv', 'w') as output_best_file:
             writer = csv.writer(output_best_file)
@@ -237,12 +231,19 @@ if __name__ == "__main__":
     num_bins = 100 # <- number of bins for the histogram
     plt.hist(data, num_bins)
     plt.savefig("histogramtest.png")
-    for station in model.stations:
-            print(station.name, "huidig")
-            for connection in station.connections:
-                print(station.connections[connection].start.name, "nieuw")
-                print(station.connections[connection].end.name, "end")
-    # print(best_traject)
-    # print(model.stations)
-   # visualization(model, best_traject)
+
+    return best_traject 
+            
+
+
+
+if __name__ == "__main__":
+    best_traject = repeated_runs()
+            
+    # model = Model()
+    # model.load_stations()
+    # model.add_connections()
+    # model.run()
+
+    # visualization(model, model.traject)
     
