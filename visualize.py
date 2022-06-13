@@ -3,11 +3,14 @@ from copy import deepcopy
 import plotly.graph_objects as go
 
 def visualization(model, best_traject):
+    "visualize the trajects with trains riding them"
+
     x_cor = []
     y_cor = []
     name = []
     connection_list = []
 
+    # add the connections as lines between the stations in dots
     for i in range(len(model.stations)):
         y_cor.append(float(model.stations[i].xcor))
         x_cor.append(float(model.stations[i].ycor))
@@ -30,13 +33,14 @@ def visualization(model, best_traject):
     connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, line=dict(color="lightgreen"),opacity= 0.6 ))
 
 
-    # add train
+    # add moving trains to the trajects
     list_y_cor = []
     list_x_cor = []
 
     total_list_x_cor = []
     total_list_y_cor = []
     
+    # make the train move back and forth for i steps
     for i in range(len(best_traject)):
         counter = 0
         
@@ -47,7 +51,8 @@ def visualization(model, best_traject):
             for j in range(len(best_traject[i])):
                 if counter == 30:
                     break
-
+                
+                # x and y coordinates were changed in the csv file
                 list_y_cor.append(float(best_traject[i][j].xcor))
                 list_x_cor.append(float(best_traject[i][j].ycor))
                 counter += 1
@@ -59,7 +64,8 @@ def visualization(model, best_traject):
                 list_y_cor.append(float(best_traject[i][k].xcor))
                 list_x_cor.append(float(best_traject[i][k].ycor))
                 counter += 1
-
+        
+        # create a list of lists with coordinates of the train trajects
         total_list_x_cor.append(deepcopy(list_x_cor))
         total_list_y_cor.append(deepcopy(list_y_cor))
 
@@ -70,6 +76,7 @@ def visualization(model, best_traject):
     final_list_y_cor = []
     current_list = []
 
+    # comprehend the first coordinates of the trains depending on the number of trains
     for i in range(len(list_x_cor)):
         final_list_x_cor = [item[i] for item in total_list_x_cor]
         final_list_y_cor = [item[i] for item in total_list_y_cor]
@@ -79,6 +86,7 @@ def visualization(model, best_traject):
         current_list.append(current)
 
 
+    # create the figure with connections/ stations and trains
     fig = go.Figure(
         data= connection_list,
         layout=go.Layout(
