@@ -1,5 +1,4 @@
 
-from copy import deepcopy
 import plotly.graph_objects as go
 
 def visualization(model, best_traject):
