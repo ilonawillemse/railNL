@@ -1,8 +1,7 @@
+from copy import deepcopy
+import plotly.graph_objects as go
 
 def visualization():
-    from copy import deepcopy
-    import plotly.graph_objects as go
-
     x_cor = []
     y_cor = []
     name = []
