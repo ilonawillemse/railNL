@@ -27,6 +27,7 @@ def visualization(model, best_traject):
             # print(value.start.xcor)
             # print()
             # print(key[i], value[i])
+            print(value.start.name)
 
         # for connection in current_station.connections:
             connection_y_cor.append(float(value.start.xcor))
