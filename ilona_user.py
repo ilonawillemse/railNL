@@ -166,10 +166,12 @@ class Model():
 def visualization():
     from copy import deepcopy
     import plotly.graph_objects as go
+
     x_cor = []
     y_cor = []
     name = []
     connection_list = []
+
     for i in range(len(station.stations)):
         y_cor.append(float(station.stations[i].xcor))
         x_cor.append(float(station.stations[i].ycor))
@@ -183,7 +185,6 @@ def visualization():
         for connection in current_station.connections:
             connection_y_cor.append(float(current_station.xcor))
             connection_x_cor.append(float(current_station.ycor))
-            # print(connection.name)
             connection_y_cor.append(float(connection.xcor))
             connection_x_cor.append(float(connection.ycor))
     
@@ -199,45 +200,44 @@ def visualization():
 
     total_list_x_cor = []
     total_list_y_cor = []
-
+    
     for i in range(len(station.traject)):
-        print(i)
-        # number_trajects.append(i)
+        counter = 0
+        
         list_y_cor.clear()
         list_x_cor.clear()
-        for station_ in station.traject[i]:
-        # for j in range(len(station.traject[i])):
-            print(station_.name)
-            print()
 
-            list_y_cor.append(float(station_.xcor))
-            list_x_cor.append(float(station_.ycor))
+        while counter < 30:
+            for j in range(len(station.traject[i])):
+                if counter == 30:
+                    break
 
-        # print(f'x',list_x_cor)
-        # print(f'y',list_y_cor)
+                list_y_cor.append(float(station.traject[i][j].xcor))
+                list_x_cor.append(float(station.traject[i][j].ycor))
+                counter += 1
+
+            for k in range(len(station.traject[i])-2 , 0, -1):
+                if counter == 30:
+                    break
+
+                list_y_cor.append(float(station.traject[i][k].xcor))
+                list_x_cor.append(float(station.traject[i][k].ycor))
+                counter += 1
 
         total_list_x_cor.append(deepcopy(list_x_cor))
         total_list_y_cor.append(deepcopy(list_y_cor))
 
-    print(total_list_x_cor)
-    print(total_list_y_cor)
+    # print(total_list_x_cor)
+    # print(total_list_y_cor)
 
-
-# oke blijkbaar als ene traject langer is dan out of range. hij kan niet pakken
-    # print(f'traject', len(station.traject))
     final_list_x_cor = []
     final_list_y_cor = []
     current_list = []
 
-
     for i in range(len(list_x_cor)):
         final_list_x_cor = [item[i] for item in total_list_x_cor]
-        print(f'x', final_list_x_cor)
         final_list_y_cor = [item[i] for item in total_list_y_cor]
-        print(f'y', final_list_y_cor)
-        print()
 
-    # hierin moeten voor alle i's
         current = go.Frame(data=[go.Scatter(x = final_list_x_cor, y = final_list_y_cor, mode = "markers", line=dict(color="red") )], 
                             layout=go.Layout(title_text="No way, railway"))
         current_list.append(current)
@@ -292,3 +292,11 @@ if __name__ == "__main__":
     # for output csv
     station.quality_score()
     station.output_generate()
+
+
+
+
+
+    # noteee: doe __repr__:
+    #   def __repr__(self):
+    #     return f"Station: {self.name} ({self.xcor})({self.ycor})"

@@ -13,6 +13,7 @@ Object based railway traject
 import csv
 import random
 import matplotlib.pyplot as plt
+from visualize import visualization
 
 class Station():
     "Station Object"
@@ -22,6 +23,14 @@ class Station():
         self.visited = 0
         self.xcor = xcor
         self.ycor = ycor
+
+class Connection():
+    def __init__(self, id, station_1, station_2, visited, time):
+        self.id = id
+        self.start = station_1
+        self.end = station_2
+        self.visit = visited
+        self.duration = time
         
 
 class Model():
@@ -30,7 +39,7 @@ class Model():
         self.stations = []
         self.score = 0
         self.fraction = 0
-        self.number_traject = 7
+        self.number_traject = 0
         self.total_time = 0
         self.traject = []
         self.time_dict = {}
@@ -129,9 +138,10 @@ class Model():
         return visited_stations, time
 
     def get_name(self, list):
+        names_list = []
         for i in range(len(list)):
-            list[i] = list[i].name
-        return list
+            names_list.append(list[i].name)
+        return names_list
 
 
     def output_generate(self):
@@ -163,6 +173,7 @@ class Model():
                     station.visited += 1
     
     def starting_trajects(self):
+        self.number_traject = random.randint(1,7)
         for i in range(self.number_traject):
             station = self.choose_starting()
             latest_traject, time = self.make_traject(station)
@@ -172,31 +183,47 @@ class Model():
 
     def run(self):
         self.starting_trajects()
+        self.set_visited()
+        self.quality_score()  
 
-        self.set_visited()  
-        self.quality_score()
-        self.output_generate()
+                    
+
+
+            
+
 
 
 if __name__ == "__main__":
-    # model = Model()
+    all_scores = []
+    highest_score = 0
+    with open('histo_data.csv', 'w') as output_file:
+        for i in range(30000):
+            model = Model()
+            model.load_stations()
+            model.add_connections()
+            model.run()
+            writer = csv.writer(output_file) 
+            if model.score > highest_score:
+                best_traject = model.traject
+                highest_score = model.score
+            score = model.score
+            all_scores.append(score)
+            writer.writerow([score])
+            
 
-    # model.load_stations()
-    # model.add_connections()
-    # model.run()
+    with open('best_traject_output.csv', 'w') as output_best_file:
+            writer = csv.writer(output_best_file)
+            writer.writerow(['train', 'stations'])
 
-    ls = []
-
-    for i in range(10):
-        model = Model()
-
-        model.load_stations()
-        model.add_connections()
-        model.run()
-        ls.append(model.score)
-        print(model.score)
-
-    plt.hist(ls)
-    plt.show()
-
-
+            for i in range(len(best_traject)):
+                names = model.get_name(best_traject[i])
+                data = [f'train_{i+1}', names]
+                writer.writerow(data)
+            
+            writer.writerow(['score', format(highest_score, '.3f')])
+    data = all_scores
+    num_bins = 100 # <- number of bins for the histogram
+    plt.hist(data, num_bins)
+    plt.savefig("histogramtest.png")
+    visualization(model, best_traject)
+    
