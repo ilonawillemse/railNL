@@ -207,7 +207,7 @@ class Model():
 if __name__ == "__main__":
     all_scores = []
     highest_score = 0
-    with open('histo_data.csv', 'w') as output_file:
+    with open('output/histo_data.csv', 'w') as output_file:
         for i in range(10):
             model = Model()
             model.load_stations()
@@ -223,7 +223,7 @@ if __name__ == "__main__":
             # print(i)
             
 
-    with open('best_traject_output.csv', 'w') as output_best_file:
+    with open('output/best_traject_output.csv', 'w') as output_best_file:
             writer = csv.writer(output_best_file)
             writer.writerow(['train', 'stations'])
 
@@ -236,7 +236,7 @@ if __name__ == "__main__":
     data = all_scores
     num_bins = 100 # <- number of bins for the histogram
     plt.hist(data, num_bins)
-    plt.savefig("histogramtest.png")
+    plt.savefig("output/histogramtest.png")
     # for station in model.stations:
             # print(station.name, "huidig")
             # for connection in station.connections:
