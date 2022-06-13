@@ -46,6 +46,7 @@ def visualization(model, best_traject):
         
         list_y_cor.clear()
         list_x_cor.clear()
+       
 
         while counter < 60:
             for j in range(len(best_traject[i])):
