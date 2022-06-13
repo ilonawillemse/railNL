@@ -25,12 +25,12 @@ class Station():
         self.ycor = ycor
 
 class Connection():
-    def __init__(self, id, station_1, station_2, visited, time):
-        self.id = id
+    def __init__(self, station_1, station_2, time, visited, id):
         self.start = station_1
         self.end = station_2
         self.visit = visited
         self.duration = time
+        self.id = id
         
 
 class Model():
@@ -43,6 +43,7 @@ class Model():
         self.total_time = 0
         self.traject = []
         self.time_dict = {}
+        self.all_connections = {}
     
 
     def fraction_visited(self):
@@ -89,19 +90,16 @@ class Model():
             all_lines = []
             for lines in csv_reader:
                 all_lines.append(lines)
+            
 
-            for station in self.stations:
-                for connection in all_lines:
-                    station_name = connection[0]
-                    connection_name = connection[1]
-                    distance = connection[2]
-                    if station.name == station_name:
-                        
-                        for i in range(len(self.stations)):
-                            if connection_name == self.stations[i].name:
-                                station.connections[self.stations[i]] = distance
-                                self.stations[i].connections[station] = distance
-                    
+            for i in range(len(all_lines)):
+                for station in self.stations:
+                    if station.name == all_lines[i][0]:
+                        for station2 in self.stations:
+                            if station2.name == all_lines[i][1]:
+                                self.all_connections[i] = Connection(station, station2, all_lines[i][2], "no", i)
+                                station.connections[i] = self.all_connections[i]
+                                station2.connections[i] = self.all_connections[i]           
 
     def make_traject(self, station):
         time = 0
@@ -109,31 +107,38 @@ class Model():
         visited_stations.append(station)
 
         while time <= 120:
-            connections = list(station.connections.items())
+            connections = list(station.connections.values())
+            
 
             new_choice = self.choose_connection(connections)
-            new_station = new_choice[0]
-            new_distance = new_choice[1]
+            if station.name != new_choice.start:
+                new_station = new_choice.start
+            else:
+                new_station = new_choice.end
+            
 
             counter = 0
 
             while new_station in visited_stations and counter < 100:
                 new_choice = self.choose_connection(connections)
-                new_station = new_choice[0]
-                new_distance = new_choice[1]
+                if station.name != new_choice.start:
+                    new_station = new_choice.start
+                else:
+                    new_station = new_choice.end
                 counter += 1
 
             if counter == 100:
                 break
 
-            time += int(new_distance)
+            time += int(new_choice.duration)
 
             if time > 120:
-                 time -= int(new_distance)
+                 time -= int(new_choice.duration)
                  break        
 
             station = new_station
             visited_stations.append(station)
+        
         
         return visited_stations, time
 
@@ -197,7 +202,7 @@ if __name__ == "__main__":
     all_scores = []
     highest_score = 0
     with open('histo_data.csv', 'w') as output_file:
-        for i in range(30000):
+        for i in range(1):
             model = Model()
             model.load_stations()
             model.add_connections()
@@ -210,8 +215,6 @@ if __name__ == "__main__":
             all_scores.append(score)
             writer.writerow([score])
             
-    
-
 
     with open('best_traject_output.csv', 'w') as output_best_file:
             writer = csv.writer(output_best_file)
@@ -227,5 +230,6 @@ if __name__ == "__main__":
     num_bins = 100 # <- number of bins for the histogram
     plt.hist(data, num_bins)
     plt.savefig("histogramtest.png")
+    print(best_traject)
     visualization(model, best_traject)
     
