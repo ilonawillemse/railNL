@@ -10,44 +10,26 @@ def visualization(model, best_traject):
     name = []
     connection_list = []
 
-    # add the connections as lines between the stations in dots
-    for i in range(len(model.stations)):
-
-        y_cor.append(float(model.stations[i].xcor))
-        x_cor.append(float(model.stations[i].ycor))
-        name.append(model.stations[i].name)
-
+    for _, value in model.all_connections.items():
         connection_x_cor = []
         connection_y_cor = []
 
-        current_station = model.stations[i]
-        # print(current_station.connections)
-        # for i in range(len(current_station.connections))
-        for i, (key, value) in enumerate(current_station.connections.items()):
-            # print(value.start.xcor)
-            # print()
-            # print(key[i], value[i])
-            print(value.start.name)
+        connection_x_cor.append(float(value.start.ycor))
+        connection_y_cor.append(float(value.start.xcor))
+        connection_y_cor.append(float(value.end.xcor))
+        connection_x_cor.append(float(value.end.ycor))
 
-        # for connection in current_station.connections:
-            connection_y_cor.append(float(value.start.xcor))
-            connection_x_cor.append(float(value.start.ycor))
-            connection_y_cor.append(float(value.end.xcor))
-            connection_x_cor.append(float(value.end.ycor))
-        
-        print(connection_y_cor)
-        print(connection_x_cor)
-    
+
         connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, line=dict(color="grey"))
         connection_list.append(connection)
+        print(len(connection_list))
+    # print(connection_list)
+
 
     connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, line=dict(color="lightgreen"),opacity= 0.6 ))
 
 
     # add moving trains to the trajects
-    list_y_cor = []
-    list_x_cor = []
-
     total_list_x_cor = []
     total_list_y_cor = []
     
@@ -55,13 +37,15 @@ def visualization(model, best_traject):
     for i in range(len(best_traject)):
         counter = 0
         
-        list_y_cor.clear()
-        list_x_cor.clear()
+        # list_y_cor.clear()
+        # list_x_cor.clear()
+        list_y_cor = []
+        list_x_cor = []
        
         # print(best_traject[i])
-        while counter < 60:
+        while counter < 10:
             for j in range(len(best_traject[i])):
-                if counter == 60:
+                if counter == 10:
                     break
                 
                 # x and y coordinates were changed in the csv file
@@ -70,7 +54,7 @@ def visualization(model, best_traject):
                 counter += 1
 
             for k in range(len(best_traject[i])-2 , 0, -1):
-                if counter == 60:
+                if counter == 10:
                     break
 
                 list_y_cor.append(float(best_traject[i][k].xcor))

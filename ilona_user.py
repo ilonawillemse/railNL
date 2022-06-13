@@ -190,13 +190,13 @@ def visualization():
             connection_y_cor.append(float(connection.xcor))
             connection_x_cor.append(float(connection.ycor))
 
-        # print(connection_x_cor)
-        # print(connection_y_cor)
+        print(f'x', connection_x_cor)
+        print(f'y', connection_y_cor)
     
         connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, line=dict(color="grey"))
         connection_list.append(connection)
 
-    connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, line=dict(color="lightgreen"),opacity= 0.6 ))
+    # connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, line=dict(color="lightgreen"),opacity= 0.6 ))
 
 
     # add train
