@@ -1,5 +1,4 @@
 
-from copy import deepcopy
 import plotly.graph_objects as go
 
 def visualization(model, best_traject):
@@ -10,62 +9,45 @@ def visualization(model, best_traject):
     name = []
     connection_list = []
 
-    # add the connections as lines between the stations in dots
-    for i in range(len(model.stations)):
-        y_cor.append(float(model.stations[i].xcor))
-        x_cor.append(float(model.stations[i].ycor))
-        name.append(model.stations[i].name)
-
+    for _, value in model.all_connections.items():
         connection_x_cor = []
         connection_y_cor = []
         connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, line=dict(color="lightgreen"),opacity= 0.6 ))
 
-    for connection in model.all_connections.values():
-        print(connection.end.name)
-        print(connection.start.name)
+        connection_x_cor.append(float(value.start.ycor))
+        connection_y_cor.append(float(value.start.xcor))
+        connection_y_cor.append(float(value.end.xcor))
+        connection_x_cor.append(float(value.end.ycor))
 
-        connection_x_cor.append(connection.start.xcor)
-        connection_y_cor.append(connection.start.ycor)
-
-        # for connection in current_station.connections:
-        #     connection_y_cor.append(float(current_station.xcor))
-        #     connection_x_cor.append(float(current_station.ycor))
-        #     connection_y_cor.append(float(connection.xcor))
-        #     connection_x_cor.append(float(connection.ycor))
-    
         connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, line=dict(color="grey"))
         connection_list.append(connection)
 
-
-
-
+    connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, marker=dict(color="lightgreen"),opacity= 0.6 ))
+    connection_list.insert(0, connection)
+    
     # add moving trains to the trajects
-    list_y_cor = []
-    list_x_cor = []
+    # make the train move back and forth for i steps
 
     total_list_x_cor = []
     total_list_y_cor = []
     
-    # make the train move back and forth for i steps
     for i in range(len(best_traject)):
         counter = 0
-        
-        list_y_cor.clear()
-        list_x_cor.clear()
+        list_y_cor = []
+        list_x_cor = []
        
-
-        while counter < 60:
+        while counter < 10:
             for j in range(len(best_traject[i])):
-                if counter == 60:
+                if counter == 10:
                     break
                 
-                # x and y coordinates were changed in the csv file
+                # x and y coordinates were switched in the csv file
                 list_y_cor.append(float(best_traject[i][j].xcor))
                 list_x_cor.append(float(best_traject[i][j].ycor))
                 counter += 1
 
             for k in range(len(best_traject[i])-2 , 0, -1):
-                if counter == 60:
+                if counter == 10:
                     break
 
                 list_y_cor.append(float(best_traject[i][k].xcor))
@@ -73,11 +55,9 @@ def visualization(model, best_traject):
                 counter += 1
         
         # create a list of lists with coordinates of the train trajects
-        total_list_x_cor.append(deepcopy(list_x_cor))
-        total_list_y_cor.append(deepcopy(list_y_cor))
+        total_list_x_cor.append(list_x_cor)
+        total_list_y_cor.append(list_y_cor)
 
-    # print(total_list_x_cor)
-    # print(total_list_y_cor)
 
     final_list_x_cor = []
     final_list_y_cor = []
@@ -85,6 +65,7 @@ def visualization(model, best_traject):
     colors = ['red', 'blue', 'green', 'yellow', 'purple', 'grey', 'white']
 
     # comprehend the first coordinates of the trains depending on the number of trains
+    # making them ride together
     for i in range(len(list_x_cor)):
         final_list_x_cor = [item[i] for item in total_list_x_cor]
         final_list_y_cor = [item[i] for item in total_list_y_cor]
@@ -96,7 +77,7 @@ def visualization(model, best_traject):
                             marker=dict(color=colors, size = 15))], 
                             layout=go.Layout(title_text="No way, railway"))
         current_list.append(current)
-
+        
 
     # create the figure with connections/ stations and trains
     fig = go.Figure(
@@ -133,5 +114,4 @@ def visualization(model, best_traject):
                 opacity=0.5,
                 layer="below")
     )
-
     fig.show()

@@ -16,8 +16,6 @@ import matplotlib.pyplot as plt
 from visualize import visualization
 
 
-
-
 class Station():
     "Station Object"
     def __init__(self, name, xcor, ycor):
@@ -217,7 +215,7 @@ def repeated_runs():
             writer.writerow([score])
             print(i)
 
-    with open('best_traject_output.csv', 'w') as output_best_file:
+    with open('output/best_traject_output.csv', 'w') as output_best_file:
             writer = csv.writer(output_best_file)
             writer.writerow(['train', 'stations'])
 
