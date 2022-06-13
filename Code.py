@@ -184,3 +184,5 @@ if __name__ == "__main__":
     model.load_stations()
     model.add_connections()
     model.run()
+
+    visualize(model, best_traject)

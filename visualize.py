@@ -1,21 +1,22 @@
+
 from copy import deepcopy
 import plotly.graph_objects as go
 
-def visualization():
+def visualization(model, best_traject):
     x_cor = []
     y_cor = []
     name = []
     connection_list = []
 
-    for i in range(len(station.stations)):
-        y_cor.append(float(station.stations[i].xcor))
-        x_cor.append(float(station.stations[i].ycor))
-        name.append(station.stations[i].name)
+    for i in range(len(model.stations)):
+        y_cor.append(float(model.stations[i].xcor))
+        x_cor.append(float(model.stations[i].ycor))
+        name.append(model.stations[i].name)
 
         connection_x_cor = []
         connection_y_cor = []
 
-        current_station = station.stations[i]
+        current_station = model.stations[i]
 
         for connection in current_station.connections:
             connection_y_cor.append(float(current_station.xcor))
@@ -36,27 +37,27 @@ def visualization():
     total_list_x_cor = []
     total_list_y_cor = []
     
-    for i in range(len(station.traject)):
+    for i in range(len(best_traject)):
         counter = 0
         
         list_y_cor.clear()
         list_x_cor.clear()
 
         while counter < 30:
-            for j in range(len(station.traject[i])):
+            for j in range(len(best_traject[i])):
                 if counter == 30:
                     break
 
-                list_y_cor.append(float(station.traject[i][j].xcor))
-                list_x_cor.append(float(station.traject[i][j].ycor))
+                list_y_cor.append(float(best_traject[i][j].xcor))
+                list_x_cor.append(float(best_traject[i][j].ycor))
                 counter += 1
 
-            for k in range(len(station.traject[i])-2 , 0, -1):
+            for k in range(len(best_traject[i])-2 , 0, -1):
                 if counter == 30:
                     break
 
-                list_y_cor.append(float(station.traject[i][k].xcor))
-                list_x_cor.append(float(station.traject[i][k].ycor))
+                list_y_cor.append(float(best_traject[i][k].xcor))
+                list_x_cor.append(float(best_traject[i][k].ycor))
                 counter += 1
 
         total_list_x_cor.append(deepcopy(list_x_cor))
