@@ -14,6 +14,7 @@ import csv
 import random
 
 from matplotlib.pyplot import legend
+from numpy import size
 
 
 class Station():
@@ -33,7 +34,7 @@ class Model():
         self.score = 0
         self.quality = 0
         self.fraction = 0
-        self.number_traject = random.randint(2,2)
+        self.number_traject = random.randint(7,7)
         self.total_time = 0
     
 
@@ -203,7 +204,7 @@ def visualization():
     
     for i in range(len(station.traject)):
         counter = 0
-        
+
         list_y_cor.clear()
         list_x_cor.clear()
 
@@ -233,12 +234,16 @@ def visualization():
     final_list_x_cor = []
     final_list_y_cor = []
     current_list = []
-
+    colors = ['red', 'blue', 'green', 'yellow', 'purple', 'grey', 'white']
     for i in range(len(list_x_cor)):
         final_list_x_cor = [item[i] for item in total_list_x_cor]
         final_list_y_cor = [item[i] for item in total_list_y_cor]
 
-        current = go.Frame(data=[go.Scatter(x = final_list_x_cor, y = final_list_y_cor, mode = "markers", line=dict(color="red") )], 
+        current = go.Frame(data=[go.Scatter(
+                            x = final_list_x_cor, 
+                            y = final_list_y_cor, 
+                            mode = "markers", 
+                            marker = dict(size = 15, color = colors))], 
                             layout=go.Layout(title_text="No way, railway"))
         current_list.append(current)
 
@@ -249,14 +254,16 @@ def visualization():
         xaxis=dict(range=[3.5, 6.5], autorange=False),
         yaxis=dict(range=[51, 54], autorange=False),
         title="No way, railway",
+        showlegend= False,
+        template="plotly_white",
         updatemenus=[dict(
             type="buttons",
             buttons=[dict(label="Let's rail",
                         method="animate",
-                        args=[None])])]),
+                        args=[None, {'frame': { "duration": 1000, "redraw": True},}])])]),
                         
-    # add train 
-    frames= current_list, 
+        # add train 
+        frames= current_list, 
     )
 
     # Add background image
@@ -273,7 +280,6 @@ def visualization():
                 opacity=0.5,
                 layer="below")
     )
-    fig.update_layout(template="plotly_white", showlegend = False)
 
     fig.show()
 
