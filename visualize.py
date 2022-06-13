@@ -48,9 +48,9 @@ def visualization(model, best_traject):
         list_x_cor.clear()
        
 
-        while counter < 30:
+        while counter < 60:
             for j in range(len(best_traject[i])):
-                if counter == 30:
+                if counter == 60:
                     break
                 
                 # x and y coordinates were changed in the csv file
@@ -59,11 +59,11 @@ def visualization(model, best_traject):
                 counter += 1
 
             for k in range(len(best_traject[i])-2 , 0, -1):
-                if counter == 30:
+                if counter == 60:
                     break
 
                 list_y_cor.append(float(best_traject[i][k].xcor))
-                list_x_cor.append(float(best_traject[i][k].ycor))
+                  list_x_cor.append(float(best_traject[i][k].ycor))
                 counter += 1
         
         # create a list of lists with coordinates of the train trajects
@@ -76,13 +76,18 @@ def visualization(model, best_traject):
     final_list_x_cor = []
     final_list_y_cor = []
     current_list = []
+    colors = ['red', 'blue', 'green', 'yellow', 'purple', 'grey', 'white']
 
     # comprehend the first coordinates of the trains depending on the number of trains
     for i in range(len(list_x_cor)):
         final_list_x_cor = [item[i] for item in total_list_x_cor]
         final_list_y_cor = [item[i] for item in total_list_y_cor]
 
-        current = go.Frame(data=[go.Scatter(x = final_list_x_cor, y = final_list_y_cor, mode = "markers", line=dict(color="red") )], 
+        current = go.Frame(data=[go.Scatter(
+                            x = final_list_x_cor, 
+                            y = final_list_y_cor, 
+                            mode = "markers", 
+                            marker=dict(color=colors, size = 15))], 
                             layout=go.Layout(title_text="No way, railway"))
         current_list.append(current)
 
@@ -94,11 +99,15 @@ def visualization(model, best_traject):
         xaxis=dict(range=[3.5, 6.5], autorange=False),
         yaxis=dict(range=[51, 54], autorange=False),
         title="No way, railway",
+        showlegend = False,
+        template = "plotly_white",
         updatemenus=[dict(
             type="buttons",
             buttons=[dict(label="Let's rail",
                         method="animate",
-                        args=[None])])]),
+                        args=[None, 
+                            {'frame': { "duration": 1000, "redraw": True},}
+                            ])])]),
                         
     # add train 
     frames= current_list, 
@@ -118,6 +127,5 @@ def visualization(model, best_traject):
                 opacity=0.5,
                 layer="below")
     )
-    fig.update_layout(template="plotly_white", showlegend = False)
 
     fig.show()
