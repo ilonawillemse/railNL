@@ -7,7 +7,7 @@ def make_traject(station):
         visited_stations = []
         visited_stations.append(station)
 
-        while time <= 120:
+        while time <= 180:
             connections = list(station.connections.values())
             new_choice = random.choice(connections)
             if station.name != new_choice.start:
@@ -32,7 +32,7 @@ def make_traject(station):
 
             time += int(float(new_choice.duration))
 
-            if time > 120:
+            if time > 180:
                  time -= int(float(new_choice.duration))
                  break        
 
