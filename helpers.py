@@ -11,8 +11,8 @@ def get_name(list):
         names_list.append(list[i].name)
     return names_list
 
-def output_generate(traject, score):
-    with open('output.csv', 'w') as output_file:
+def output_generate(traject, score, fraction):
+    with open('output/output_model.csv', 'w') as output_file:
         writer = csv.writer(output_file)
         writer.writerow(['train', 'stations'])
         for i in range(len(traject)):
@@ -21,39 +21,24 @@ def output_generate(traject, score):
             writer.writerow(data)
         
         writer.writerow(['score', format(score, '.3f')])
+        writer.writerow(['fraction', format(fraction, '.3f')])
 
-def multiple_runs():
-    all_scores = []
-    highest_score = 0
-    with open('histo_data.csv', 'w') as output_file:
-        for i in range(10):
-            model = Model()
-            model.load_stations()
-            model.add_connections()
-            model.run()
-            writer = csv.writer(output_file) 
-            if model.score > highest_score:
-                best_traject = model.traject
-                highest_score = model.score
-            score = model.score
-            all_scores.append(score)
-            writer.writerow([score])
-            print(i)
-            
-    output_generate(best_traject, highest_score)
+def fraction_visited(model):
+        "calculated fraction of visited stations"
+        
+        visited_connections = 0
+        for connection in model.all_connections:
+            if model.all_connections[connection].visit != 0:
+                visited_connections += 1
 
-    # with open('best_traject_output.csv', 'w') as output_best_file:
-    #         writer = csv.writer(output_best_file)
-    #         writer.writerow(['train', 'stations'])
+        model.fraction = visited_connections / len(model.all_connections)
+        
 
-    #         for i in range(len(best_traject)):
-    #             names = get_name(best_traject[i])
-    #             data = [f'train_{i+1}', names]
-    #             writer.writerow(data)
-                            
-    #         writer.writerow(['score', format(highest_score, '.3f')])
+def quality_score(model):
+    "calculate quality score of model"
+    fraction_visited(model)
+    model.score = model.fraction * 10000 - (model.number_traject * 100 + model.total_time)
     
-    data = all_scores
-    num_bins = 100 # <- number of bins for the histogram
-    plt.hist(data, num_bins)
-    plt.savefig("histogramtest.png")
+
+
+           
