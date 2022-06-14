@@ -9,10 +9,18 @@ def visualization(model, best_traject):
     name = []
     connection_list = []
 
+    for i in range(len(model.stations)):
+        y_cor.append(float(model.stations[i].xcor))
+        x_cor.append(float(model.stations[i].ycor))
+        name.append(model.stations[i].name)
+
     for _, value in model.all_connections.items():
         connection_x_cor = []
         connection_y_cor = []
-        connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, line=dict(color="lightgreen"),opacity= 0.6 ))
+        connection_list.append(go.Scatter(x = x_cor, y = y_cor, 
+                                mode = "markers", 
+                                hovertext= name, 
+                                opacity= 0.6 ))
 
         connection_x_cor.append(float(value.start.ycor))
         connection_y_cor.append(float(value.start.xcor))
@@ -22,7 +30,10 @@ def visualization(model, best_traject):
         connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, line=dict(color="grey"))
         connection_list.append(connection)
 
-    connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, marker=dict(color="lightgreen"),opacity= 0.6 ))
+    connection_list.append(go.Scatter(x = x_cor, y = y_cor, 
+                            mode = "markers", hovertext= name,
+                            marker=dict(color="lightgreen"),
+                            opacity= 0.6 ))
     connection_list.insert(0, connection)
     
     # add moving trains to the trajects
@@ -62,7 +73,8 @@ def visualization(model, best_traject):
     final_list_x_cor = []
     final_list_y_cor = []
     current_list = []
-    colors = ['red', 'blue', 'green', 'yellow', 'purple', 'grey', 'white']
+    colors = ['red', 'blue', 'green', 'yellow', 'purple', 'grey', 'pink', 'black']
+    colors = colors + colors + colors
 
     # comprehend the first coordinates of the trains depending on the number of trains
     # making them ride together

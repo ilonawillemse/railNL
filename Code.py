@@ -46,6 +46,8 @@ class Model():
 if __name__ == "__main__":
     # model = Model()
     # model.run()
+
+# ---------------------------------baseline-------------------------------
     best_traject = []
     all_scores = []
     highest_score = 0
