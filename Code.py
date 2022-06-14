@@ -15,6 +15,7 @@ import random
 import matplotlib.pyplot as plt
 from visualize import visualization
 
+
 class Station():
     "Station Object"
     def __init__(self, name, xcor, ycor):
@@ -143,9 +144,6 @@ class Model():
             station = new_station
             visited_stations.append(station)
         
-
-        
-        
         return visited_stations, time
 
     def get_name(self, list):
@@ -199,16 +197,11 @@ class Model():
 
                     
 
-
-            
-
-
-
-if __name__ == "__main__":
+def repeated_runs():
     all_scores = []
     highest_score = 0
-    with open('output/histo_data.csv', 'w') as output_file:
-        for i in range(10):
+    with open('histo_data.csv', 'w') as output_file:
+        for i in range(1000000):
             model = Model()
             model.load_stations()
             model.add_connections()
@@ -220,8 +213,7 @@ if __name__ == "__main__":
             score = model.score
             all_scores.append(score)
             writer.writerow([score])
-            # print(i)
-            
+            print(i)
 
     with open('output/best_traject_output.csv', 'w') as output_best_file:
             writer = csv.writer(output_best_file)
@@ -236,13 +228,20 @@ if __name__ == "__main__":
     data = all_scores
     num_bins = 100 # <- number of bins for the histogram
     plt.hist(data, num_bins)
-    plt.savefig("output/histogramtest.png")
-    # for station in model.stations:
-            # print(station.name, "huidig")
-            # for connection in station.connections:
-                # print(station.connections[connection].start.name, "nieuw")
-                # print(station.connections[connection].end.name, "end")
-    # print(best_traject)
-    # print(model.stations)
-    visualization(model, best_traject)
+    plt.savefig("histogramtest.png")
+
+    return best_traject 
+            
+
+
+
+if __name__ == "__main__":
+    best_traject = repeated_runs()
+            
+    # model = Model()
+    # model.load_stations()
+    # model.add_connections()
+    # model.run()
+
+    # visualization(model, model.traject)
     

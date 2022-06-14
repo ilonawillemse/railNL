@@ -12,6 +12,7 @@ def visualization(model, best_traject):
     for _, value in model.all_connections.items():
         connection_x_cor = []
         connection_y_cor = []
+        connection_list.append(go.Scatter(x = x_cor, y = y_cor, mode = "markers", hovertext= name, line=dict(color="lightgreen"),opacity= 0.6 ))
 
         connection_x_cor.append(float(value.start.ycor))
         connection_y_cor.append(float(value.start.xcor))
