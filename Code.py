@@ -14,6 +14,8 @@ import csv
 import random
 import matplotlib.pyplot as plt
 #from visualize import visualization
+from helpers import output_generate
+
 
 class Station():
     "Station Object"
@@ -142,30 +144,7 @@ class Model():
 
             station = new_station
             visited_stations.append(station)
-        
-
-        
-        
         return visited_stations, time
-
-    def get_name(self, list):
-        names_list = []
-        for i in range(len(list)):
-            names_list.append(list[i].name)
-        return names_list
-
-
-    def output_generate(self):
-        with open('output.csv', 'w') as output_file:
-            writer = csv.writer(output_file)
-            writer.writerow(['train', 'stations'])
-
-            for i in range(len(self.traject)):
-                names = self.get_name(self.traject[i])
-                data = [f'train_{i+1}', names]
-                writer.writerow(data)
-            
-            writer.writerow(['score', format(self.score, '.3f')])
 
     def choose_starting(self):
         station = random.choice(self.stations)
@@ -193,25 +172,19 @@ class Model():
             self.time_dict[i] = time        
 
     def run(self):
+        self.load_stations()
+        self.add_connections()
         self.starting_trajects()
         self.set_visited()
         self.quality_score()  
 
-                    
-
-
-            
-
-
-
 if __name__ == "__main__":
+    
     all_scores = []
     highest_score = 0
     with open('histo_data.csv', 'w') as output_file:
         for i in range(10):
             model = Model()
-            model.load_stations()
-            model.add_connections()
             model.run()
             writer = csv.writer(output_file) 
             if model.score > highest_score:
@@ -221,28 +194,42 @@ if __name__ == "__main__":
             all_scores.append(score)
             writer.writerow([score])
             print(i)
+    output_generate(best_traject, highest_score)
+    
+    
+    # all_scores = []
+    # highest_score = 0
+    # with open('histo_data.csv', 'w') as output_file:
+    #     for i in range(100000):
+    #         model = Model()
+    #         model.load_stations()
+    #         model.add_connections()
+    #         model.run()
+    #         writer = csv.writer(output_file) 
+    #         if model.score > highest_score:
+    #             best_traject = model.traject
+    #             highest_score = model.score
+    #         score = model.score
+    #         all_scores.append(score)
+    #         writer.writerow([score])
+    #         print(i)
             
 
-    with open('best_traject_output.csv', 'w') as output_best_file:
-            writer = csv.writer(output_best_file)
-            writer.writerow(['train', 'stations'])
+    # with open('best_traject_output.csv', 'w') as output_best_file:
+    #         writer = csv.writer(output_best_file)
+    #         writer.writerow(['train', 'stations'])
 
-            for i in range(len(best_traject)):
-                names = model.get_name(best_traject[i])
-                data = [f'train_{i+1}', names]
-                writer.writerow(data)
+    #         for i in range(len(best_traject)):
+    #             names = model.get_name(best_traject[i])
+    #             data = [f'train_{i+1}', names]
+    #             writer.writerow(data)
                             
-            writer.writerow(['score', format(highest_score, '.3f')])
-    data = all_scores
-    num_bins = 100 # <- number of bins for the histogram
-    plt.hist(data, num_bins)
-    plt.savefig("histogramtest.png")
-    for station in model.stations:
-            print(station.name, "huidig")
-            for connection in station.connections:
-                print(station.connections[connection].start.name, "nieuw")
-                print(station.connections[connection].end.name, "end")
-    # print(best_traject)
+    #         writer.writerow(['score', format(highest_score, '.3f')])
+    # data = all_scores
+    # num_bins = 100 # <- number of bins for the histogram
+    # plt.hist(data, num_bins)
+    # plt.savefig("histogramtest.png")
+    
     # print(model.stations)
    # visualization(model, best_traject)
     
