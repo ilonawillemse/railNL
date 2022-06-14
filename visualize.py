@@ -36,9 +36,9 @@ def visualization(model, best_traject):
         list_y_cor = []
         list_x_cor = []
        
-        while counter < 10:
+        while counter < 40:
             for j in range(len(best_traject[i])):
-                if counter == 10:
+                if counter == 40:
                     break
                 
                 # x and y coordinates were switched in the csv file
@@ -47,7 +47,7 @@ def visualization(model, best_traject):
                 counter += 1
 
             for k in range(len(best_traject[i])-2 , 0, -1):
-                if counter == 10:
+                if counter == 40:
                     break
 
                 list_y_cor.append(float(best_traject[i][k].xcor))
@@ -83,8 +83,8 @@ def visualization(model, best_traject):
     fig = go.Figure(
         data= connection_list,
         layout=go.Layout(
-        xaxis=dict(range=[3.5, 6.5], autorange=False),
-        yaxis=dict(range=[51, 54], autorange=False),
+        xaxis=dict(range=[3, 7], autorange=False),
+        yaxis=dict(range=[50, 55], autorange=False),
         title="No way, railway",
         showlegend = False,
         template = "plotly_white",

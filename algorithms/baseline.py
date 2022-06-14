@@ -30,10 +30,10 @@ def make_traject(station):
             if counter == 100:
                 break
 
-            time += int(new_choice.duration)
+            time += int(float(new_choice.duration))
 
             if time > 120:
-                 time -= int(new_choice.duration)
+                 time -= int(float(new_choice.duration))
                  break        
 
             station = new_station
@@ -45,7 +45,7 @@ def choose_starting(model):
     return station
 
 def starting_trajects(model):
-    model.number_traject = random.randint(1,7)
+    model.number_traject = random.randint(1,20)
     for i in range(model.number_traject):
         station = choose_starting(model)
         latest_traject, time = make_traject(station)
