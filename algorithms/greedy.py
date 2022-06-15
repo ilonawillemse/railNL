@@ -19,7 +19,7 @@ def make_traject(station):
 
     # add current station to visited stations list
     visited_stations.append(station)
-    print('begin', station.name)
+    # print('begin', station.name)
 
     while time < 180:
         new_choice = next_shortest(station)
@@ -59,8 +59,8 @@ def make_traject(station):
         station = new_station
         new_choice.visit += 1
         visited_stations.append(station)
-        print(station.name)
-        print(time)
+        # print(station.name)
+        # print(time)
 
     
     return visited_stations, time
@@ -72,8 +72,8 @@ def get_started(model):
         # in case i would like to let trains drive same traject
         # for connection in model.all_connections.values():
         #     connection.visit = 0
-        print()
-        print(i)
+        # print()
+        # print(i)
         station = random.choice(model.stations)
         latest_traject, time = make_traject(station)
         model.traject.append(latest_traject)

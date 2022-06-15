@@ -86,8 +86,10 @@ def visualization(model, best_traject):
                             x = final_list_x_cor, 
                             y = final_list_y_cor, 
                             mode = "markers", 
+                            # hovertext = ....,
                             marker=dict(color=colors, size = 15))], 
                             layout=go.Layout(title_text="No way, railway"))
+
         current_list.append(current)
         
 
