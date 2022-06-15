@@ -16,6 +16,7 @@ from helpers import output_generate, quality_score
 from visualize import visualization
 from loader import load_stations, add_connections
 from algorithms.baseline import starting_trajects
+from algorithms.greedy import get_started
 
 class Model():
     "Railway Model"
@@ -38,36 +39,49 @@ class Model():
                 if station in traject:
                     station.visited += 1       
 
-    def run(self):
+    def baseline(self):
         starting_trajects(self)
         self.set_visited()
-        quality_score(self)  
+        quality_score(self) 
+    
+    def greedy(self):
+        get_started(self)
+        self.set_visited()
+        quality_score(self) 
+
 
 if __name__ == "__main__":
-    # model = Model()
-    # model.run()
+# ---------------greedy-----------
+    model = Model()
+    model.greedy()
+    output_generate(model.traject, model.score, model.fraction)
+    visualization(model, model.traject)
 
-# ---------------------------------baseline-------------------------------
-    best_traject = []
-    all_scores = []
-    highest_score = 0
-    with open('output/histo_data.csv', 'w') as output_file:
-        for i in range(10):
-            model = Model()
-            model.run()
-            writer = csv.writer(output_file) 
-            if model.score > highest_score:
-                best_traject = model.traject
-                highest_score = model.score
-                best_fraction = model.fraction
-            score = model.score
-            all_scores.append(score)
-            writer.writerow([score])
-            print(i)
-    output_generate(best_traject, highest_score, best_fraction)
-    data = all_scores
-    num_bins = 100 # <- number of bins for the histogram
-    plt.hist(data, num_bins)
-    plt.savefig("output/histogramtest.png")
-    visualization(model, best_traject)
+
+# ---------------random-----------
+    # model = Model()
+    # model.baseline()
+
+    # best_traject = []
+    # all_scores = []
+    # highest_score = 0
+    # with open('output/histo_data.csv', 'w') as output_file:
+    #     for i in range(10):
+    #         model = Model()
+    #         model.run()
+    #         writer = csv.writer(output_file) 
+    #         if model.score > highest_score:
+    #             best_traject = model.traject
+    #             highest_score = model.score
+    #             best_fraction = model.fraction
+    #         score = model.score
+    #         all_scores.append(score)
+    #         writer.writerow([score])
+    #         print(i)
+    # output_generate(best_traject, highest_score, best_fraction)
+    # data = all_scores
+    # num_bins = 100 # <- number of bins for the histogram
+    # plt.hist(data, num_bins)
+    # plt.savefig("output/histogramtest.png")
+    # visualization(model, best_traject)
     
