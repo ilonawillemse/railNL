@@ -67,7 +67,7 @@ def make_traject(station):
 
 def get_started(model):
     station = random.choice(model.stations)
-    model.number_traject = random.randint(20,20)
+    model.number_traject = random.randint(1,20)
     for i in range(model.number_traject):
         # in case i would like to let trains drive same traject
         # for connection in model.all_connections.values():
