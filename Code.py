@@ -113,7 +113,6 @@ if __name__ == "__main__":
 
     if key == 2:
     # -------------------------------hillclimber baseline------------------------------
-
         best_score = 0
         best_traject = []
         best_fraction = 0
@@ -132,10 +131,9 @@ if __name__ == "__main__":
                     best_fraction = fraction
                 counter += 1
                 print(counter)
+
         except KeyboardInterrupt:
             pass
-        
-        
         
         
         # model = Model()
@@ -151,13 +149,6 @@ if __name__ == "__main__":
 
     if key == 3:
     # -------------------------------hillclimber greedy-------------------------------
-
-        model = Model()
-        model.greedy()
-
-        best_traject, best_score, best_fraction = run_hillclimber(model, key)
-
-
         best_score = 0
         best_traject = []
         best_fraction = 0
@@ -178,7 +169,13 @@ if __name__ == "__main__":
 
         except KeyboardInterrupt:
             pass
-        
 
-        output_generate(best_traject, best_score, best_fraction)
-        visualization(model, best_traject)
+        # model = Model()
+        # model.greedy()
+
+        # best_traject, best_score, best_fraction = run_hillclimber(model, key)
+
+        # output_generate(best_traject, best_score, best_fraction)
+        # visualization(model, best_traject)
+
+
