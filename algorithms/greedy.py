@@ -1,4 +1,5 @@
 
+from multiprocessing import connection
 import random
 
 def next_shortest(station):
@@ -7,13 +8,13 @@ def next_shortest(station):
     for _, value in station.connections.items():
         # look for connections that have not been visited yet
         if value.visit == 0:
-
             if shortest_duration == None or int(float(value.duration)) < shortest_duration :
                 shortest_duration = int(float(value.duration))
                 new_choice = value       
     return new_choice
 
 def make_traject(station):
+    visited_connections = []
     visited_stations = []
     time = 0
 
@@ -59,14 +60,15 @@ def make_traject(station):
         station = new_station
         new_choice.visit += 1
         visited_stations.append(station)
+        visited_connections.append(new_choice)
         # print(station.name)
         # print(time)
 
     
-    return visited_stations, time
+    return visited_stations, time, visited_connections
 
 def get_started(model):
-    station = random.choice(model.stations)
+    # station = random.choice(model.stations)
     model.number_traject = random.randint(1,20)
     for i in range(model.number_traject):
         # in case i would like to let trains drive same traject
@@ -75,7 +77,8 @@ def get_started(model):
         # print()
         # print(i)
         station = random.choice(model.stations)
-        latest_traject, time = make_traject(station)
+        latest_traject, time, connections = make_traject(station)
         model.traject.append(latest_traject)
         model.total_time += time
         model.time_dict[i] = time
+        model.visited_connections.append(connections)

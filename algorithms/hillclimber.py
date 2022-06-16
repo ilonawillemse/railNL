@@ -1,7 +1,12 @@
 from helpers import quality_score
-from algorithms.baseline import choose_starting
 import random
 import copy
+
+# for greedy turn on
+from algorithms.greedy import make_traject
+
+# for random turn on
+# from algorithms.baseline import make_traject
         
 
 def change_traject(model, t):
@@ -16,65 +21,15 @@ def change_traject(model, t):
     quality_score(model)
     return model
 
-def make_traject_hillclimber(station):
-    time = 0
-    visited_connections = []
-    visited_stations = []
-    visited_stations.append(station)
-
-    while time <= 180:
-        connections = list(station.connections.values())
-        new_choice = random.choice(connections)
-        if station.name != new_choice.start:
-            new_station = new_choice.start
-        else:
-            new_station = new_choice.end
-
-        counter = 0
-
-        while new_station in visited_stations and counter < 100:
-            new_choice = random.choice(connections)
-            if station != new_choice.start:
-                new_station = new_choice.start
-            else:
-                new_station = new_choice.end
-            counter += 1
-            
-
-        if counter == 100:
-            break
-
-        time += int(float(new_choice.duration))
-
-        if time > 180:
-                time -= int(float(new_choice.duration))
-                break        
-        
-        new_choice.visit += 1
-        visited_stations.append(new_station)
-        visited_connections.append(new_choice)
-        
-    return visited_stations, time, visited_connections
-
 def single_traject(model, t):
-    station = choose_starting(model)
-    latest_traject, time, connections = make_traject_hillclimber(station)
+    station = random.choice(model.stations)
+    latest_traject, time, connections = make_traject(station)
     model.traject[t] = latest_traject
     model.total_time += time
     model.time_dict[t] = time
     model.visited_connections[t] = connections
     model.number_traject += 1
     return model
-
-def starting_trajects_hillclimber(model):
-    model.number_traject = random.randint(1,20)
-    for i in range(model.number_traject):
-        station = choose_starting(model)
-        latest_traject, time, connections = make_traject_hillclimber(station)
-        model.traject.append(latest_traject)
-        model.total_time += time
-        model.time_dict[i] = time
-        model.visited_connections.append(connections)
 
 def run_hillclimber(model):
     for i in range(1):
@@ -102,6 +57,3 @@ def run_hillclimber(model):
         new_model = single_traject(change_version, max_index)
         quality_score(new_model)
     return best_version.traject, best_version.score, best_version.fraction
-       
-
-        
