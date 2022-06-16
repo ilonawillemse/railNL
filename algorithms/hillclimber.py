@@ -77,7 +77,7 @@ def starting_trajects_hillclimber(model):
         model.visited_connections.append(connections)
 
 def run_hillclimber(model):
-    for i in range(1000):
+    for i in range(1):
         if i > 0:
             print(new_model.score, "new")
             print(best_version.score, 'best')

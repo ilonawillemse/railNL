@@ -48,6 +48,10 @@ class Model():
         quality_score(self)
 
 if __name__ == "__main__":
+
+    model = Model()
+    model.baseline()
+    output_generate(model.traject, model.score, model.fraction)
 # ---------------greedy-----------
     # model = Model()
     # model.baseline()
@@ -100,10 +104,10 @@ if __name__ == "__main__":
 #     visualization(model, best_traject)
 
 ## -------------------------------hillclimber-------------------------------
-    model = Model()
-    model.hillclimber_base()
+    # model = Model()
+    # model.hillclimber_base()
 
-    best_traject, best_score, best_fraction = run_hillclimber(model)
+    # best_traject, best_score, best_fraction = run_hillclimber(model)
 
-    output_generate(best_traject, best_score, best_fraction)
+    # output_generate(best_traject, best_score, best_fraction)
   
