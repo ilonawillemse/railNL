@@ -30,24 +30,7 @@ def make_traject(station):
             new_station = new_choice.start
         else:
             new_station = new_choice.end
-       
-        # counter = 0
-       
-        # while new_station in visited_stations:
-        #     new_choice = next_shortest(station, visited_connections)
-        #     if new_choice == None:
-        #         break
-
-        #     if station != new_choice.start:
-        #         new_station = new_choice.start
-        #     else:
-        #         new_station = new_choice.end
-        #     counter += 1
-
-        #     if counter == 100:
-        #         break
                             
-
         # generate time
         time += int(float(new_choice.duration))
 
