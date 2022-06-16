@@ -77,7 +77,7 @@ if __name__ == "__main__":
     data = all_scores
     num_bins = 100 # <- number of bins for the histogram
     plt.hist(data, num_bins)
-    plt.savefig("output/histogramtestwithlimitreturning.png")
+    plt.savefig("output/histogramgreedy.png")
     visualization(model, best_traject)
 
 
