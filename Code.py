@@ -98,21 +98,21 @@ if __name__ == "__main__":
 
 
 # # -------------------------------hillclimber baseline------mind: change import in hillclimber.p-------------------------
-#     model = Model()
-#     model.baseline()
+    model = Model()
+    model.baseline()
 
-#     best_traject, best_score, best_fraction = run_hillclimber(model)
+    best_traject, best_score, best_fraction = run_hillclimber(model)
 
-#     output_generate(best_traject, best_score, best_fraction)
-#     visualization(model, best_traject)
+    # output_generate(best_traject, best_score, best_fraction)
+    # visualization(model, best_traject)
 
 
 
 ## -------------------------------hillclimber greedy-----mind: change import in hillclimber.py--------------------------
-    model = Model()
-    model.greedy()
+    # model = Model()
+    # model.greedy()
 
-    best_traject, best_score, best_fraction = run_hillclimber(model)
+    # best_traject, best_score, best_fraction = run_hillclimber(model)
 
-    output_generate(best_traject, best_score, best_fraction)
-    visualization(model, best_traject)
+    # output_generate(best_traject, best_score, best_fraction)
+    # visualization(model, best_traject)
