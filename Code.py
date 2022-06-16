@@ -103,8 +103,44 @@ if __name__ == "__main__":
 
     best_traject, best_score, best_fraction = run_hillclimber(model)
 
-    # output_generate(best_traject, best_score, best_fraction)
-    # visualization(model, best_traject)
+    best_score = 0
+    best_traject = []
+    best_fraction = 0
+
+
+    try:
+        counter = 0
+        while True:
+            model = Model()
+            model.baseline()
+            traject, score, fraction = run_hillclimber(model)
+
+            if score >= best_score:
+                best_traject = traject
+                best_score = score
+                best_fraction = fraction
+            counter += 1
+            print(counter)
+    except KeyboardInterrupt:
+        pass
+
+
+
+    # for i in range(100):
+    #     model = Model()
+    #     model.baseline()
+    #     traject, score, fraction = run_hillclimber(model)
+
+    #     if score >= best_score:
+    #         best_traject = traject
+    #         best_score = score
+    #         best_fraction = fraction
+
+    #     print(i)
+            
+
+    output_generate(best_traject, best_score, best_fraction)
+
 
 
 
