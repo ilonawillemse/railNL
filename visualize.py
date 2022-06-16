@@ -97,8 +97,8 @@ def visualization(model, best_traject):
     fig = go.Figure(
         data= connection_list,
         layout=go.Layout(
-        xaxis=dict(range=[3, 7], autorange=False),
-        yaxis=dict(range=[50, 55], autorange=False),
+        xaxis=dict(range=[1, 10], autorange=False),
+        yaxis=dict(range=[50.5, 54], autorange=False),
         title="No way, railway",
         showlegend = False,
         template = "plotly_white",

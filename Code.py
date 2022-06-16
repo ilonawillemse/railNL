@@ -51,18 +51,25 @@ if __name__ == "__main__":
         all_scores = []
         highest_score = 0
         with open('output/histo_data.csv', 'w') as output_file:
-            for i in range(100):
-                model = Model()
-                model.baseline()
-                writer = csv.writer(output_file) 
-                if model.score > highest_score:
-                    best_traject = model.traject
-                    highest_score = model.score
-                    best_fraction = model.fraction
-                score = model.score
-                all_scores.append(score)
-                writer.writerow([score])
-                print(i)
+            try:
+                i = 0
+                while True:
+            # for i in range(100):
+                    model = Model()
+                    model.baseline()
+                    writer = csv.writer(output_file) 
+                    if model.score > highest_score:
+                        best_traject = model.traject
+                        highest_score = model.score
+                        best_fraction = model.fraction
+                    score = model.score
+                    all_scores.append(score)
+                    writer.writerow([score])
+                    print(i)
+                    i += 1
+            except KeyboardInterrupt:
+                pass
+            
         output_generate(best_traject, highest_score, best_fraction)
         data = all_scores
         num_bins = 100 # <- number of bins for the histogram
@@ -79,18 +86,24 @@ if __name__ == "__main__":
         all_scores = []
         highest_score = 0
         with open('output/histo_data.csv', 'w') as output_file:
-            for i in range(100):
-                model = Model()
-                model.greedy()
-                writer = csv.writer(output_file) 
-                if model.score > highest_score:
-                    best_traject = model.traject
-                    highest_score = model.score
-                    best_fraction = model.fraction
-                score = model.score
-                all_scores.append(score)
-                writer.writerow([score])
-                print(i)
+            try:
+                i = 0
+                while True:
+                    model = Model()
+                    model.greedy()
+                    writer = csv.writer(output_file) 
+                    if model.score > highest_score:
+                        best_traject = model.traject
+                        highest_score = model.score
+                        best_fraction = model.fraction
+                    score = model.score
+                    all_scores.append(score)
+                    writer.writerow([score])
+                    print(i)
+                    i += 1
+            except KeyboardInterrupt:
+                pass
+            
         output_generate(best_traject, highest_score, best_fraction)
         data = all_scores
         num_bins = 100 # <- number of bins for the histogram
