@@ -52,10 +52,33 @@ class Model():
 
 if __name__ == "__main__":
 # ---------------greedy-----------
-    model = Model()
-    model.greedy()
-    output_generate(model.traject, model.score, model.fraction)
-    visualization(model, model.traject)
+    # model = Model()
+    # model.greedy()
+    # output_generate(model.traject, model.score, model.fraction)
+    # visualization(model, model.traject)
+
+    best_traject = []
+    all_scores = []
+    highest_score = 0
+    with open('output/histo_data.csv', 'w') as output_file:
+        for i in range(10000):
+            model = Model()
+            model.greedy()
+            writer = csv.writer(output_file) 
+            if model.score > highest_score:
+                best_traject = model.traject
+                highest_score = model.score
+                best_fraction = model.fraction
+            score = model.score
+            all_scores.append(score)
+            writer.writerow([score])
+            print(i)
+    output_generate(best_traject, highest_score, best_fraction)
+    data = all_scores
+    num_bins = 100 # <- number of bins for the histogram
+    plt.hist(data, num_bins)
+    plt.savefig("output/histogramtestwithlimitreturning.png")
+    visualization(model, best_traject)
 
 
 # ---------------random-----------
