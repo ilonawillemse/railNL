@@ -43,112 +43,142 @@ class Model():
 
 
 if __name__ == "__main__":
+    key = int(input("What would you like to run: baseline(0), greedy(1), hillclimber baseline(2), hillclimber greedy(3): "))
 
-# # ---------------------------------baseline-------------------------------
-#     best_traject = []
-#     all_scores = []
-#     highest_score = 0
-#     with open('output/histo_data.csv', 'w') as output_file:
-#         for i in range(100):
-#             model = Model()
-#             model.baseline()
-#             writer = csv.writer(output_file) 
-#             if model.score > highest_score:
-#                 best_traject = model.traject
-#                 highest_score = model.score
-#                 best_fraction = model.fraction
-#             score = model.score
-#             all_scores.append(score)
-#             writer.writerow([score])
-#             print(i)
-#     output_generate(best_traject, highest_score, best_fraction)
-#     data = all_scores
-#     num_bins = 100 # <- number of bins for the histogram
-#     plt.hist(data, num_bins)
-#     plt.savefig("output/histogramtest.png")
-#     visualization(model, best_traject)
-
-
-# # # ---------------------------------greedy-------------------------------
-#     # model = Model()
-#     # model.greedy()
-#     # 
-#     best_traject = []
-#     all_scores = []
-#     highest_score = 0
-#     with open('output/histo_data.csv', 'w') as output_file:
-#         for i in range(100):
-#             model = Model()
-#             model.greedy()
-#             writer = csv.writer(output_file) 
-#             if model.score > highest_score:
-#                 best_traject = model.traject
-#                 highest_score = model.score
-#                 best_fraction = model.fraction
-#             score = model.score
-#             all_scores.append(score)
-#             writer.writerow([score])
-#             print(i)
-#     output_generate(best_traject, highest_score, best_fraction)
-#     data = all_scores
-#     num_bins = 100 # <- number of bins for the histogram
-#     plt.hist(data, num_bins)
-#     plt.savefig("output/histogramgreedy.png")
-#     # visualization(model, best_traject)
-
-
-# # -------------------------------hillclimber baseline------mind: change import in hillclimber.p-------------------------
-    model = Model()
-    model.baseline()
-
-    best_traject, best_score, best_fraction = run_hillclimber(model)
-
-    best_score = 0
-    best_traject = []
-    best_fraction = 0
-
-
-    try:
-        counter = 0
-        while True:
-            model = Model()
-            model.baseline()
-            traject, score, fraction = run_hillclimber(model)
-
-            if score >= best_score:
-                best_traject = traject
-                best_score = score
-                best_fraction = fraction
-            counter += 1
-            print(counter)
-    except KeyboardInterrupt:
-        pass
-
-
-
-    # for i in range(100):
-    #     model = Model()
-    #     model.baseline()
-    #     traject, score, fraction = run_hillclimber(model)
-
-    #     if score >= best_score:
-    #         best_traject = traject
-    #         best_score = score
-    #         best_fraction = fraction
-
-    #     print(i)
+    if key == 0:
+    # ---------------------------------baseline-------------------------------
+        best_traject = []
+        all_scores = []
+        highest_score = 0
+        with open('output/histo_data.csv', 'w') as output_file:
+            try:
+                i = 0
+                while True:
+            # for i in range(100):
+                    model = Model()
+                    model.baseline()
+                    writer = csv.writer(output_file) 
+                    if model.score > highest_score:
+                        best_traject = model.traject
+                        highest_score = model.score
+                        best_fraction = model.fraction
+                    score = model.score
+                    all_scores.append(score)
+                    writer.writerow([score])
+                    print(i)
+                    i += 1
+            except KeyboardInterrupt:
+                pass
             
+        output_generate(best_traject, highest_score, best_fraction)
+        data = all_scores
+        num_bins = 100 # <- number of bins for the histogram
+        plt.hist(data, num_bins)
+        plt.savefig("output/histogramtest.png")
+        visualization(model, best_traject)
 
-    output_generate(best_traject, best_score, best_fraction)
+    if key == 1:
+    # ---------------------------------greedy-------------------------------
+        # model = Model()
+        # model.greedy()
+     
+        best_traject = []
+        all_scores = []
+        highest_score = 0
+        with open('output/histo_data.csv', 'w') as output_file:
+            try:
+                i = 0
+                while True:
+                    model = Model()
+                    model.greedy()
+                    writer = csv.writer(output_file) 
+                    if model.score > highest_score:
+                        best_traject = model.traject
+                        highest_score = model.score
+                        best_fraction = model.fraction
+                    score = model.score
+                    all_scores.append(score)
+                    writer.writerow([score])
+                    print(i)
+                    i += 1
+            except KeyboardInterrupt:
+                pass
+            
+        output_generate(best_traject, highest_score, best_fraction)
+        data = all_scores
+        num_bins = 100 # <- number of bins for the histogram
+        plt.hist(data, num_bins)
+        plt.savefig("output/histogramgreedy.png")
+        # visualization(model, best_traject)
+
+    if key == 2:
+    # -------------------------------hillclimber baseline------------------------------
+
+        best_score = 0
+        best_traject = []
+        best_fraction = 0
+
+
+        try:
+            counter = 0
+            while True:
+                model = Model()
+                model.baseline()
+                traject, score, fraction = run_hillclimber(model, key)
+
+                if score >= best_score:
+                    best_traject = traject
+                    best_score = score
+                    best_fraction = fraction
+                counter += 1
+                print(counter)
+        except KeyboardInterrupt:
+            pass
+        
+        
+        
+        
+        # model = Model()
+        # model.baseline()
+
+        # best_traject, best_score, best_fraction = run_hillclimber(model,key)
+
+        # output_generate(best_traject, best_score, best_fraction)
+        # visualization(model, best_traject)
 
 
 
 
-## -------------------------------hillclimber greedy-----mind: change import in hillclimber.py--------------------------
-    # model = Model()
-    # model.greedy()
+    if key == 3:
+    # -------------------------------hillclimber greedy-------------------------------
 
-    # best_traject, best_score, best_fraction = run_hillclimber(model)
+        model = Model()
+        model.greedy()
 
-    # output_generate(best_traject, best_score, best_fraction)
-    # visualization(model, best_traject)
+        best_traject, best_score, best_fraction = run_hillclimber(model, key)
+
+
+        best_score = 0
+        best_traject = []
+        best_fraction = 0
+
+        try:
+            counter = 0
+            while True:
+                model = Model()
+                model.greedy()
+                traject, score, fraction = run_hillclimber(model, key)
+
+                if score >= best_score:
+                    best_traject = traject
+                    best_score = score
+                    best_fraction = fraction
+                counter += 1
+                print(counter)
+
+        except KeyboardInterrupt:
+            pass
+        
+
+        output_generate(best_traject, best_score, best_fraction)
+        visualization(model, best_traject)

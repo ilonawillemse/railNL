@@ -12,7 +12,7 @@ def next_shortest(station,visited_connections):
                 new_choice = value       
     return new_choice
 
-def make_traject(station):
+def make_greedy_traject(station):
     visited_connections = []
     visited_stations = []
     time = 0
@@ -49,7 +49,7 @@ def get_started(model):
     model.number_traject = random.randint(1,20)
     for i in range(model.number_traject):
         station = random.choice(model.stations)
-        latest_traject, time, connections = make_traject(station)
+        latest_traject, time, connections = make_greedy_traject(station)
         model.traject.append(latest_traject)
         model.total_time += time
         model.time_dict[i] = time

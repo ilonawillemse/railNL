@@ -2,7 +2,7 @@
 import random
 
 
-def make_traject(station):
+def make_baseline_traject(station):
         time = 0
         visited_stations = []
         visited_connections = []
@@ -47,7 +47,7 @@ def starting_trajects(model):
     model.number_traject = random.randint(1,20)
     for i in range(model.number_traject):
         station = random.choice(model.stations)
-        latest_traject, time, connections = make_traject(station)
+        latest_traject, time, connections = make_baseline_traject(station)
         model.traject.append(latest_traject)
         model.total_time += time
         model.time_dict[i] = time
