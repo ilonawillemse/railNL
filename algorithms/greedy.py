@@ -1,13 +1,13 @@
 
-from multiprocessing import connection
 import random
 
-def next_shortest(station):
+def next_shortest(station,visited_connections):
     shortest_duration = None
     new_choice = None
     for _, value in station.connections.items():
         # look for connections that have not been visited yet
-        if value.visit == 0:
+        # if value.visit == 0:
+        if value not in visited_connections:
             if shortest_duration == None or int(float(value.duration)) < shortest_duration :
                 shortest_duration = int(float(value.duration))
                 new_choice = value       
@@ -20,10 +20,9 @@ def make_traject(station):
 
     # add current station to visited stations list
     visited_stations.append(station)
-    # print('begin', station.name)
 
     while time < 180:
-        new_choice = next_shortest(station)
+        new_choice = next_shortest(station, visited_connections)
         if new_choice == None:
             break
 
@@ -32,21 +31,21 @@ def make_traject(station):
         else:
             new_station = new_choice.end
        
-        counter = 0
+        # counter = 0
        
-        while new_station in visited_stations:
-            new_choice = next_shortest(station)
-            if new_choice == None:
-                break
+        # while new_station in visited_stations:
+        #     new_choice = next_shortest(station, visited_connections)
+        #     if new_choice == None:
+        #         break
 
-            if station != new_choice.start:
-                new_station = new_choice.start
-            else:
-                new_station = new_choice.end
-            counter += 1
+        #     if station != new_choice.start:
+        #         new_station = new_choice.start
+        #     else:
+        #         new_station = new_choice.end
+        #     counter += 1
 
-            if counter == 100:
-                break
+        #     if counter == 100:
+        #         break
                             
 
         # generate time
@@ -61,21 +60,12 @@ def make_traject(station):
         new_choice.visit += 1
         visited_stations.append(station)
         visited_connections.append(new_choice)
-        # print(station.name)
-        # print(time)
-
     
     return visited_stations, time, visited_connections
 
 def get_started(model):
-    # station = random.choice(model.stations)
     model.number_traject = random.randint(1,20)
     for i in range(model.number_traject):
-        # in case i would like to let trains drive same traject
-        # for connection in model.all_connections.values():
-        #     connection.visit = 0
-        # print()
-        # print(i)
         station = random.choice(model.stations)
         latest_traject, time, connections = make_traject(station)
         model.traject.append(latest_traject)

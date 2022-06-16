@@ -3,10 +3,10 @@ import random
 import copy
 
 # for greedy turn on
-from algorithms.greedy import make_traject
+# from algorithms.greedy import make_traject
 
 # for random turn on
-# from algorithms.baseline import make_traject
+from algorithms.baseline import make_traject
         
 
 def change_traject(model, t):

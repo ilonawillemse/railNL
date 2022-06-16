@@ -24,14 +24,14 @@ class Model():
     "Railway Model"
     def __init__(self):
         self.stations = load_stations()
+        self.all_connections = add_connections(self.stations)
+        self.visited_connections = []
+        self.traject = []
+        self.time_dict = {}
         self.score = 0
         self.fraction = 0
         self.number_traject = 0
         self.total_time = 0
-        self.traject = []
-        self.time_dict = {}
-        self.all_connections = add_connections(self.stations)
-        self.visited_connections = []     
 
     def baseline(self):
         starting_trajects(self)
@@ -69,7 +69,10 @@ if __name__ == "__main__":
 #     visualization(model, best_traject)
 
 
-# # ---------------------------------greedy-------------------------------
+# # # ---------------------------------greedy-------------------------------
+#     # model = Model()
+#     # model.greedy()
+#     # 
 #     best_traject = []
 #     all_scores = []
 #     highest_score = 0
@@ -91,23 +94,25 @@ if __name__ == "__main__":
 #     num_bins = 100 # <- number of bins for the histogram
 #     plt.hist(data, num_bins)
 #     plt.savefig("output/histogramgreedy.png")
+#     # visualization(model, best_traject)
+
+
+# # -------------------------------hillclimber baseline------mind: change import in hillclimber.p-------------------------
+#     model = Model()
+#     model.baseline()
+
+#     best_traject, best_score, best_fraction = run_hillclimber(model)
+
+#     output_generate(best_traject, best_score, best_fraction)
 #     visualization(model, best_traject)
 
 
-## -------------------------------hillclimber baseline------mind: change import in hillclimber.p-------------------------
-    # model = Model()
-    # model.baseline()
-
-    # best_traject, best_score, best_fraction = run_hillclimber(model)
-
-    # output_generate(best_traject, best_score, best_fraction)
-
 
 ## -------------------------------hillclimber greedy-----mind: change import in hillclimber.py--------------------------
-    # model = Model()
-    # model.greedy()
+    model = Model()
+    model.greedy()
 
-    # best_traject, best_score, best_fraction = run_hillclimber(model)
+    best_traject, best_score, best_fraction = run_hillclimber(model)
 
-    # output_generate(best_traject, best_score, best_fraction)
-    # visualization(model, best_traject)
+    output_generate(best_traject, best_score, best_fraction)
+    visualization(model, best_traject)
