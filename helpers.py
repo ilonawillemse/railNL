@@ -17,11 +17,13 @@ def output_generate(traject, score, fraction):
         writer.writerow(['train', 'stations'])
         for i in range(len(traject)):
             names = get_name(traject[i])
-            data = [f'train_{i+1}', names]
+            separator = ', '
+            x = separator.join(names)          
+            data = [f'train_{i+1}',f'[{x}]']
             writer.writerow(data)
         
-        writer.writerow(['score', format(score, '.3f')])
-        writer.writerow(['fraction', format(fraction, '.3f')])
+        writer.writerow(['score', score])
+        #writer.writerow(['fraction', format(fraction, '.3f')])
 
 def fraction_visited(model):
         "calculated fraction of visited stations"
