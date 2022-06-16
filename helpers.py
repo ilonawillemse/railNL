@@ -12,7 +12,7 @@ def get_name(list):
     return names_list
 
 def output_generate(traject, score, fraction):
-    with open('output.csv', 'w') as output_file:
+    with open('output/output_model.csv', 'w') as output_file:
         writer = csv.writer(output_file)
         writer.writerow(['train', 'stations'])
         for i in range(len(traject)):
@@ -23,7 +23,7 @@ def output_generate(traject, score, fraction):
             writer.writerow(data)
         
         writer.writerow(['score', score])
-        # writer.writerow(['fraction', format(fraction, '.3f')])
+        #writer.writerow(['fraction', format(fraction, '.3f')])
 
 def fraction_visited(model):
         "calculated fraction of visited stations"

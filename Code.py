@@ -113,21 +113,72 @@ if __name__ == "__main__":
 
     if key == 2:
     # -------------------------------hillclimber baseline------------------------------
-        model = Model()
-        model.baseline()
 
-        best_traject, best_score, best_fraction = run_hillclimber(model,key)
+        best_score = 0
+        best_traject = []
+        best_fraction = 0
 
-        output_generate(best_traject, best_score, best_fraction)
-        visualization(model, best_traject)
+
+        try:
+            counter = 0
+            while True:
+                model = Model()
+                model.baseline()
+                traject, score, fraction = run_hillclimber(model, key)
+
+                if score >= best_score:
+                    best_traject = traject
+                    best_score = score
+                    best_fraction = fraction
+                counter += 1
+                print(counter)
+        except KeyboardInterrupt:
+            pass
+        
+        
+        
+        
+        # model = Model()
+        # model.baseline()
+
+        # best_traject, best_score, best_fraction = run_hillclimber(model,key)
+
+        # output_generate(best_traject, best_score, best_fraction)
+        # visualization(model, best_traject)
+
+
 
 
     if key == 3:
     # -------------------------------hillclimber greedy-------------------------------
+
         model = Model()
         model.greedy()
 
         best_traject, best_score, best_fraction = run_hillclimber(model, key)
+
+
+        best_score = 0
+        best_traject = []
+        best_fraction = 0
+
+        try:
+            counter = 0
+            while True:
+                model = Model()
+                model.greedy()
+                traject, score, fraction = run_hillclimber(model, key)
+
+                if score >= best_score:
+                    best_traject = traject
+                    best_score = score
+                    best_fraction = fraction
+                counter += 1
+                print(counter)
+
+        except KeyboardInterrupt:
+            pass
+        
 
         output_generate(best_traject, best_score, best_fraction)
         visualization(model, best_traject)

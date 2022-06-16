@@ -33,35 +33,34 @@ def single_traject(model, t, key):
     return model
 
 def run_hillclimber(model, key):
-    try:
-        i = 0
-        while True:
-            if i > 0:
-                print(new_model.score, "new")
-                print(best_version.score, 'best')
-                if new_model.score > best_version.score:
-                    best_version = copy.deepcopy(new_model)
-                else: 
-                    print("hi")
-                    best_version = copy.deepcopy(best_version)
-            else:
-                best_version = copy.deepcopy(model)
-            changed_scores = []
-            for t in range(len(best_version.traject)):
-                copy_version = copy.deepcopy(best_version)      
-                removed_version = change_traject(copy_version, t)
-                changed_scores.append(removed_version.score)
-                
-            change_version = copy.deepcopy(best_version) 
-        
-            max_index = changed_scores.index(max(changed_scores))
-                
-            change_version = change_traject(change_version, max_index)
-            new_model = single_traject(change_version, max_index, key)
-            quality_score(new_model)
-            i += 1  
-        
-    except KeyboardInterrupt:
-        pass
+    unchanged_counter = 0
+    i = 0
 
-    return best_version.traject, best_version.score, best_version.fraction
+    while True:
+        if i > 0:
+            # print(new_model.score, "new")
+            # print(best_version.score, 'best')
+            if new_model.score > best_version.score:
+                best_version = copy.deepcopy(new_model)
+                unchanged_counter = 0
+            else: 
+                best_version = copy.deepcopy(best_version)
+                unchanged_counter += 1
+        else:
+            best_version = copy.deepcopy(model)
+        changed_scores = []
+        for t in range(len(best_version.traject)):
+            copy_version = copy.deepcopy(best_version)      
+            removed_version = change_traject(copy_version, t)
+            changed_scores.append(removed_version.score)
+            
+        change_version = copy.deepcopy(best_version) 
+       
+        max_index = changed_scores.index(max(changed_scores))
+               
+        change_version = change_traject(change_version, max_index)
+        new_model = single_traject(change_version, max_index, key)
+        quality_score(new_model)
+        i += 1
+        if unchanged_counter == 100:
+            return best_version.traject, best_version.score, best_version.fraction
