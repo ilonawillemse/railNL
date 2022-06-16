@@ -6,7 +6,6 @@ def next_shortest(station,visited_connections):
     new_choice = None
     for _, value in station.connections.items():
         # look for connections that have not been visited yet
-        # if value.visit == 0:
         if value not in visited_connections:
             if shortest_duration == None or int(float(value.duration)) < shortest_duration :
                 shortest_duration = int(float(value.duration))
