@@ -59,7 +59,7 @@ def run_hillclimber(model, key):
             change_version = change_traject(change_version, max_index)
             new_model = single_traject(change_version, max_index, key)
             quality_score(new_model)
-            i += 1
+            i += 1  
         
     except KeyboardInterrupt:
         pass
