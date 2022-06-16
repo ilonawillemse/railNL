@@ -1,12 +1,8 @@
 from helpers import quality_score
 import random
 import copy
-
-# for greedy turn on
-# from algorithms.greedy import make_traject
-
-# for random turn on
-from algorithms.baseline import make_traject
+from algorithms.greedy import make_greedy_traject
+from algorithms.baseline import make_baseline_traject
         
 
 def change_traject(model, t):
@@ -21,9 +17,14 @@ def change_traject(model, t):
     quality_score(model)
     return model
 
-def single_traject(model, t):
+def single_traject(model, t, key):
     station = random.choice(model.stations)
-    latest_traject, time, connections = make_traject(station)
+    if key == 2:
+        latest_traject, time, connections = make_baseline_traject(station)
+    
+    if key ==3:
+        latest_traject, time, connections = make_greedy_traject(station)
+
     model.traject[t] = latest_traject
     model.total_time += time
     model.time_dict[t] = time
@@ -31,8 +32,8 @@ def single_traject(model, t):
     model.number_traject += 1
     return model
 
-def run_hillclimber(model):
-    for i in range(1):
+def run_hillclimber(model, key):
+    for i in range(1000):
         if i > 0:
             print(new_model.score, "new")
             print(best_version.score, 'best')
@@ -54,6 +55,6 @@ def run_hillclimber(model):
         max_index = changed_scores.index(max(changed_scores))
                
         change_version = change_traject(change_version, max_index)
-        new_model = single_traject(change_version, max_index)
+        new_model = single_traject(change_version, max_index, key)
         quality_score(new_model)
     return best_version.traject, best_version.score, best_version.fraction
