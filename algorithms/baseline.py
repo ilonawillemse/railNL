@@ -7,10 +7,10 @@ def make_traject(station):
         visited_stations = []
         visited_stations.append(station)
 
-        while time <= 180:
+        while time < 180:
             connections = list(station.connections.values())
             new_choice = random.choice(connections)
-            if station.name != new_choice.start:
+            if station != new_choice.start:
                 new_station = new_choice.start
             else:
                 new_station = new_choice.end
@@ -19,7 +19,6 @@ def make_traject(station):
 
             while new_station in visited_stations and counter < 100:
                 new_choice = random.choice(connections)
-                new_choice.visit += 1
                 if station != new_choice.start:
                     new_station = new_choice.start
                 else:
@@ -36,6 +35,7 @@ def make_traject(station):
                  time -= int(float(new_choice.duration))
                  break        
 
+            new_choice.visit += 1
             station = new_station
             visited_stations.append(station)
         return visited_stations, time
@@ -45,10 +45,11 @@ def choose_starting(model):
     return station
 
 def starting_trajects(model):
-    model.number_traject = random.randint(1,20)
+    model.number_traject = random.randint(8,20)
     for i in range(model.number_traject):
         station = choose_starting(model)
         latest_traject, time = make_traject(station)
         model.traject.append(latest_traject)
         model.total_time += time
         model.time_dict[i] = time
+        

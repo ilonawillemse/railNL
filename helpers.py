@@ -30,7 +30,7 @@ def fraction_visited(model):
         for connection in model.all_connections:
             if model.all_connections[connection].visit != 0:
                 visited_connections += 1
-
+        
         model.fraction = visited_connections / len(model.all_connections)
         
 
@@ -38,6 +38,7 @@ def quality_score(model):
     "calculate quality score of model"
     fraction_visited(model)
     model.score = model.fraction * 10000 - (model.number_traject * 100 + model.total_time)
+    # print(model.number_traject)
     
 
 
