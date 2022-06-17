@@ -19,10 +19,10 @@ def change_traject(model, t):
 
 def single_traject(model, t, key):
     station = random.choice(model.stations)
-    if key == 2:
+    if key == 2 or key == 4:
         latest_traject, time, connections = make_baseline_traject(station)
     
-    if key == 3:
+    if key == 3 or key == 5:
         latest_traject, time, connections = make_greedy_traject(station)
 
     model.traject[t] = latest_traject

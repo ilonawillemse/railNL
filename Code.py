@@ -44,7 +44,7 @@ class Model():
 
 
 if __name__ == "__main__":
-    key = int(input("What would you like to run: baseline(0), greedy(1), hillclimber baseline(2), hillclimber greedy(3), simulated annealing(4): "))
+    key = int(input("What would you like to run: baseline(0), greedy(1), hillclimber baseline(2), hillclimber greedy(3), simulated annealing baseline(4), simulated annealing greedy(5): "))
 
     if key == 0:
     # ---------------------------------baseline-------------------------------
@@ -199,6 +199,17 @@ if __name__ == "__main__":
 
         model = Model()
         model.baseline()
+
+        best_traject, best_score, best_fraction = run_simulated_annealing(model, key)
+
+        output_generate(best_traject, best_score, best_fraction)
+
+
+    if key == 5:
+    #-------------------------------simulated annealing----------------------------
+
+        model = Model()
+        model.greedy()
 
         best_traject, best_score, best_fraction = run_simulated_annealing(model, key)
 

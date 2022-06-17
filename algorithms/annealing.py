@@ -3,6 +3,7 @@ import random
 import copy
 from algorithms.greedy import make_greedy_traject
 from algorithms.baseline import make_baseline_traject
+from algorithms.hillclimber import change_traject, single_traject
         
 
 def temperature(start_temperature, total_iterations, iteration):
@@ -12,33 +13,6 @@ def temperature(start_temperature, total_iterations, iteration):
 def chance(score_old, score_new, temperature):
     chance = 2 ** ((score_old - score_new) / temperature)
     return chance
-
-def change_traject(model, t):
-    time = model.time_dict[t]
-    model.total_time -= time
-    model.number_traject -= 1
-
-    for connection in range(len(model.visited_connections[t])):
-        model.visited_connections[t][connection].visit -= 1
-
-    model.traject[t] = []
-    quality_score(model)
-    return model
-
-def single_traject(model, t, key):
-    station = random.choice(model.stations)
-    if key == 2  or key == 4:
-        latest_traject, time, connections = make_baseline_traject(station)
-    
-    if key == 3:
-        latest_traject, time, connections = make_greedy_traject(station)
-
-    model.traject[t] = latest_traject
-    model.total_time += time
-    model.time_dict[t] = time
-    model.visited_connections[t] = connections
-    model.number_traject += 1
-    return model
 
 def run_simulated_annealing(model, key):
     total_iterations = 100000
