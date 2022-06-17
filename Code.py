@@ -19,6 +19,7 @@ from loader import load_stations, add_connections
 from algorithms.baseline import starting_trajects
 from algorithms.hillclimber import run_hillclimber
 from algorithms.greedy import get_started
+from algorithms.annealing import run_simulated_annealing
 
 class Model():
     "Railway Model"
@@ -43,7 +44,7 @@ class Model():
 
 
 if __name__ == "__main__":
-    key = int(input("What would you like to run: baseline(0), greedy(1), hillclimber baseline(2), hillclimber greedy(3): "))
+    key = int(input("What would you like to run: baseline(0), greedy(1), hillclimber baseline(2), hillclimber greedy(3), simulated annealing(4): "))
 
     if key == 0:
     # ---------------------------------baseline-------------------------------
@@ -178,4 +179,13 @@ if __name__ == "__main__":
         # output_generate(best_traject, best_score, best_fraction)
         # visualization(model, best_traject)
 
+    if key == 4:
+    #-------------------------------simulated annealing----------------------------
 
+        model = Model()
+        model.baseline()
+
+        best_traject, best_score, best_fraction = run_simulted_annealing(model, key)
+
+        output_generate(best_traject, best_score, best_fraction)
+  
