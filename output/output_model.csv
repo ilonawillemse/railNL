@@ -1,17 +1,3 @@
 train,stations
-train_1,"[Etten-Leur, Roosendaal, Vlissingen]"
-train_2,"[Vlissingen, Roosendaal, Dordrecht, Rotterdam Centraal, Rotterdam Alexander, Rotterdam Blaak, Schiedam Centrum, Delft, Den Haag HS, Leiden Centraal, Den Haag Laan v NOI]"
-train_3,"[Beverwijk, Haarlem, Heemstede-Aerdenhout, Leiden Centraal, Den Haag Centraal, Gouda, Utrecht Centraal, Alphen a/d Rijn]"
-train_4,"[Enschede, Hengelo, Almelo, Deventer, Zwolle, Steenwijk, Heerenveen, Leeuwarden, Groningen, Assen]"
-train_5,"[Nijmegen, Arnhem Centraal, Ede-Wageningen, Utrecht Centraal, Amersfoort, Apeldoorn, Deventer, Zutphen, Dieren]"
-train_6,"[Venlo, Helmond, Eindhoven, s-Hertogenbosch, Tilburg, Breda, Etten-Leur, Roosendaal, Dordrecht, Rotterdam Blaak, Schiedam Centrum, Rotterdam Centraal, Rotterdam Alexander, Gouda]"
-train_7,"[Roosendaal, Etten-Leur, Breda, Tilburg, Eindhoven, s-Hertogenbosch, Utrecht Centraal, Alphen a/d Rijn, Gouda, Den Haag Laan v NOI]"
-train_8,"[Zwolle, Almelo, Hengelo, Enschede]"
-train_9,"[Weert, Roermond, Sittard, Heerlen]"
-train_10,"[Amsterdam Centraal, Utrecht Centraal, Ede-Wageningen, Arnhem Centraal, Nijmegen, Oss, s-Hertogenbosch, Tilburg, Breda, Dordrecht, Rotterdam Centraal, Rotterdam Alexander, Rotterdam Blaak]"
-train_11,"[Schiedam Centrum, Delft, Den Haag Centraal, Gouda, Den Haag Laan v NOI, Leiden Centraal, Den Haag HS]"
-train_12,"[Leiden Centraal, Heemstede-Aerdenhout, Haarlem, Beverwijk, Zaandam, Hoorn, Alkmaar, Den Helder]"
-train_13,"[Beverwijk, Haarlem, Heemstede-Aerdenhout, Leiden Centraal, Schiphol Airport, Amsterdam Zuid, Amsterdam Amstel, Utrecht Centraal, Amsterdam Centraal, Amsterdam Sloterdijk, Zaandam, Hoorn, Alkmaar]"
-train_14,"[Tilburg, Eindhoven, Helmond, Venlo]"
-train_15,"[Deventer, Zwolle, Amersfoort, Apeldoorn, Zutphen, Dieren, Arnhem Centraal, Nijmegen, Oss, s-Hertogenbosch, Eindhoven]"
-score,4454.168539325843
+train_1,"[Castricum, Zaandam, Amsterdam Sloterdijk, Haarlem, Heemstede-Aerdenhout, Leiden Centraal, Den Haag Laan v NOI, Delft, Schiedam Centrum, Rotterdam Centraal, Dordrecht, Roosendaal, Etten-Leur, Breda, Tilburg, s-Hertogenbosch]"
+score,1419.3932584269662
