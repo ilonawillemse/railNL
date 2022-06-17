@@ -40,7 +40,7 @@ def run_hillclimber(model, key):
         if i > 0:
             # print(new_model.score, "new")
             # print(best_version.score, 'best')
-            if new_model.score > best_version.score:
+            if new_model.score >= best_version.score:
                 best_version = copy.deepcopy(new_model)
                 unchanged_counter = 0
             else: 

@@ -46,7 +46,7 @@ def make_greedy_traject(station):
     return visited_stations, time, visited_connections
 
 def get_started(model):
-    model.number_traject = random.randint(1,20)
+    model.number_traject = random.randint(9,11)
     for i in range(model.number_traject):
         station = random.choice(model.stations)
         latest_traject, time, connections = make_greedy_traject(station)

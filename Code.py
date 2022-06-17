@@ -54,7 +54,6 @@ if __name__ == "__main__":
             try:
                 i = 0
                 while True:
-            # for i in range(100):
                     model = Model()
                     model.baseline()
                     writer = csv.writer(output_file) 
@@ -99,8 +98,10 @@ if __name__ == "__main__":
                     score = model.score
                     all_scores.append(score)
                     writer.writerow([score])
-                    print(i)
+                    # print(i)
                     i += 1
+                    print(highest_score)
+                    print(len(best_traject))
             except KeyboardInterrupt:
                 pass
             
@@ -130,7 +131,9 @@ if __name__ == "__main__":
                     best_score = score
                     best_fraction = fraction
                 counter += 1
-                print(counter)
+                # print(counter)
+                print(best_score)
+                print(len(best_traject))
 
         except KeyboardInterrupt:
             pass
@@ -141,7 +144,7 @@ if __name__ == "__main__":
 
         # best_traject, best_score, best_fraction = run_hillclimber(model,key)
 
-        # output_generate(best_traject, best_score, best_fraction)
+        output_generate(best_traject, best_score, best_fraction)
         # visualization(model, best_traject)
 
 
@@ -153,11 +156,21 @@ if __name__ == "__main__":
         best_traject = []
         best_fraction = 0
 
+        highest_score = 0
+        model = Model()
+        model.greedy()
+        for i in range(1000):
+            print(i)
+            # writer = csv.writer(output_file) 
+            if model.score < highest_score:
+                model = Model()
+                model.greedy()
+
         try:
             counter = 0
             while True:
-                model = Model()
-                model.greedy()
+                # model = Model()
+                # model.greedy()
                 traject, score, fraction = run_hillclimber(model, key)
 
                 if score >= best_score:
@@ -165,7 +178,9 @@ if __name__ == "__main__":
                     best_score = score
                     best_fraction = fraction
                 counter += 1
-                print(counter)
+                # print(counter)
+                print(best_score)
+                print(len(best_traject))
 
         except KeyboardInterrupt:
             pass
@@ -175,7 +190,7 @@ if __name__ == "__main__":
 
         # best_traject, best_score, best_fraction = run_hillclimber(model, key)
 
-        # output_generate(best_traject, best_score, best_fraction)
-        # visualization(model, best_traject)
+        output_generate(best_traject, best_score, best_fraction)
+        visualization(model, best_traject)
 
-
+  
