@@ -185,7 +185,7 @@ if __name__ == "__main__":
         model = Model()
         model.baseline()
 
-        best_traject, best_score, best_fraction = run_simulted_annealing(model, key)
+        best_traject, best_score, best_fraction = run_simulated_annealing(model, key)
 
         output_generate(best_traject, best_score, best_fraction)
   

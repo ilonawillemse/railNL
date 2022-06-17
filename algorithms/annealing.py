@@ -27,7 +27,7 @@ def change_traject(model, t):
 
 def single_traject(model, t, key):
     station = random.choice(model.stations)
-    if key == 2:
+    if key == 2  or key == 4:
         latest_traject, time, connections = make_baseline_traject(station)
     
     if key == 3:
@@ -41,15 +41,15 @@ def single_traject(model, t, key):
     return model
 
 def run_simulated_annealing(model, key):
-    total_iterations = 2000
-    for i in total_iterations:
-        print(i)
+    total_iterations = 100000
+    best_version = copy.deepcopy(model)
+    for i in range(total_iterations):
         if i == 0:
             start_temperature = 1000 
             new_version = copy.deepcopy(model)
         else:
-            index = random.randint(0, (len(change_version.traject) - 1))
-            change_version = change_traject(change_version, index)
+            index = random.randint(0, (len(new_version.traject) - 1))
+            change_version = change_traject(new_version, index)
             new_model = single_traject(change_version, index, key)
             quality_score(new_model)
             r = random.random()
@@ -57,7 +57,9 @@ def run_simulated_annealing(model, key):
             if r > chance_float:
                 new_version = copy.deepcopy(new_version)
             else:
-                new_version = copy.deepcopy(change_version) 
+                new_version = copy.deepcopy(change_version)
+                if new_version.score > best_version.score:
+                    best_version = copy.deepcopy(new_version)
         current_temperature = temperature(start_temperature, total_iterations, i)   
-        print(new_version.score) 
+        print(best_version.score) 
     return new_version.traject, new_version.score, new_version.fraction
