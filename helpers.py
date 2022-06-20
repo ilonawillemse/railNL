@@ -23,7 +23,7 @@ def output_generate(traject, score, fraction):
             writer.writerow(data)
         
         writer.writerow(['score', score])
-        writer.writerow(['fraction', format(fraction, '.3f')])
+        #writer.writerow(['fraction', format(fraction, '.3f')])
 
 def fraction_visited(model):
         "calculated fraction of visited stations"

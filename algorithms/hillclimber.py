@@ -19,10 +19,10 @@ def change_traject(model, t):
 
 def single_traject(model, t, key):
     station = random.choice(model.stations)
-    if key == 2:
+    if key == 2 or key == 4 or key == 6:
         latest_traject, time, connections = make_baseline_traject(station)
     
-    if key == 3:
+    if key == 3 or key == 5:
         latest_traject, time, connections = make_greedy_traject(station)
 
     model.traject[t] = latest_traject
@@ -64,4 +64,3 @@ def run_hillclimber(model, key):
         i += 1
         if unchanged_counter == 100:
             return best_version.traject, best_version.score, best_version.fraction
-
