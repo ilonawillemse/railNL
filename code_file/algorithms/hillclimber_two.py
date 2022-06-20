@@ -1,10 +1,21 @@
-from helpers import quality_score
+"""
+=================================================
+hillclimber_two.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+hillclimber replaces the two worst trajects with random new generated traject
+
+!!not yet tested!!
+=================================================
+"""
+
+from code_file.helpers import quality_score
 import copy
 from algorithms.hillclimber import change_traject, single_traject
-"""
-hillclimber that generates random new traject for two worst trajects
-not yet tested!
-"""
+
 
 def run_hillclimber(model, key):
     unchanged_counter = 0

@@ -1,8 +1,20 @@
-from helpers import quality_score
+"""
+=================================================
+hillclimber.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+implements a hillclimber algorithm to search for best score by creating trajects
+=================================================
+"""
+
+from code_file.helpers import quality_score
 import random
 import copy
-from algorithms.greedy import make_greedy_traject
-from algorithms.baseline import make_baseline_traject
+from code_file.algorithms.greedy import make_greedy_traject
+from code_file.algorithms.baseline import make_baseline_traject
         
 
 def change_traject(model, t):
@@ -17,12 +29,12 @@ def change_traject(model, t):
     quality_score(model)
     return model
 
-def single_traject(model, t, key):
+def single_traject(model, t, choice):
     station = random.choice(model.stations)
-    if key == 2 or key == 4:
+    if choice == 0:
         latest_traject, time, connections = make_baseline_traject(station)
     
-    if key == 3 or key == 5:
+    if choice == 1:
         latest_traject, time, connections = make_greedy_traject(station)
 
     model.traject[t] = latest_traject

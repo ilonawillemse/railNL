@@ -1,7 +1,21 @@
-from helpers import quality_score
+
+"""
+=================================================
+annealing.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+repeats searching for better trajects based on the formula: 2** ((old score - new score) / temperature)
+=================================================
+"""
+
+from code_file.helpers import quality_score
 import random
 import copy
-from algorithms.hillclimber import change_traject, single_traject
+from code_file.algorithms.hillclimber import change_traject, single_traject
+
         
 
 def temperature(start_temperature, total_iterations, iteration):
@@ -12,7 +26,7 @@ def chance(score_old, score_new, temperature):
     chance = 2 ** ((score_old - score_new) / temperature)
     return chance
 
-def run_simulated_annealing(model, key):
+def run_simulated_annealing(model, choice):
     total_iterations = 100
     best_version = copy.deepcopy(model)
     for i in range(total_iterations):
@@ -22,7 +36,7 @@ def run_simulated_annealing(model, key):
         else:
             index = random.randint(0, (len(new_version.traject) - 1))
             change_version = change_traject(new_version, index)
-            new_model = single_traject(change_version, index, key)
+            new_model = single_traject(change_version, index, choice)
             quality_score(new_model)
             r = random.random()
             chance_float = chance(new_version.score, change_version.score, current_temperature)
@@ -33,6 +47,7 @@ def run_simulated_annealing(model, key):
                 if new_version.score > best_version.score:
                     best_version = copy.deepcopy(new_version)
                     #print(best_version.score) 
+        #print(i)
         current_temperature = temperature(start_temperature, total_iterations, i)   
         # print(best_version.score) 
     return new_version.traject, new_version.score, new_version.fraction
