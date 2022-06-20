@@ -1,11 +1,11 @@
 
-from objects import Station, Connection
+from code_file.classes import Station, Connection
 import csv
 
 def load_stations():
     "load the stations from database"
     stations = []
-    with open(f"data_nationaal/StationsNationaal.csv") as f:
+    with open(f"data/data_nationaal/StationsNationaal.csv") as f:
         csv_reader = csv.reader(f, delimiter=',')
         next(csv_reader)
         for row in csv_reader:
@@ -21,7 +21,7 @@ def add_connections(stations):
     "add the connections of the stations"
     all_connections = {}
     #print(len(stations))
-    with open(f"data_nationaal/ConnectiesNationaal.csv") as f:
+    with open(f"data/data_nationaal/ConnectiesNationaal.csv") as f:
 
         csv_reader = csv.reader(f, delimiter = ',')
         next(csv_reader)

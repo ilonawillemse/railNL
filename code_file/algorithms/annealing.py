@@ -11,10 +11,10 @@ repeats searching for better trajects based on the formula: 2** ((old score - ne
 =================================================
 """
 
-from helpers import quality_score
+from code_file.helpers import quality_score
 import random
 import copy
-from algorithms.hillclimber import change_traject, single_traject
+from code_file.algorithms.hillclimber import change_traject, single_traject
 
         
 
@@ -26,7 +26,7 @@ def chance(score_old, score_new, temperature):
     chance = 2 ** ((score_old - score_new) / temperature)
     return chance
 
-def run_simulated_annealing(model, key):
+def run_simulated_annealing(model, choice):
     total_iterations = 100000
     best_version = copy.deepcopy(model)
     for i in range(total_iterations):
@@ -36,7 +36,7 @@ def run_simulated_annealing(model, key):
         else:
             index = random.randint(0, (len(new_version.traject) - 1))
             change_version = change_traject(new_version, index)
-            new_model = single_traject(change_version, index, key)
+            new_model = single_traject(change_version, index, choice)
             quality_score(new_model)
             r = random.random()
             chance_float = chance(new_version.score, change_version.score, current_temperature)

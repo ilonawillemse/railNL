@@ -12,7 +12,7 @@ hillclimber replaces the two worst trajects with random new generated traject
 =================================================
 """
 
-from helpers import quality_score
+from code_file.helpers import quality_score
 import copy
 from algorithms.hillclimber import change_traject, single_traject
 

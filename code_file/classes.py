@@ -1,6 +1,6 @@
 """
 =================================================
-objects.py
+classes.py
 
 Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
