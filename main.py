@@ -1,12 +1,13 @@
 """
 =================================================
-Code.py
+main.py
 
 Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
 Object based railway traject
+made interactive for used based on what algorithm they would like to run the programm
 =================================================
 """
 
@@ -21,6 +22,7 @@ from code_file.algorithms.random_hillclimber import random_hillclimber
 from code_file.algorithms.greedy import get_started
 from code_file.algorithms.annealing import run_simulated_annealing
 import pickle
+
 
 class Model():
     "Railway Model"
@@ -45,11 +47,11 @@ class Model():
 
 
 if __name__ == "__main__":
-    key = int(input("What would you like to run: without hillclimber(0), with hillclimber(1), simulated annealing(2): "))
+    key = int(input("What would you like to run: simple run(0), with hillclimber(1), simulated annealing(2): "))
     if key == 1:    
-        hillclimber = int(input("choose: random hillclimber(0), regular hillclimber(1): "))
-
-    choice = int(input("What would you like to run: random(0), greedy(1): "))
+        hillclimber = int(input("random hillclimber(0) or regular hillclimber(1): "))
+    
+    choice = int(input("random(0) or greedy(1): "))
     vis = int(input("Would you like to visualize: no(0), yes(1): "))
 
     # ophalen van opgeslagen data
@@ -57,8 +59,8 @@ if __name__ == "__main__":
         file = open("saved", "rb")
         print(pickle.load(file))
 
-    # ---------------------run without hillclimber---------------------
     if key == 0:
+    # ---------------------run without hillclimber---------------------
         best_traject = []
         all_scores = []
         highest_score = 0
@@ -101,7 +103,6 @@ if __name__ == "__main__":
         best_score = 0
         best_traject = []
         best_fraction = 0
-
 
         try:
             counter = 0
@@ -159,13 +160,3 @@ if __name__ == "__main__":
         output_generate(best_traject, best_score, best_fraction)
         if vis == 1:
             visualization(model, best_traject)
-
-
-    # if key == 6:
-    # #-------------------------------Hillclimber, random traject----------------------------
-    #     model = Model()
-    #     model.baseline()
-    #     traject, score, fraction, data = random_hillclimber(model, key)
-    #     output_generate(traject, score, fraction)
-    #     plt.plot(data)
-    #     plt.savefig("output/histogramtest.png")

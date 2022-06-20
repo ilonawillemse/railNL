@@ -1,8 +1,21 @@
+"""
+=================================================
+random_hillclimber.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+implements a hillclimber algorithm to search for best score by creating trajects on a random base
+=================================================
+"""
+
 from code_file.helpers import quality_score
 import random
 import copy
 from code_file.algorithms.greedy import make_greedy_traject
 from code_file.algorithms.baseline import make_baseline_traject
+
 
 def single_traject_random(model, t, choice):
 
@@ -23,7 +36,7 @@ def single_traject_random(model, t, choice):
     model.visited_connections[t] = connections
     return model
 
-def random_hillclimber(model, key):
+def random_hillclimber(model, choice):
     try:
         best_scores = []
         counter = 0
@@ -40,7 +53,7 @@ def random_hillclimber(model, key):
 
             change_version = copy.deepcopy(best_version)
             random_index = random.randint(0, len(model.traject) - 1)
-            new_model = single_traject_random(change_version, random_index, key)
+            new_model = single_traject_random(change_version, random_index, choice)
             quality_score(new_model)
             counter += 1
             if counter % 500 == 0:

@@ -15,7 +15,7 @@ calculates the quality score
 """
 
 import csv
-import matplotlib.pyplot as plt
+
 
 def get_name(list):
     names_list = []

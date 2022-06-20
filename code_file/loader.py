@@ -1,6 +1,18 @@
+"""
+=================================================
+loader.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+loads the station and connection data from database (csv file)
+=================================================
+"""
 
 from code_file.classes import Station, Connection
 import csv
+
 
 def load_stations():
     "load the stations from database"

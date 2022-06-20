@@ -1,6 +1,6 @@
 """
 =================================================
-objects.py
+visualize.py
 
 Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
@@ -11,6 +11,7 @@ Visualizes the best traject combinations found in a plotly simulation
 """
 
 import plotly.graph_objects as go
+
 
 def visualization(model, best_traject):
     "visualize the trajects with trains riding them"
