@@ -197,12 +197,47 @@ if __name__ == "__main__":
     if key == 4:
     #-------------------------------simulated annealing----------------------------
 
-        model = Model()
-        model.baseline()
+        best_score = 0
+        best_traject = []
+        best_fraction = 0
 
-        best_traject, best_score, best_fraction = run_simulated_annealing(model, key)
+
+        try:
+            counter = 0
+            while True:
+                model = Model()
+                model.baseline()
+                traject, score, fraction = run_simulated_annealing(model, key)
+
+                if score >= best_score:
+                    best_traject = traject
+                    best_score = score
+                    best_fraction = fraction
+                counter += 1
+                print(counter)
+                print(best_score)
+                print(len(best_traject))
+
+        except KeyboardInterrupt:
+            pass
+        
+        
+        # model = Model()
+        # model.baseline()
+
+        # best_traject, best_score, best_fraction = run_hillclimber(model,key)
 
         output_generate(best_traject, best_score, best_fraction)
+        # visualization(model, best_traject)
+
+
+
+        # model = Model()
+        # model.baseline()
+
+        # best_traject, best_score, best_fraction = run_simulated_annealing(model, key)
+
+        # output_generate(best_traject, best_score, best_fraction)
 
 
     if key == 5:

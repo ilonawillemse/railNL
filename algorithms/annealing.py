@@ -5,7 +5,7 @@ from algorithms.hillclimber import change_traject, single_traject
         
 
 def temperature(start_temperature, total_iterations, iteration):
-    temperature = start_temperature - (start_temperature/total_iterations)* iteration
+    temperature = start_temperature * (0.997 ** iteration)
     return temperature
 
 def chance(score_old, score_new, temperature):
@@ -13,11 +13,11 @@ def chance(score_old, score_new, temperature):
     return chance
 
 def run_simulated_annealing(model, key):
-    total_iterations = 100000
+    total_iterations = 100
     best_version = copy.deepcopy(model)
     for i in range(total_iterations):
         if i == 0:
-            start_temperature = 1000 
+            start_temperature = 10000
             new_version = copy.deepcopy(model)
         else:
             index = random.randint(0, (len(new_version.traject) - 1))
@@ -32,6 +32,7 @@ def run_simulated_annealing(model, key):
                 new_version = copy.deepcopy(change_version)
                 if new_version.score > best_version.score:
                     best_version = copy.deepcopy(new_version)
+                    #print(best_version.score) 
         current_temperature = temperature(start_temperature, total_iterations, i)   
-        print(best_version.score) 
+        # print(best_version.score) 
     return new_version.traject, new_version.score, new_version.fraction
