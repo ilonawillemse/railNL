@@ -19,6 +19,7 @@ from loader import load_stations, add_connections
 from algorithms.baseline import starting_trajects
 from algorithms.hillclimber import run_hillclimber
 from algorithms.greedy import get_started
+from algorithms.random_hillclimber import random_hillclimber
 
 class Model():
     "Railway Model"
@@ -39,11 +40,13 @@ class Model():
     
     def greedy(self):
         get_started(self)
-        quality_score(self) 
+        quality_score(self)
+
 
 
 if __name__ == "__main__":
-    key = int(input("What would you like to run: baseline(0), greedy(1), hillclimber baseline(2), hillclimber greedy(3): "))
+    key = int(input("What would you like to run: baseline(0), greedy(1), hillclimber baseline(2), hillclimber greedy(3):, hillclimber one-traject(6)"))
+
 
     if key == 0:
     # ---------------------------------baseline-------------------------------
@@ -77,6 +80,7 @@ if __name__ == "__main__":
         plt.savefig("output/histogramtest.png")
         visualization(model, best_traject)
 
+
     if key == 1:
     # ---------------------------------greedy-------------------------------
         # model = Model()
@@ -101,6 +105,8 @@ if __name__ == "__main__":
                     writer.writerow([score])
                     print(i)
                     i += 1
+                    print(highest_score, 'best')
+                    print(score, 'new')
             except KeyboardInterrupt:
                 pass
             
@@ -111,51 +117,45 @@ if __name__ == "__main__":
         plt.savefig("output/histogramgreedy.png")
         # visualization(model, best_traject)
 
-    if key == 2:
-    # -------------------------------hillclimber baseline------------------------------
+    # elif key == 2:
+    # # -------------------------------hillclimber baseline------------------------------
 
-        best_score = 0
-        best_traject = []
-        best_fraction = 0
+    #     best_score = 0
+    #     best_traject = []
+    #     best_fraction = 0
+    #     all_scores = []
 
+    #     try:
+    #         counter = 0
+    #         while True:
+    #             print(counter)
+    #             model = Model()
+    #             model.baseline()
+    #             traject, score, fraction = run_hillclimber(model, key)
 
-        try:
-            counter = 0
-            while True:
-                model = Model()
-                model.baseline()
-                traject, score, fraction = run_hillclimber(model, key)
+    #             all_scores.append(best_score)
 
-                if score >= best_score:
-                    best_traject = traject
-                    best_score = score
-                    best_fraction = fraction
-                counter += 1
-                print(counter)
-        except KeyboardInterrupt:
-            pass
+    #             print(best_score, 'best')
+    #             print(score, 'new')
+
+    #             if score >= best_score:
+    #                 best_traject = traject
+    #                 best_score = score
+    #                 best_fraction = fraction
+                    
+
+    #             counter += 1
+    #     except KeyboardInterrupt:
+    #         pass
         
-        
-        
-        
-        # model = Model()
-        # model.baseline()
+    #     output_generate(best_traject, best_score, best_fraction)
+    #     plt.plot(all_scores)
+    #     plt.savefig("output/histogramtest.png")
+    #     print(best_fraction)
+    #     visualization(model, best_traject)
 
-        # best_traject, best_score, best_fraction = run_hillclimber(model,key)
-
-        # output_generate(best_traject, best_score, best_fraction)
-        # visualization(model, best_traject)
-
-
-
-
-    if key == 3:
+    elif key == 3:
     # -------------------------------hillclimber greedy-------------------------------
-
-        model = Model()
-        model.greedy()
-
-        best_traject, best_score, best_fraction = run_hillclimber(model, key)
 
 
         best_score = 0
@@ -169,6 +169,9 @@ if __name__ == "__main__":
                 model.greedy()
                 traject, score, fraction = run_hillclimber(model, key)
 
+                print(best_score, 'best')
+                print(score, 'new')
+
                 if score >= best_score:
                     best_traject = traject
                     best_score = score
@@ -179,6 +182,15 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             pass
         
-
         output_generate(best_traject, best_score, best_fraction)
         visualization(model, best_traject)
+    
+    
+
+    if key == 2:
+        model = Model()
+        model.baseline()
+        traject, score, fraction, data = random_hillclimber(model, key)
+        output_generate(traject, score, fraction)
+        plt.plot(data)
+        plt.savefig("output/histogramtest.png")
