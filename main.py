@@ -22,6 +22,8 @@ from code_file.algorithms.random_hillclimber import random_hillclimber
 from code_file.algorithms.greedy import get_started
 from code_file.algorithms.annealing import run_simulated_annealing
 import pickle
+from code_file.visualize_output import visualization_output
+
 
 
 class Model():
@@ -58,6 +60,9 @@ if __name__ == "__main__":
     if key == 20:
         file = open("saved", "rb")
         print(pickle.load(file))
+    
+    if key == 30:
+        visualization_output(Model())
 
     if key == 0:
     # ---------------------run without hillclimber---------------------
