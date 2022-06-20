@@ -142,3 +142,13 @@ if __name__ == "__main__":
         output_generate(best_traject, best_score, best_fraction)
         if vis == 1:
             visualization(model, best_traject)
+
+
+    if key == 6:
+    #-------------------------------Hillclimber, random traject----------------------------
+        model = Model()
+        model.baseline()
+        traject, score, fraction, data = random_hillclimber(model, key)
+        output_generate(traject, score, fraction)
+        plt.plot(data)
+        plt.savefig("output/histogramtest.png")
