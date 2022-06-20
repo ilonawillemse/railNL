@@ -1,8 +1,6 @@
 from helpers import quality_score
 import random
 import copy
-from algorithms.greedy import make_greedy_traject
-from algorithms.baseline import make_baseline_traject
 from algorithms.hillclimber import change_traject, single_traject
 
         

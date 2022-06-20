@@ -1,16 +1,3 @@
 train,stations
-train_1,"[Alphen a/d Rijn, Gouda, Den Haag Laan v NOI, Delft, Den Haag Centraal, Leiden Centraal, Den Haag HS]"
-train_2,"[Utrecht Centraal, Ede-Wageningen, Arnhem Centraal, Dieren, Zutphen, Deventer, Almelo, Hengelo, Enschede]"
-train_3,"[Den Helder, Alkmaar, Castricum, Zaandam, Amsterdam Sloterdijk, Amsterdam Zuid, Amsterdam Amstel, Utrecht Centraal, s-Hertogenbosch, Eindhoven, Helmond]"
-train_4,"[Heemstede-Aerdenhout, Haarlem, Amsterdam Sloterdijk, Amsterdam Centraal, Almere Centrum, Hilversum, Amsterdam Amstel, Amsterdam Zuid, Schiphol Airport, Utrecht Centraal, Amersfoort]"
-train_5,"[Amsterdam Sloterdijk, Zaandam, Castricum, Alkmaar, Den Helder]"
-train_6,"[Heerenveen, Leeuwarden, Groningen, Assen, Zwolle, Almelo, Hengelo, Enschede]"
-train_7,"[Breda, Dordrecht, Rotterdam Centraal, Rotterdam Alexander, Rotterdam Blaak, Schiedam Centrum, Delft, Den Haag Centraal, Gouda, Den Haag HS, Leiden Centraal, Alphen a/d Rijn, Utrecht Centraal]"
-train_8,"[Ede-Wageningen, Arnhem Centraal, Dieren, Zutphen, Apeldoorn, Deventer, Zwolle, Amersfoort, Utrecht Centraal, Amsterdam Centraal, Almere Centrum]"
-train_9,"[Den Haag HS, Leiden Centraal, Schiphol Airport, Amsterdam Zuid, Amsterdam Amstel, Hilversum, Utrecht Centraal, Amsterdam Centraal, Amsterdam Sloterdijk, Zaandam, Hoorn, Alkmaar]"
-train_10,"[Dordrecht, Breda, Tilburg, s-Hertogenbosch, Oss, Nijmegen, Arnhem Centraal, Ede-Wageningen, Utrecht Centraal, Gouda, Den Haag Centraal, Delft, Schiedam Centrum, Rotterdam Centraal]"
-train_11,"[Den Haag Centraal, Delft, Den Haag Laan v NOI, Leiden Centraal, Heemstede-Aerdenhout, Haarlem, Amsterdam Sloterdijk, Amsterdam Zuid, Amsterdam Amstel, Amsterdam Centraal, Almere Centrum, Hilversum, Utrecht Centraal, Gouda]"
-train_12,"[Dordrecht, Breda, Etten-Leur, Roosendaal, Vlissingen]"
-train_13,"[Eindhoven, Weert, Roermond, Sittard, Heerlen]"
-train_14,"[Amsterdam Zuid, Amsterdam Amstel, Amsterdam Centraal, Utrecht Centraal, Gouda, Alphen a/d Rijn, Leiden Centraal, Den Haag HS, Delft, Den Haag Centraal]"
-score,5094.966292134832
+train_1,"[Castricum, Zaandam, Amsterdam Sloterdijk, Haarlem, Heemstede-Aerdenhout, Leiden Centraal, Den Haag Laan v NOI, Delft, Schiedam Centrum, Rotterdam Centraal, Dordrecht, Roosendaal, Etten-Leur, Breda, Tilburg, s-Hertogenbosch]"
+score,1419.3932584269662
