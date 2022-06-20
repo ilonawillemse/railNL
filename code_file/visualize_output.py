@@ -11,6 +11,7 @@ Visualizes the best traject combinations found in a plotly simulation by using t
 """
 
 import plotly.graph_objects as go
+import csv
 
 
 def visualization_output(model):
@@ -49,15 +50,31 @@ def visualization_output(model):
     connection_list.insert(0, connection)
     
 
-
-
-
-
-
     # add moving trains to the trajects
     # make the train move back and forth for i steps
-    best_traject = importttttttttttt
+    traject_names = []
+    with open(f"output/output_model.csv") as f:
+        csv_reader = csv.reader(f, delimiter=',')
+        next(csv_reader)
+        for row in csv_reader:
+            traject = []
+            tmp = row[1].split(', ')
+            for i in range(len(tmp)):
+                traject.append(tmp[i])
+            traject_names.append(traject)
+        traject_names.pop()
+        f.close()
 
+# compare the list items with the stations and exchange them for the object from Station()
+    best_traject = []
+    for traject_ in traject_names:
+        best = []
+
+        for i in range(len(traject_)):
+            for j in range(len(model.stations)):
+                if traject_[i] == model.stations[j].name:
+                    best.append(model.stations[j])
+        best_traject.append(best)
     
     total_list_x_cor = []
     total_list_y_cor = []
@@ -111,16 +128,6 @@ def visualization_output(model):
                             layout=go.Layout(title_text="No way, railway"))
 
         current_list.append(current)
-        
-
-
-
-
-
-
-
-
-
 
     # create the figure with connections/ stations and trains
     fig = go.Figure(

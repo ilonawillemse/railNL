@@ -55,15 +55,16 @@ if __name__ == "__main__":
         hillclimber = int(input("random hillclimber(0) or regular hillclimber(1): "))
     
     choice = int(input("random(0) or greedy(1): "))
-    vis = int(input("Would you like to visualize: no(0), yes(1): "))
 
     # ophalen van opgeslagen data
     if key == 20:
         file = open("saved", "rb")
         print(pickle.load(file))
     
+    # visualize the output file
     if key == 30:
         visualization_output(Model())
+
 
     if key == 0:
     # ---------------------run without hillclimber---------------------
@@ -100,8 +101,6 @@ if __name__ == "__main__":
         num_bins = 100 # <- number of bins for the histogram
         plt.hist(data, num_bins)
         plt.savefig("output/histogramtest.png")
-        if vis == 1:
-            visualization(model, best_traject)
 
     
     if key == 1 or key == 2:
@@ -156,23 +155,7 @@ if __name__ == "__main__":
             
         output_generate(best_traject, best_score, best_fraction)
             
-        if vis == 1:
-            visualization(model, best_traject)
-            plt.plot(data)
-            plt.savefig("output/histogramtest.png")
-        
+        plt.plot(data)
+        plt.savefig("output/histogramtest.png")
 
 
-    # if key == 2:
-    #-------------------------------simulated annealing----------------------------
-        # model = Model()
-        # if choice == 0:
-        #     model.baseline()
-        # if choice == 1:
-        #     model.greedy()
-
-        # best_traject, best_score, best_fraction = run_simulated_annealing(model, choice)
-
-        # output_generate(best_traject, best_score, best_fraction)
-        # if vis == 1:
-        #     visualization(model, best_traject)
