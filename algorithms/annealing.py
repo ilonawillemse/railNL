@@ -1,3 +1,16 @@
+
+"""
+=================================================
+annealing.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+repeats searching for better trajects based on the formula: 2** ((old score - new score) / temperature)
+=================================================
+"""
+
 from helpers import quality_score
 import random
 import copy

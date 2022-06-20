@@ -1,4 +1,14 @@
+"""
+=================================================
+objects.py
 
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+Objects for the railway model
+=================================================
+"""
 
 class Station():
     "Station Object"

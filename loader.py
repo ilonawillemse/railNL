@@ -1,5 +1,5 @@
 
-from classes import Station, Connection
+from objects import Station, Connection
 import csv
 
 def load_stations():

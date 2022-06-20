@@ -1,3 +1,15 @@
+"""
+=================================================
+hillclimber.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+implements a hillclimber algorithm to search for best score by creating trajects
+=================================================
+"""
+
 from helpers import quality_score
 import random
 import copy

@@ -1,3 +1,16 @@
+"""
+=================================================
+baseline.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+creates railway trajects based on a random algorithm
+bias:   max of 180 min traject length
+        max station visit of one (total or per traject?)
+=================================================
+"""
 
 import random
 

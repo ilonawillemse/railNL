@@ -1,3 +1,14 @@
+"""
+=================================================
+greedy.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+greedy constructive searching algorithm for trajects with lowest costs (shortest travel duration)
+=================================================
+"""
 
 import random
 

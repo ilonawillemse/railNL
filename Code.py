@@ -11,7 +11,6 @@ Object based railway traject
 """
 
 import csv
-import copy
 import matplotlib.pyplot as plt
 from helpers import output_generate, quality_score
 from visualize import visualization

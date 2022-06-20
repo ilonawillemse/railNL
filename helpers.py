@@ -1,9 +1,21 @@
+"""
+=================================================
+helpers.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+some helper files to:
+return names
+generate a output file with the best trajects found
+calculates the fraction visited connections
+calculates the quality score
+=================================================
+"""
 
 import csv
-
 import matplotlib.pyplot as plt
-
-
 
 def get_name(list):
     names_list = []
