@@ -20,6 +20,7 @@ from algorithms.baseline import starting_trajects
 from algorithms.hillclimber import run_hillclimber
 from algorithms.greedy import get_started
 from algorithms.annealing import run_simulated_annealing
+import pickle
 
 class Model():
     "Railway Model"
@@ -46,6 +47,11 @@ class Model():
 if __name__ == "__main__":
     key = int(input("What would you like to run: baseline(0), greedy(1), hillclimber baseline(2), hillclimber greedy(3), simulated annealing baseline(4), simulated annealing greedy(5): "))
 
+    # # ophalen van opgeslagen data
+    # if key == 20:
+    #     file = open("saved", "rb")
+    #     print(pickle.load(file))
+
     if key == 0:
     # ---------------------------------baseline-------------------------------
         best_traject = []
@@ -65,9 +71,12 @@ if __name__ == "__main__":
                     score = model.score
                     all_scores.append(score)
                     writer.writerow([score])
-                    print(i)
+                    # print(i)
+                    print(highest_score)
+                    print(len(best_traject))
                     i += 1
             except KeyboardInterrupt:
+                pickle.dump(best_traject, open("saved", "wb"))
                 pass
             
         output_generate(best_traject, highest_score, best_fraction)
@@ -104,6 +113,7 @@ if __name__ == "__main__":
                     print(highest_score)
                     print(len(best_traject))
             except KeyboardInterrupt:
+                pickle.dump(best_traject, open("saved", "wb"))
                 pass
             
         output_generate(best_traject, highest_score, best_fraction)
@@ -132,11 +142,12 @@ if __name__ == "__main__":
                     best_score = score
                     best_fraction = fraction
                 counter += 1
-                # print(counter)
+                print(counter)
                 print(best_score)
                 print(len(best_traject))
 
         except KeyboardInterrupt:
+            pickle.dump(best_traject, open("saved", "wb"))
             pass
         
         
@@ -184,6 +195,7 @@ if __name__ == "__main__":
                 print(len(best_traject))
 
         except KeyboardInterrupt:
+            pickle.dump(best_traject, open("saved", "wb"))
             pass
 
         # model = Model()
@@ -214,4 +226,3 @@ if __name__ == "__main__":
         best_traject, best_score, best_fraction = run_simulated_annealing(model, key)
 
         output_generate(best_traject, best_score, best_fraction)
-  
