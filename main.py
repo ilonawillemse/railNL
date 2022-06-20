@@ -13,7 +13,7 @@ Object based railway traject
 import csv
 import matplotlib.pyplot as plt
 from code_file.helpers import output_generate, quality_score
-from code_file.visualization.visualize import visualization
+from code_file.visualize import visualization
 from code_file.loader import load_stations, add_connections
 from code_file.algorithms.baseline import starting_trajects
 from code_file.algorithms.hillclimber import run_hillclimber

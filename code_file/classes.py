@@ -6,7 +6,7 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-Objects for the railway model
+Station and Connection objects for the railway model
 =================================================
 """
 
