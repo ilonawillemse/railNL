@@ -17,6 +17,7 @@ from code_file.visualize import visualization
 from code_file.loader import load_stations, add_connections
 from code_file.algorithms.baseline import starting_trajects
 from code_file.algorithms.hillclimber import run_hillclimber
+from code_file.algorithms.random_hillclimber import random_hillclimber
 from code_file.algorithms.greedy import get_started
 from code_file.algorithms.annealing import run_simulated_annealing
 import pickle
@@ -45,9 +46,11 @@ class Model():
 
 if __name__ == "__main__":
     key = int(input("What would you like to run: without hillclimber(0), with hillclimber(1), simulated annealing(2): "))
+    if key == 1:    
+        hillclimber = int(input("choose: random hillclimber(0), regular hillclimber(1): "))
+
     choice = int(input("What would you like to run: random(0), greedy(1): "))
     vis = int(input("Would you like to visualize: no(0), yes(1): "))
-
 
     # ophalen van opgeslagen data
     if key == 20:
@@ -102,31 +105,45 @@ if __name__ == "__main__":
 
         try:
             counter = 0
-            while True:
-                model = Model()
-                if choice == 0:
-                    model.baseline()
-                if choice == 1:
-                    model.greedy()
-                traject, score, fraction = run_hillclimber(model, choice)
 
-                if score >= best_score:
-                    best_traject = traject
-                    best_score = score
-                    best_fraction = fraction
-                counter += 1
-                print(counter)
-                print(best_score)
-                print(len(best_traject))
+            if hillclimber == 1:
+                while True:
+                    model = Model()
+                    if choice == 0:
+                        model.baseline()
+                    if choice == 1:
+                        model.greedy()
+
+                    traject, score, fraction = run_hillclimber(model, choice)
+
+                    if score >= best_score:
+                        best_traject = traject
+                        best_score = score
+                        best_fraction = fraction
+                    counter += 1
+                    print(counter)
+                    print(best_score)
+                    print(len(best_traject))
 
         except KeyboardInterrupt:
             pickle.dump(best_traject, open("saved", "wb"))
             pass
+        
+        if hillclimber == 0:
+            model = Model()
+            if choice == 0:
+                model.baseline()
+            if choice == 1:
+                model.greedy()
+            best_traject, best_score, best_fraction, data = random_hillclimber(model, choice)
 
         output_generate(best_traject, best_score, best_fraction)
-        
+            
         if vis == 1:
             visualization(model, best_traject)
+            plt.plot(data)
+            plt.savefig("output/histogramtest.png")
+        
 
 
     if key == 2:
@@ -144,11 +161,11 @@ if __name__ == "__main__":
             visualization(model, best_traject)
 
 
-    if key == 6:
-    #-------------------------------Hillclimber, random traject----------------------------
-        model = Model()
-        model.baseline()
-        traject, score, fraction, data = random_hillclimber(model, key)
-        output_generate(traject, score, fraction)
-        plt.plot(data)
-        plt.savefig("output/histogramtest.png")
+    # if key == 6:
+    # #-------------------------------Hillclimber, random traject----------------------------
+    #     model = Model()
+    #     model.baseline()
+    #     traject, score, fraction, data = random_hillclimber(model, key)
+    #     output_generate(traject, score, fraction)
+    #     plt.plot(data)
+    #     plt.savefig("output/histogramtest.png")
