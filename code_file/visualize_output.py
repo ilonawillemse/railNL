@@ -136,12 +136,16 @@ def visualization_output(model):
 
         current_stations.append(current)
 
+        # print(list_x_cor)
+        # print(list_y_cor)
+        # print()
+
     # create the figure with connections/ stations and trains
     fig = go.Figure(
         data = connection_list,
         layout = go.Layout(
-        xaxis = dict(range = [1, 10], autorange=False),
-        yaxis = dict(range = [50.5, 54], autorange=False),
+        # xaxis = dict(range = [1, 10], autorange=False),
+        # yaxis = dict(range = [50.5, 54], autorange=False),
         title = "No way, railway",
         showlegend = False,
         template = "plotly_white",
