@@ -31,7 +31,7 @@ def output_generate(traject, score, fraction):
             names = get_name(traject[i])
             separator = ', '
             x = separator.join(names)          
-            data = [f'train_{i+1}',f'[{x}]']
+            data = [f'train_{i+1}',x]
             writer.writerow(data)
         
         writer.writerow(['score', score])
