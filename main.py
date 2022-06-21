@@ -21,7 +21,7 @@ from code_file.algorithms.random_hillclimber import random_hillclimber
 from code_file.algorithms.greedy import get_started
 from code_file.algorithms.annealing import run_simulated_annealing
 import pickle
-from code_file.visualize import visualization_output
+from code_file.visualize_output import visualization_output
 
 
 
