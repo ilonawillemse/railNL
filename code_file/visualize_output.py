@@ -84,10 +84,10 @@ def visualization_output(model):
         traject_y_cor = []
         traject_x_cor = []
        
-        while number_of_moves < 60:
+        while number_of_moves < 100:
             # make the trains move across the traject
             for j in range(len(traject_objects[i])):
-                if number_of_moves == 60:
+                if number_of_moves == 100:
                     break
                 
                 # x and y coordinates were switched in the csv file
@@ -97,7 +97,7 @@ def visualization_output(model):
 
             # make the trains move back across the traject when they reach the end
             for k in range(len(traject_objects[i])-2 , 0, -1):
-                if number_of_moves == 60:
+                if number_of_moves == 100:
                     break
 
                 # x and y coordinates were switched in the csv file
