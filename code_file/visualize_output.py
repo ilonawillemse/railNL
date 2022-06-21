@@ -16,16 +16,19 @@ import csv
 
 def visualization_output(model):
     "visualize the trajects with trains riding them"
-
+    # add the stations to the visualization
+    stations_dict = {}
+    name = []
     x_cor = []
     y_cor = []
-    name = []
-    connection_list = []
+    for station in model.stations:
+        stations_dict[station.name] = station
+        name.append(station.name)
+        x_cor.append(station.ycor)
+        y_cor.append(station.xcor)
 
-    for i in range(len(model.stations)):
-        y_cor.append(float(model.stations[i].xcor))
-        x_cor.append(float(model.stations[i].ycor))
-        name.append(model.stations[i].name)
+    # add the connection lines to the visualization
+    connection_list = []
 
     for _, value in model.all_connections.items():
         connection_x_cor = []
@@ -49,119 +52,119 @@ def visualization_output(model):
                             opacity= 0.6 ))
     connection_list.insert(0, connection)
     
-
     # add moving trains to the trajects
-    # make the train move back and forth for i steps
+    # read the trajects from csv file and get the corresponding station objects to obtain the information about the stations
     traject_names = []
     with open(f"output/output_model.csv") as f:
         csv_reader = csv.reader(f, delimiter=',')
         next(csv_reader)
         for row in csv_reader:
-            traject = []
+            traject_row = []
             tmp = row[1].split(', ')
             for i in range(len(tmp)):
-                traject.append(tmp[i])
-            traject_names.append(traject)
+                traject_row.append(tmp[i])
+            traject_names.append(traject_row)
         traject_names.pop()
         f.close()
 
-# compare the list items with the stations and exchange them for the object from Station()
-    best_traject = []
-    for traject_ in traject_names:
-        best = []
+    # compare the station names with the stations and exchange them for the Station() objects
+    traject_objects = []
+    for traject in traject_names:
+        trajects = []
+        for station in traject:
+            trajects.append(stations_dict.get(station))
+        traject_objects.append(trajects)
 
-        for i in range(len(traject_)):
-            for j in range(len(model.stations)):
-                if traject_[i] == model.stations[j].name:
-                    best.append(model.stations[j])
-        best_traject.append(best)
+    all_traject_x_cor = []
+    all_traject_y_cor = []
     
-    total_list_x_cor = []
-    total_list_y_cor = []
-    
-    for i in range(len(best_traject)):
-        counter = 0
-        list_y_cor = []
-        list_x_cor = []
+    # make the train move back and forth
+    for i in range(len(traject_objects)):
+        number_of_moves = 0
+        traject_y_cor = []
+        traject_x_cor = []
        
-        while counter < 40:
-            for j in range(len(best_traject[i])):
-                if counter == 40:
+        while number_of_moves < 100:
+            # make the trains move across the traject
+            for j in range(len(traject_objects[i])):
+                if number_of_moves == 100:
                     break
                 
                 # x and y coordinates were switched in the csv file
-                list_y_cor.append(float(best_traject[i][j].xcor))
-                list_x_cor.append(float(best_traject[i][j].ycor))
-                counter += 1
+                traject_y_cor.append(float(traject_objects[i][j].xcor))
+                traject_x_cor.append(float(traject_objects[i][j].ycor))
+                number_of_moves += 1
 
-            for k in range(len(best_traject[i])-2 , 0, -1):
-                if counter == 40:
+            # make the trains move back across the traject when they reach the end
+            for k in range(len(traject_objects[i])-2 , 0, -1):
+                if number_of_moves == 100:
                     break
 
-                list_y_cor.append(float(best_traject[i][k].xcor))
-                list_x_cor.append(float(best_traject[i][k].ycor))
-                counter += 1
+                # x and y coordinates were switched in the csv file
+                traject_y_cor.append(float(traject_objects[i][k].xcor))
+                traject_x_cor.append(float(traject_objects[i][k].ycor))
+                number_of_moves += 1
         
         # create a list of lists with coordinates of the train trajects
-        total_list_x_cor.append(list_x_cor)
-        total_list_y_cor.append(list_y_cor)
+        all_traject_x_cor.append(traject_x_cor)
+        all_traject_y_cor.append(traject_y_cor)
 
-
-    final_list_x_cor = []
-    final_list_y_cor = []
-    current_list = []
-    colors = ['red', 'blue', 'green', 'yellow', 'purple', 'grey', 'pink', 'black']
+    colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'black']
     colors = colors + colors + colors
 
     # comprehend the first coordinates of the trains depending on the number of trains
     # making them ride together
-    for i in range(len(list_x_cor)):
-        final_list_x_cor = [item[i] for item in total_list_x_cor]
-        final_list_y_cor = [item[i] for item in total_list_y_cor]
+    list_x_cor = []
+    list_y_cor = []
+    current_stations = []
 
-        current = go.Frame(data=[go.Scatter(
-                            x = final_list_x_cor, 
-                            y = final_list_y_cor, 
+    for i in range(len(traject_x_cor)):
+        list_x_cor = [item[i] for item in all_traject_x_cor]
+        list_y_cor = [item[i] for item in all_traject_y_cor]
+
+        current = go.Frame(data = [go.Scatter(
+                            x = list_x_cor, 
+                            y = list_y_cor, 
                             mode = "markers", 
                             # hovertext = ....,
-                            marker=dict(color=colors, size = 15))], 
-                            layout=go.Layout(title_text="No way, railway"))
+                            marker = dict(color=colors, size = 15))], 
+                            layout = go.Layout(title_text = "No way, railway"))
 
-        current_list.append(current)
+        current_stations.append(current)
 
     # create the figure with connections/ stations and trains
     fig = go.Figure(
-        data= connection_list,
-        layout=go.Layout(
-        xaxis=dict(range=[1, 10], autorange=False),
-        yaxis=dict(range=[50.5, 54], autorange=False),
-        title="No way, railway",
+        data = connection_list,
+        layout = go.Layout(
+        xaxis = dict(range = [1, 10], autorange=False),
+        yaxis = dict(range = [50.5, 54], autorange=False),
+        title = "No way, railway",
         showlegend = False,
         template = "plotly_white",
-        updatemenus=[dict(
-            type="buttons",
-            buttons=[dict(label="Let's rail",
-                        method="animate",
-                        args=[None, 
+        updatemenus = [dict(
+            type = "buttons",
+            buttons = [dict(label = "Let's rail",
+                        method = "animate",
+                        args = [None, 
                             {'frame': { "duration": 1000, "redraw": True},}
                             ])])]),
                         
-    # add train 
-    frames= current_list, 
+    # add moving trains
+    frames = current_stations, 
     )
 
     # Add background image
     fig.add_layout_image(
             dict(
-                source="https://cdn.pixabay.com/photo/2014/04/02/10/18/netherlands-303419_960_720.png",
-                xref="x",
-                yref="y",
-                x=3.52,
-                y=53.7,
-                sizex=3.5,
-                sizey=3.0,
-                sizing="stretch",
-                opacity=0.5,
-                layer="below")
+                source = "https://cdn.pixabay.com/photo/2014/04/02/10/18/netherlands-303419_960_720.png",
+                xref = "x",
+                yref = "y",
+                x = 3.52,
+                y = 53.7,
+                sizex = 3.5,
+                sizey = 3.0,
+                sizing = "stretch",
+                opacity = 0.5,
+                layer = "below")
     )
     fig.show()

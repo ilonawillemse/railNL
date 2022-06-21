@@ -60,7 +60,8 @@ if __name__ == "__main__":
     if key == 1:    
         hillclimber = int(input("random hillclimber(0) or regular hillclimber(1): "))
     
-    choice = int(input("random(0) or greedy(1): "))
+    if key != 30:
+        choice = int(input("random(0) or greedy(1): "))
 
     # ophalen van opgeslagen data
     if key == 20:
@@ -78,6 +79,7 @@ if __name__ == "__main__":
             try:
                 i = 0
                 while True:
+                    i += 1
                     model = Model()
                     if choice == 0:
                         model.baseline()
