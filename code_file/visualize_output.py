@@ -16,6 +16,7 @@ import csv
 
 def visualization_output(model):
     "visualize the trajects with trains riding them"
+    # add the stations to the visualization
     stations_dict = {}
     name = []
     x_cor = []
@@ -26,6 +27,7 @@ def visualization_output(model):
         x_cor.append(station.ycor)
         y_cor.append(station.xcor)
 
+    # add the connection lines to the visualization
     connection_list = []
 
     for _, value in model.all_connections.items():
@@ -51,7 +53,7 @@ def visualization_output(model):
     connection_list.insert(0, connection)
     
     # add moving trains to the trajects
-    # make the train move back and forth for i steps
+    # read the trajects from csv file and get the corresponding station objects to obtain the information about the stations
     traject_names = []
     with open(f"output/output_model.csv") as f:
         csv_reader = csv.reader(f, delimiter=',')
@@ -65,7 +67,7 @@ def visualization_output(model):
         traject_names.pop()
         f.close()
 
-# compare the list items with the stations and exchange them for the object from Station()
+    # compare the station names with the stations and exchange them for the Station() objects
     traject_objects = []
     for traject in traject_names:
         trajects = []
@@ -76,6 +78,7 @@ def visualization_output(model):
     all_traject_x_cor = []
     all_traject_y_cor = []
     
+    # make the train move back and forth
     for i in range(len(traject_objects)):
         number_of_moves = 0
         traject_y_cor = []
