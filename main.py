@@ -106,49 +106,21 @@ if __name__ == "__main__":
         best_fraction = 0
 
 
-        if hillclimber == 0:
-            model = Model()
-            if choice == 0:
-                model.baseline()
-            if choice == 1:
-                model.greedy()
+        model = Model()
+        if choice == 0:
+            model.baseline()
+        if choice == 1:
+            model.greedy()
 
-            if key == 1:
+        if key == 1:
+            if hillclimber == 0:
                 best_traject, best_score, best_fraction, data = random_hillclimber(model, choice)
+            if hillclimber == 1:
+                best_traject, best_score, best_fraction, data= run_hillclimber(model, choice)
 
-            if key == 2:
-                traject, score, fraction = run_simulated_annealing(model, choice)
-        
-        else:
-            try:
-                counter = 0
-                while True:
-                    model = Model()
-                    if choice == 0:
-                        model.baseline()
-                    if choice == 1:
-                        model.greedy()
-
-                    if key == 1:
-                        traject, score, fraction = run_hillclimber(model, choice)
+        if key == 2:
+            traject, score, fraction = run_simulated_annealing(model, choice)
                     
-                    if key == 2:
-                        traject, score, fraction = run_simulated_annealing(model, choice)
-
-                    if score >= best_score:
-                        best_traject = traject
-                        best_score = score
-                        best_fraction = fraction
-
-                    counter += 1
-                    print(counter)
-                    print(best_score)
-                    print(len(best_traject))
-
-            except KeyboardInterrupt:
-                pickle.dump(best_traject, open("saved", "wb"))
-                pass
-            
         output_generate(best_traject, best_score, best_fraction)
             
         if vis == 1:
@@ -156,18 +128,3 @@ if __name__ == "__main__":
             plt.plot(data)
             plt.savefig("output/histogramtest.png")
         
-
-
-    # if key == 2:
-    #-------------------------------simulated annealing----------------------------
-        # model = Model()
-        # if choice == 0:
-        #     model.baseline()
-        # if choice == 1:
-        #     model.greedy()
-
-        # best_traject, best_score, best_fraction = run_simulated_annealing(model, choice)
-
-        # output_generate(best_traject, best_score, best_fraction)
-        # if vis == 1:
-        #     visualization(model, best_traject)

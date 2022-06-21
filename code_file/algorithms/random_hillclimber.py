@@ -15,6 +15,7 @@ import random
 import copy
 from code_file.algorithms.greedy import make_greedy_traject
 from code_file.algorithms.baseline import make_baseline_traject
+import pickle
 
 
 def single_traject_random(model, t, choice):
@@ -61,6 +62,7 @@ def random_hillclimber(model, choice):
                 print(best_version.score, 'best 13')
             best_scores.append(best_version.score)
     except KeyboardInterrupt:
+        pickle.dump(best_version, open("saved", "wb"))
         pass
     return best_version.traject, best_version.score, best_version.fraction, best_scores
 
