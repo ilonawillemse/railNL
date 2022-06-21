@@ -1,8 +1,20 @@
+"""
+=================================================
+helpers.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+some helper files to:
+return names
+generate a output file with the best trajects found
+calculates the fraction visited connections
+calculates the quality score
+=================================================
+"""
 
 import csv
-
-import matplotlib.pyplot as plt
-
 
 
 def get_name(list):
@@ -19,7 +31,7 @@ def output_generate(traject, score, fraction):
             names = get_name(traject[i])
             separator = ', '
             x = separator.join(names)          
-            data = [f'train_{i+1}',f'[{x}]']
+            data = [f'train_{i+1}',x]
             writer.writerow(data)
         
         writer.writerow(['score', score])
@@ -40,7 +52,6 @@ def quality_score(model):
     "calculate quality score of model"
     fraction_visited(model)
     model.score = model.fraction * 10000 - (model.number_traject * 100 + model.total_time)
-    # print(model.number_traject)
     
 
 

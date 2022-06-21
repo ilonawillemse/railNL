@@ -1,7 +1,18 @@
+"""
+=================================================
+greedy.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+greedy constructive searching algorithm for trajects with lowest costs (shortest travel duration)
+=================================================
+"""
 
 import random
 
-def next_shortest(station,visited_connections):
+def next_shortest(station, visited_connections):
     shortest_duration = None
     new_choice = None
     for _, value in station.connections.items():
@@ -29,6 +40,20 @@ def make_greedy_traject(station):
             new_station = new_choice.start
         else:
             new_station = new_choice.end
+
+        # counter = 0
+
+        # while new_station in visited_stations and counter < 100:
+        #     new_choice = next_shortest(station, visited_connections)
+        #     if station != new_choice.start:
+        #         new_station = new_choice.start
+        #     else:
+        #         new_station = new_choice.end
+        #     counter += 1
+            
+
+        # if counter == 100:
+        #     break
                             
         # generate time
         time += int(float(new_choice.duration))
