@@ -1,3 +1,4 @@
+from secrets import choice
 from helpers import quality_score
 import random
 import copy
@@ -23,7 +24,7 @@ def single_traject_random(model, t, key):
     model.visited_connections[t] = connections
     return model
 
-def random_hillclimber(model, key):
+def random_hillclimber(model, key, N):
     try:
         best_scores = []
         counter = 0
@@ -33,58 +34,33 @@ def random_hillclimber(model, key):
                 # print(best_version.score, 'best')
                 if new_model.score >= best_version.score:
                     best_version = copy.deepcopy(new_model)
-                else: 
-                    best_version = copy.deepcopy(best_version)
+
             else:
                 best_version = copy.deepcopy(model)
 
             change_version = copy.deepcopy(best_version)
-            random_index = random.randint(0, len(model.traject) - 1)
-            new_model = single_traject_random(change_version, random_index, key)
+
+            if N == 1:
+                random_index = random.randint(0, len(model.traject) - 1)
+                new_model = single_traject_random(change_version, random_index, key)
+            
+            elif N > 1:
+                index_list = list(range(0, (len(model.traject))))
+                
+                indexes = random.choices(index_list, k=N)
+                
+                for index in indexes:
+                    new_model = single_traject_random(change_version, index, key)
+                    change_version = copy.deepcopy(new_model)
+                    
+
+
             quality_score(new_model)
             counter += 1
             if counter % 500 == 0:
                 print(counter)
-                print(best_version.score, 'best 13')
+                print(best_version.score, 'best 9*')
             best_scores.append(best_version.score)
     except KeyboardInterrupt:
         pass
     return best_version.traject, best_version.score, best_version.fraction, best_scores
-
-
-
-
-
-# def run_random_hillclimber(model, key):
-#     unchanged_counter = 0
-#     i = 0
-
-#     while True:
-#         if i > 0:
-#             # print(new_model.score, "new")
-#             # print(best_version.score, 'best')
-#             if new_model.score >= best_version.score:
-#                 best_version = copy.deepcopy(new_model)
-#                 unchanged_counter = 0
-#             else: 
-#                 best_version = copy.deepcopy(best_version)
-#                 unchanged_counter += 1
-#         else:
-#             best_version = copy.deepcopy(model)
-#         changed_scores = []
-#         for t in range(len(best_version.traject)):
-#             copy_version = copy.deepcopy(best_version)      
-#             removed_version = change_traject(copy_version, t)
-#             changed_scores.append(removed_version.score)
-            
-#         change_version = copy.deepcopy(best_version) 
-       
-#         max_index = changed_scores.index(max(changed_scores))
-               
-#         change_version = change_traject(change_version, max_index)
-#         new_model = single_traject(change_version, max_index, key)
-#         quality_score(new_model)
-#         i += 1
-#         if unchanged_counter == 100:
-#             return best_version.traject, best_version.score, best_version.fraction
-

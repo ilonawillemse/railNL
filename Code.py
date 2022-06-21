@@ -67,7 +67,9 @@ if __name__ == "__main__":
                     score = model.score
                     all_scores.append(score)
                     writer.writerow([score])
-                    print(i)
+                    if i % 500 == 0:
+                        print(i)
+                        print(highest_score)
                     i += 1
             except KeyboardInterrupt:
                 pass
@@ -220,7 +222,8 @@ if __name__ == "__main__":
     #-------------------------------Hillclimber, random traject----------------------------
         model = Model()
         model.baseline()
-        traject, score, fraction, data = random_hillclimber(model, key)
+        N = 1
+        traject, score, fraction, data = random_hillclimber(model, key, N)
         output_generate(traject, score, fraction)
         plt.plot(data)
         plt.savefig("output/histogramtest.png")
