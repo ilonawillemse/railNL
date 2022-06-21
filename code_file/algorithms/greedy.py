@@ -31,7 +31,7 @@ def make_greedy_traject(station):
     # add current station to visited stations list
     visited_stations.append(station)
 
-    while time < 180:
+    while time <= 180:
         new_choice = next_shortest(station, visited_connections)
         if new_choice == None:
             break
