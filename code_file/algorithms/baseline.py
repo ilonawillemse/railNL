@@ -39,7 +39,7 @@ def make_baseline_traject(station):
         #         new_station = new_choice.end
 
 # ------------------------ limited station use -----------------
-        while time < 180:
+        while time <= 180:
             connections = list(station.connections.values())
             new_choice = random.choice(connections)
             if new_choice == None:
