@@ -36,8 +36,7 @@ def single_traject(model, t, choice, hillclimber):
         for connection in range(len(model.visited_connections[t])):
             model.visited_connections[t][connection].visit -= 1
         model.total_time -= model.time_dict[t]
-    elif hillclimber == 1:
-        model.number_traject += 1
+    
         
     station = random.choice(model.stations)
     if choice == 0:
@@ -50,6 +49,8 @@ def single_traject(model, t, choice, hillclimber):
     model.total_time += time
     model.time_dict[t] = time
     model.visited_connections[t] = connections
+    if hillclimber == 1:
+        model.number_traject += 1
     return model
 
 def run_hillclimber(model, choice, hillclimber):
