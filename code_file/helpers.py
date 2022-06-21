@@ -53,6 +53,13 @@ def quality_score(model):
     fraction_visited(model)
     model.score = model.fraction * 10000 - (model.number_traject * 100 + model.total_time)
     
+    
+def replace_best(score, traject, fraction):
+    best_traject = traject
+    best_score = score
+    best_fraction = fraction
+    return best_traject, best_score, best_fraction
+
 
 
            
