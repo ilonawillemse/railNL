@@ -99,8 +99,7 @@ if __name__ == "__main__":
         data = all_scores
         num_bins = 100 # <- number of bins for the histogram
         plt.hist(data, num_bins)
-        plt.savefig("output/histogramtest.png")
-
+        plt.savefig("output/histogramtest1.png")
     
     if key == 1 or key == 2:
     # --------------------hillclimber or simulated annealing------------------------------
