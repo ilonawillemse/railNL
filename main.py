@@ -48,7 +48,7 @@ class Model():
 
 
 if __name__ == "__main__":
-    key = int(input("What would you like to run: simple run(0), with hillclimber(1), simulated annealing(2): "))
+    key = int(input("What would you like to run: simple run(0), with hillclimber(1), simulated annealing(2), visualize(30): "))
     hillclimber = None
     if key == 1:    
         hillclimber = int(input("random hillclimber(0) or regular hillclimber(1): "))
@@ -126,8 +126,6 @@ if __name__ == "__main__":
                     
         output_generate(best_traject, best_score, best_fraction)
             
-        if vis == 1:
-            visualization(model, best_traject)
-            plt.plot(data)
-            plt.savefig("output/histogramtest.png")
+        plt.plot(data)
+        plt.savefig("output/histogramtest.png")
         
