@@ -33,23 +33,27 @@ def visualization_output(model):
     for _, value in model.all_connections.items():
         connection_x_cor = []
         connection_y_cor = []
-        connection_list.append(go.Scatter(x = x_cor, y = y_cor, 
+        connection_list.append(go.Scattermapbox(lon = x_cor, lat = y_cor, 
                                 mode = "markers", 
                                 hovertext= name, 
-                                opacity= 0.6 ))
+                                opacity= 1 ))
 
         connection_x_cor.append(float(value.start.ycor))
         connection_y_cor.append(float(value.start.xcor))
         connection_y_cor.append(float(value.end.xcor))
         connection_x_cor.append(float(value.end.ycor))
 
-        connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, line=dict(color="grey"))
+        connection = go.Scattermapbox(lon = connection_x_cor, lat = connection_y_cor, 
+                                        mode = "markers + lines",
+                                        line=dict(color="grey"))
         connection_list.append(connection)
 
-    connection_list.append(go.Scatter(x = x_cor, y = y_cor, 
-                            mode = "markers", hovertext= name,
-                            marker=dict(color="lightgreen"),
-                            opacity= 0.6 ))
+    # add station dots
+    connection_list.append(go.Scattermapbox(lon = x_cor, lat = y_cor, 
+                            mode = "markers", 
+                            hovertext = name,
+                            marker = dict(color = "black"),
+                            opacity = 0.6 ))
     connection_list.insert(0, connection)
     
     # add moving trains to the trajects
@@ -122,9 +126,9 @@ def visualization_output(model):
         list_x_cor = [item[i] for item in all_traject_x_cor]
         list_y_cor = [item[i] for item in all_traject_y_cor]
 
-        current = go.Frame(data = [go.Scatter(
-                            x = list_x_cor, 
-                            y = list_y_cor, 
+        current = go.Frame(data = [go.Scattermapbox(
+                            lon = list_x_cor, 
+                            lat = list_y_cor, 
                             mode = "markers", 
                             # hovertext = ....,
                             marker = dict(color=colors, size = 15))], 
@@ -132,12 +136,16 @@ def visualization_output(model):
 
         current_stations.append(current)
 
+        # print(list_x_cor)
+        # print(list_y_cor)
+        # print()
+
     # create the figure with connections/ stations and trains
     fig = go.Figure(
         data = connection_list,
         layout = go.Layout(
-        xaxis = dict(range = [1, 10], autorange=False),
-        yaxis = dict(range = [50.5, 54], autorange=False),
+        # xaxis = dict(range = [1, 10], autorange=False),
+        # yaxis = dict(range = [50.5, 54], autorange=False),
         title = "No way, railway",
         showlegend = False,
         template = "plotly_white",
@@ -152,19 +160,33 @@ def visualization_output(model):
     # add moving trains
     frames = current_stations, 
     )
+    
+    fig.update_layout(
+        margin = {'l':0,'t':0, 'b':0, 'r':0},
+        mapbox = {
+            'center': {'lon': 5.2, 'lat': 52.2},
+            'style': 'open-street-map',
+            'zoom': 7
+        })
 
-    # Add background image
-    fig.add_layout_image(
-            dict(
-                source = "https://cdn.pixabay.com/photo/2014/04/02/10/18/netherlands-303419_960_720.png",
-                xref = "x",
-                yref = "y",
-                x = 3.52,
-                y = 53.7,
-                sizex = 3.5,
-                sizey = 3.0,
-                sizing = "stretch",
-                opacity = 0.5,
-                layer = "below")
-    )
     fig.show()
+    
+    # to do:
+    # gif maken
+    # coordinaat map (https://plotly.com/python/mapbox-layers/)
+
+
+        # Add background image
+    # fig.add_layout_image(
+    #         dict(
+    #             source = "https://cdn.pixabay.com/photo/2014/04/02/10/18/netherlands-303419_960_720.png",
+    #             xref = "x",
+    #             yref = "y",
+    #             x = 3.52,
+    #             y = 53.7,
+    #             sizex = 3.5,
+    #             sizey = 3.0,
+    #             sizing = "stretch",
+    #             opacity = 0.5,
+    #             layer = "below")
+    # )

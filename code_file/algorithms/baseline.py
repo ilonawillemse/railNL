@@ -79,7 +79,7 @@ def make_baseline_traject(station):
 
 def starting_trajects(model):
     # model.number_traject = random.randint(7,13)
-    model.number_traject = 10
+    model.number_traject = 11
     for i in range(model.number_traject):
         station = random.choice(model.stations)
         latest_traject, time, connections = make_baseline_traject(station)
