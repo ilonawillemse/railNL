@@ -46,7 +46,7 @@ def visualization_output(model):
 
         connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, 
                                         mode = "markers + lines",
-                                        line = dict(color="grey", dash = "dashdot"),
+                                        line = dict(color="grey", dash = "dot"),
                                         opacity = 1)
         connection_list.append(connection)
 
@@ -118,13 +118,13 @@ def visualization_output(model):
 
 # ----------------------------------------------------------------------------------------------
         # add traject lines
-        colors = ['orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'darkolivegreen', 'darkred', 'blueviolet', 'pink', 'red']
+        colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'darkolivegreen', 'blueviolet', 'pink']
         colors = colors + colors + colors
         
 
         connection_list.append(go.Scatter(x = traject_x_cor, y = traject_y_cor, 
                                 mode = "lines", 
-                                line = dict(color = random.choice(colors)),
+                                line = dict(color = colors[i]),
                                 opacity = 1 ))
 
 
@@ -148,7 +148,7 @@ def visualization_output(model):
                             y = list_y_cor, 
                             mode = "markers", 
                             hovertext = traject_number,
-                            marker = dict(color = 'black', size = 13),
+                            marker = dict(color = colors, size = 13),
                             opacity = 1)], 
                             layout = go.Layout(title_text = "No way, railway"))
 
