@@ -55,21 +55,21 @@ if __name__ == "__main__":
     best_traject = [] 
     all_data = []
 
-    key = int(input("What would you like to run: simple run(0), with hillclimber(1), simulated annealing(2): "))
+    key = int(input("What would you like to run: simple run(0), with hillclimber(1), simulated annealing(2), simulate output file(3): "))
     hillclimber = None
     if key == 1:    
         hillclimber = int(input("random hillclimber(0) or regular hillclimber(1): "))
     
-    if key != 30:
+    if key != 3:
         choice = int(input("random(0) or greedy(1): "))
 
     # ophalen van opgeslagen data
-    if key == 20:
-        file = open("saved", "rb")
-        print(pickle.load(file))
+    # if key == 20:
+    #     file = open("saved", "rb")
+    #     print(pickle.load(file))
     
     # visualize the output file
-    if key == 30:
+    if key == 3:
         visualization_output(Model())
 
 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
             try:
                 i = 0
                 while True:
-                    i += 1
+                    # i += 1
                     model = Model()
                     if choice == 0:
                         model.baseline()
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                     # print(i)
                     print(best_score)
                     print(len(best_traject))
-                    i += 1
+                    # i += 1
             except KeyboardInterrupt:
                 pickle.dump(best_traject, open("saved", "wb"))
                 pass
@@ -135,6 +135,7 @@ if __name__ == "__main__":
                     all_data.extend(data)
                     counter += 1
             except:
+                pickle.dump(best_traject, open("saved", "wb"))
                 KeyboardInterrupt
                     
         output_generate(best_traject, best_score, best_fraction)

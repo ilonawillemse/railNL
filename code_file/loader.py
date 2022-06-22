@@ -50,5 +50,4 @@ def add_connections(stations):
                             all_connections[i] = Connection(station, station2, all_lines[i][2], i)
                             station.connections[i] = all_connections[i]
                             station2.connections[i] = all_connections[i]
-    #print(all_connections)
     return all_connections

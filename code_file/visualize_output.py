@@ -123,7 +123,7 @@ def visualization_output(model):
         
 
         connection_list.append(go.Scatter(x = traject_x_cor, y = traject_y_cor, 
-                                mode = "markers + lines", 
+                                mode = "lines", 
                                 line = dict(color = colors[i]),
                                 opacity = 1 ))
 
