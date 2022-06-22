@@ -36,10 +36,10 @@ def chance(score_old, score_new, temperature):
 def run_simulated_annealing(model, choice):
     try: 
         scores = []
-        total_iterations = 1000
+        total_iterations = 35000
         current_version = copy.deepcopy(model)
         best_version = copy.deepcopy(model)
-        max_temperature = 25
+        max_temperature = 30
         current_temperature = max_temperature
         for i in range(total_iterations):
             current_temperature = temperature(max_temperature, total_iterations, i)   
@@ -50,7 +50,7 @@ def run_simulated_annealing(model, choice):
             r = random.random()
             chance_float = chance(current_version.score, new_model.score, current_temperature)
             
-            
+
             if new_model.score > best_version.score:
                 current_version = new_model
                 best_version = new_model
