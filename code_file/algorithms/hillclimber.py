@@ -6,7 +6,7 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-implements a hillclimber algorithm to search for best score by creating trajects
+Implements a hillclimber algorithm to search for best score by creating trajects
 =================================================
 """
 
@@ -84,7 +84,9 @@ def run_hillclimber(model, choice, hillclimber):
                 print(counter)
                 print(best_version.score,)
             best_scores.append(best_version.score)
+    
     except KeyboardInterrupt:
         pickle.dump(best_version, open("saved", "wb"))
         pass
+    
     return best_version.traject, best_version.score, best_version.fraction, best_scores

@@ -6,7 +6,9 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-loads the station and connection data from database (csv file)
+Loads the station and connection data from database (csv file)
+Adds the station objects with corresponding name, xcor and ycor to a list
+Adds the connections between the stations to a dictionary with the connection number as key
 =================================================
 """
 
@@ -15,7 +17,7 @@ import csv
 
 
 def load_stations():
-    "load the stations from database"
+    "load the stations from database and add them to a list of stations"
     stations = []
     with open(f"data/data_nationaal/StationsNationaal.csv") as f:
         csv_reader = csv.reader(f, delimiter=',')
@@ -26,19 +28,19 @@ def load_stations():
             ycor = row[2]
             stations.append(Station(name, xcor, ycor))
         f.close()
+    
     return stations
 
 
 def add_connections(stations):
-    "add the connections of the stations"
+    "add the connections of the stations to a dictionary with the connection number as key"
     all_connections = {}
-    #print(len(stations))
+    
     with open(f"data/data_nationaal/ConnectiesNationaal.csv") as f:
-
         csv_reader = csv.reader(f, delimiter = ',')
         next(csv_reader)
-
         all_lines = []
+        
         for lines in csv_reader:
             all_lines.append(lines)
         
@@ -50,4 +52,5 @@ def add_connections(stations):
                             all_connections[i] = Connection(station, station2, all_lines[i][2], i)
                             station.connections[i] = all_connections[i]
                             station2.connections[i] = all_connections[i]
+    
     return all_connections
