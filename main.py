@@ -17,7 +17,6 @@ from code_file.helpers import output_generate, quality_score, replace_best
 from code_file.loader import load_stations, add_connections
 from code_file.algorithms.baseline import starting_trajects
 from code_file.algorithms.hillclimber import run_hillclimber
-from code_file.algorithms.random_hillclimber import random_hillclimber
 from code_file.algorithms.greedy import get_started
 from code_file.algorithms.annealing import run_simulated_annealing
 import pickle
