@@ -62,7 +62,7 @@ def visualization_output(model):
 # ------------------------------------------moving trains---------------------------------------------
     # read the trajects from csv file and get the corresponding station objects to obtain the information about the stations
     traject_names = []
-    with open(f"national_trajects.csv") as f:
+    with open(f"best_nationaal.csv") as f:
         csv_reader = csv.reader(f, delimiter=',')
         next(csv_reader)
         for row in csv_reader:
