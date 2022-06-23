@@ -22,6 +22,7 @@ import random
 
 #     return new_choice
 
+
 def make_baseline_traject(station):
     "......................."
 
@@ -30,7 +31,7 @@ def make_baseline_traject(station):
     visited_connections = []
     visited_stations.append(station)
 
-# ---------------------- limited connection use--------------
+    # ---------------------- limited connection use--------------
     # while time < 180:
     #     new_choice = next(station, visited_connections)
     #     if new_choice == None:
@@ -41,12 +42,11 @@ def make_baseline_traject(station):
     #     else:
     #         new_station = new_choice.end
 
-
-# ------------------------ limited station use -----------------
+    # ------------------------ limited station use -----------------
     while time <= 180:
         connections = list(station.connections.values())
         new_choice = random.choice(connections)
-        if new_choice == None:
+        if new_choice is None:
             break
 
         if station != new_choice.start:
@@ -63,16 +63,16 @@ def make_baseline_traject(station):
             else:
                 new_station = new_choice.end
             counter += 1
-            
+
         if counter == 100:
             break
-# ---------------------------------------------------
+        # ---------------------------------------------------
 
         time += int(float(new_choice.duration))
 
         if time > 180:
-                time -= int(float(new_choice.duration))
-                break        
+            time -= int(float(new_choice.duration))
+            break
 
         new_choice.visit += 1
         station = new_station
@@ -80,6 +80,7 @@ def make_baseline_traject(station):
         visited_connections.append(new_choice)
 
     return visited_stations, time, visited_connections
+
 
 def starting_trajects(model):
     "......................."
@@ -93,5 +94,3 @@ def starting_trajects(model):
         model.total_time += time
         model.time_dict[i] = time
         model.visited_connections.append(connections)
-
-        
