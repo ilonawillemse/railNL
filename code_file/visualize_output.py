@@ -68,7 +68,7 @@ def visualization_output(model):
 # ------------------------------------------moving trains---------------------------------------------
     # read the trajects from csv file and get the corresponding station objects to obtain the information about the stations
     traject_names = []
-    with open(f"output/output_model.csv") as f:
+    with open(f"best_nationaal.csv") as f:
         csv_reader = csv.reader(f, delimiter=',')
         next(csv_reader)
         for row in csv_reader:
@@ -123,7 +123,7 @@ def visualization_output(model):
         all_traject_y_cor.append(traject_y_cor)
 
         # add traject lines with different colors for every traject
-        colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'blueviolet', 'pink']
+        colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'aqua', 'white', 'black']
         colors = colors + colors + colors
         
 
