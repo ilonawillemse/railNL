@@ -1,3 +1,17 @@
+"""
+=================================================
+model.py
+
+Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
+
+No way, Railway
+
+Model for an object based railway traject
+The model contains two base algorithms to run the program with (random and greedy)
+=================================================
+"""
+
+
 from code_file.loader import load_stations, add_connections
 from code_file.algorithms.baseline import starting_trajects
 from code_file.helpers import quality_score
@@ -23,10 +37,12 @@ class Model:
         self.time_dict = {}
         self.score, self.fraction, self.number_traject, self.total_time = 0, 0, 0, 0
 
+    # when the random type_base is chosen
     def baseline(self):
         starting_trajects(self)
         quality_score(self)
 
+    # when the greedy type_base is chosen
     def greedy(self):
         get_started(self)
         quality_score(self)

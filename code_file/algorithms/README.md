@@ -4,7 +4,7 @@
 In this map the different kinds of algorithms for 'solving' the railway problems can be found and a function to run the algorithms
 ```
 
-A file that make the algoritms run multiple times(run_algoritm.py)
+A file that make the chosen algoritm run (run_algoritm.py)
 
 Algorithms that can be found:
 - baseline.py (a random algorithm with a bias of not being able to visit the same station in one traject twice)

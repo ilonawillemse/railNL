@@ -52,9 +52,9 @@ Removal other stations and its impact
 main.py
 
 # Authors:
-- Wesley Korff
-- Anouk Van Valkengoed
-- Ilona Willemse
+- Wesley Korff (12626465)
+- Anouk Van Valkengoed (12379832)
+- Ilona Willemse (11596120)
 
 # License:
 MIT License - see the LICENSE file for details

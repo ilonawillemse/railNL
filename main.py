@@ -6,9 +6,7 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-Model for an object based railway traject
 Interactive for user, based on with what algorithm they would like to run the simulation
-The model contains two base algorithms to run the program with (random and greedy)
 The programm generates an output file with the best trajects found
     and its corresponding quality score
 Posibility to visualize the output file with trajects in a simulation
@@ -18,9 +16,9 @@ Posibility to visualize the output file with trajects in a simulation
 """
 
 from code_file.helpers import output_generate
-from code_file.visualize_output import visualization_output
-from code_file.plot import make_plot
-from code_file.classes import Dataclass
+from code_file.visualize.visualize_output import visualization_output
+from code_file.visualize.plot import make_plot
+from code_file.classes.dataclass import Dataclass
 from code_file.algorithms.run_algorithm import (
     run_repeated_hillclimber,
     run_repeated_simulated_annealing,
@@ -32,6 +30,7 @@ if __name__ == "__main__":
     dataclass = Dataclass()
     type_hillclimber = None
 
+    # asks user what algorithm to run
     key = int(
         input(
             "What would you like to run: simple run(0), with hillclimber(1), "
@@ -47,7 +46,7 @@ if __name__ == "__main__":
             type_hillclimber = int(input("random(0) or worst traject removal(1): "))
         type_base = int(input("random(0) or greedy(1): "))
 
-    # ---------------------run algorithm--------------------
+    # run wished algorithm
     if key == 0:
         run_simple(type_base, dataclass)
 
