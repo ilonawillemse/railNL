@@ -12,7 +12,6 @@ taking on a worse score is dependant on the chance, which depends on the tempera
 =================================================
 """
 
-from code_file.algorithms.hillclimber import single_traject
 from code_file.helpers import quality_score
 import random
 import copy

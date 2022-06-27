@@ -75,7 +75,7 @@ def replace_traject(model, index, type_base, type_hillclimber):
         model = change_model_parameters(model, index) 
 
     # randomly choosing a starting station
-    station = random.type_base(model.stations)
+    station = random.choice(model.stations)
 
     # creating a baseline (randomly generated) traject
     if type_base == 0:
