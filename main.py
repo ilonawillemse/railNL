@@ -39,14 +39,13 @@ if __name__ == "__main__":
         )
     )
 
-    if key == 1:
-        type_hillclimber = int(input("random(0) or worst traject removal(1): "))
-
-    if key != 3:
-        type_base = int(input("random(0) or greedy(1): "))
-
     if key == 3:
         visualization_output()
+
+    else:
+        if key == 1:
+            type_hillclimber = int(input("random(0) or worst traject removal(1): "))
+        type_base = int(input("random(0) or greedy(1): "))
 
     # ---------------------run algorithm--------------------
     if key == 0:
