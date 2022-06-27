@@ -12,6 +12,7 @@ taking on a worse score is dependant on the chance, which depends on the tempera
 =================================================
 """
 
+from code_file.algorithms.hillclimber import single_traject
 from code_file.helpers import quality_score
 import random
 import copy
@@ -25,6 +26,7 @@ def temperature(start_temperature, total_iterations, iteration):
     """
     temperature = start_temperature - ((start_temperature/total_iterations) * iteration)
     return temperature
+
 
 def chance(score_old, score_new, temperature):
     """
@@ -107,4 +109,3 @@ def run_simulated_annealing(model, type_base):
         pass
 
     return best_version.traject, best_version.score, best_version.fraction, scores
-

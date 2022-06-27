@@ -7,7 +7,7 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 No way, Railway
 
 Object based railway traject
-made interactive for used based on what algorithm they would like to run the programm
+made interactive for user, based on with what algorithm they would like to run
 =================================================
 """
 
@@ -19,121 +19,141 @@ from code_file.algorithms.baseline import starting_trajects
 from code_file.algorithms.hillclimber import run_hillclimber
 from code_file.algorithms.greedy import get_started
 from code_file.algorithms.annealing import run_simulated_annealing
-import pickle
 from code_file.visualize_output import visualization_output
 
 
-
-class Model():
+class Model:
     "Railway Model"
+
     def __init__(self):
         self.stations = load_stations()
         self.all_connections = add_connections(self.stations)
         self.visited_connections = []
         self.traject = []
         self.time_dict = {}
-        self.score = 0
-        self.fraction = 0
-        self.number_traject = 0
-        self.total_time = 0
+        self.score, self.fraction, self.number_traject, self.total_time = 0, 0, 0, 0
 
     def baseline(self):
         starting_trajects(self)
-        quality_score(self)  
-    
+        quality_score(self)
+
     def greedy(self):
         get_started(self)
-        quality_score(self) 
+        quality_score(self)
 
 
 if __name__ == "__main__":
+    # dataclass ?-------------------
+    best_score, counter, best_fraction, best_traject = 0, 0, 0, 0
+    best_traject, all_data = [], []
+    type_hillclimber = None
 
-    best_score = 0
-    counter = 0
-    best_fraction = 0
-    best_traject = [] 
-    all_data = []
+    key = int(
+        input(
+            "What would you like to run: simple run(0), with hillclimber(1), \
+                simulated annealing(2), simulate output file(3): "
+        )
+    )
 
-    key = int(input("What would you like to run: simple run(0), with hillclimber(1), simulated annealing(2), simulate output file(3): "))
-    hillclimber = None
-    if key == 1:    
-        hillclimber = int(input("random hillclimber(0) or regular hillclimber(1): "))
-    
+    if key == 1:
+        type_hillclimber = int(input("random(0) or worst traject removal(1): "))
+
     if key != 3:
-        choice = int(input("random(0) or greedy(1): "))
+        type_base = int(input("random(0) or greedy(1): "))
 
-    # visualize the output file
     if key == 3:
         visualization_output(Model())
 
-
-    if key == 0:
     # ---------------------run without hillclimber---------------------
-        with open('output/histo_data.csv', 'w') as output_file:
+    if key == 0:
+        with open("output/histo_data.csv", "w") as output_file:
             try:
-                i = 0
                 while True:
                     model = Model()
-                    if choice == 0:
+
+                    if type_base == 0:
                         model.baseline()
-                    if choice == 1:
+
+                    if type_base == 1:
                         model.greedy()
-                    writer = csv.writer(output_file) 
+
+                    writer = csv.writer(output_file)
+
                     if model.score > best_score:
-                        best_traject, best_score, best_fraction = replace_best(model.score, model.traject, model.fraction)
+                        best_traject, best_score, best_fraction = replace_best(
+                            model.score, model.traject, model.fraction
+                        )
+
                     score = model.score
                     all_data.append(score)
                     writer.writerow([score])
+                    print(best_score)
+                    print(len(best_traject))
+
             except KeyboardInterrupt:
                 pass
-            
+
         output_generate(best_traject, best_score, best_fraction)
+
+        # make histogram
         data = all_data
-        num_bins = 100 # <- number of bins for the histogram
+        num_bins = 100  # <- number of bins for the histogram
         plt.hist(data, num_bins)
-        if choice == 0:
+
+        if type_base == 0:
             plt.title("Baseline algorithm: distribution of model data")
-        elif choice == 1:
+
+        elif type_base == 1:
             plt.title("Greedy algorithm: distribution of model data")
+
         plt.xlabel("Model quality score")
         plt.ylabel("Occurence of score")
         plt.savefig("output/histogramtest.png")
 
-    
-    if key == 1 or key == 2:
     # --------------------hillclimber or simulated annealing------------------------------
-        
+    if key == 1 or key == 2:
         model = Model()
-        if choice == 0:
+        if type_base == 0:
             model.baseline()
-        if choice == 1:
+        if type_base == 1:
             model.greedy()
 
+        # hillclimber
         if key == 1:
-            best_traject, best_score, best_fraction, all_data = run_hillclimber(model, choice, hillclimber)
+            best_traject, best_score, best_fraction, all_data = run_hillclimber(
+                model, type_base, type_hillclimber
+            )
+
+        # simulated annealing
         if key == 2:
             try:
                 while True:
-                    traject, score, fraction, data = run_simulated_annealing(model, choice)
+                    traject, score, fraction, data = run_simulated_annealing(
+                        model, type_base
+                    )
                     if score > best_score:
-                        best_traject, best_score, best_fraction = replace_best(score, traject, fraction)
-                    print(counter)
-                    print(best_score)
+                        best_traject, best_score, best_fraction = replace_best(
+                            score, traject, fraction
+                        )
+                    # print(counter)
+                    # print(best_score)
                     all_data.extend(data)
                     counter += 1
-            except:
-                pickle.dump(best_traject, open("saved", "wb"))
-                KeyboardInterrupt
-                    
+
+            except KeyboardInterrupt:
+                pass
+
         output_generate(best_traject, best_score, best_fraction)
-            
-    
+
+        # make histogram
         plt.plot(all_data)
+
         if key == 1:
             plt.title("Hillclimber algorithm: best scores over time")
+
         elif key == 2:
             plt.title("Simulated annealing algorithm: scores over time")
+
         plt.xlabel("Number of iterations")
         plt.ylabel("Model quality score")
         plt.savefig("output/histogramtest.png")
-        

@@ -198,5 +198,5 @@ def run_hillclimber(model, type_base, type_hillclimber):
     # stop loop when the user executes a KeyboardInterrupt
     except KeyboardInterrupt:
         pass
-    
+
     return best_version.traject, best_version.score, best_version.fraction, best_scores
