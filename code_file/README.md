@@ -1,7 +1,7 @@
-# code_file
+# Code_file
 
 ```
-In this map the code files for the Rail NL case can be found
+In this folder the code files for the Rail NL case can be found
 ```
 
 It contains:
@@ -11,3 +11,4 @@ It contains:
 - a file containing the station and connections classes and a dataclass class for some initializes (classes.py)
 - a file which visualizes the outputfile into an animation (visualize_output)
 - a file that plots the corresponding data (plot.py)
+- a file that holds the Model class (model.py)
