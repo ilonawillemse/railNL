@@ -6,43 +6,43 @@ Objective score:
 
 K = p * 10000 - (T * 100 + Min)
 
-### assignment 1:
+### Assignment 1:
 ```
 make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. All rails must be used.
 ```
 ![All rails used](............png)
 
-### assignment 2:
+### Assignment 2:
 ```
 make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. Try to get K as high as possible.
 ```
 ![Holland with high K value](............png)
 
-### assignment 3:
+### Assignment 3:
 ```
 make trainconnections of the Netherlands, max of 20 trajects within a timeframe of 3 hours. Try to get K as high as possible.
 ```
 ![Netherlands with high K value](............png)
 
-### assignment 4:
+### Assignment 4:
 ```
 Make a visualization of the results
 ```
 ![visualization](............gif)
 
-### assignment 5:
+### Assignment 5:
 ```
 Change 3 connections and look at the scores
 ```
 ![Change connections](............gif)
 
-### assignment 6:
+### Assignment 6:
 ```
 Delete all Utrecht Centraal connections
 ```
 ![Remove Utrecht Centraal connections](............gif)
 
-### assignment 7:
+### Assignment 7:
 ```
 Removal other stations and its impact
 ```
