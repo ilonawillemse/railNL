@@ -12,7 +12,6 @@ taking on a worse score is dependant on the chance, which depends on the tempera
 =================================================
 """
 
-from code_file.algorithms.hillclimber import single_traject
 from code_file.helpers import quality_score
 import random
 import copy
@@ -21,10 +20,12 @@ from code_file.algorithms.hillclimber import replace_traject
 
 def temperature(start_temperature, total_iterations, iteration):
     """
-    Calculating and returning the temperature per iteration, 
+    Calculating and returning the temperature per iteration,
     using a linear function
     """
-    temperature = start_temperature - ((start_temperature/total_iterations) * iteration)
+    temperature = start_temperature - (
+        (start_temperature / total_iterations) * iteration
+    )
     return temperature
 
 
@@ -36,9 +37,10 @@ def chance(score_old, score_new, temperature):
     chance = 2 ** ((score_new - score_old) / temperature)
     return chance
 
+
 def change_model(current_version, type_base):
     """
-    Changes a random traject within a model and 
+    Changes a random traject within a model and
     recalculates model parameters
     """
 
@@ -59,15 +61,15 @@ def change_model(current_version, type_base):
 def run_simulated_annealing(model, type_base):
     """
     Running a simulated annealing, takes a model and
-    a base type algorithm as input, to change a traject based on 
+    a base type algorithm as input, to change a traject based on
     this base type
     """
 
     # run the model unless tiher is an OverflowError
-    try: 
+    try:
 
-        # initializing parameters of the simulated annealing such 
-        # as the number of iterations, the temperature and a list to keep 
+        # initializing parameters of the simulated annealing such
+        # as the number of iterations, the temperature and a list to keep
         # track of all scores, to be able to plot
         scores = []
         total_iterations = 100000
@@ -82,29 +84,31 @@ def run_simulated_annealing(model, type_base):
             # calculating the current temperature
             current_temperature = temperature(max_temperature, total_iterations, i)
 
-            # creating a new model   
+            # creating a new model
             new_model = change_model(current_version, type_base)
 
             # determining a random number and calculating the acceptance chance
             random_float = random.random()
-            chance_float = chance(current_version.score, new_model.score, current_temperature)
+            chance_float = chance(
+                current_version.score, new_model.score, current_temperature
+            )
 
             # when the newly generated model has a higher score than the best
-            # version, replacing the current and best version with the  
+            # version, replacing the current and best version with the
             # newly generated model
             if new_model.score > best_version.score:
                 current_version = new_model
                 best_version = new_model
-            
+
             # if the score of the new model is lower than the best score
             # and the random float is lower than the chance, the new model
             # will be the next current version and thus a new starting point
             elif random_float < chance_float:
                 current_version = new_model
             scores.append(current_version.score)
-            
+
     # if the function reaches an OverflowError, do not execute but just pass and
-    # go into the next iteration 
+    # go into the next iteration
     except OverflowError:
         pass
 
