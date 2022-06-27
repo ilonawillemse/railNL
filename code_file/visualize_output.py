@@ -9,16 +9,24 @@ No way, Railway
 Visualizes the best traject combinations found in a plotly simulation by using the output file
 All stations and connections are visualised with corresponding dots and lines
 The trajects are visualised with colored lines, another color for each traject
-Moving trains are visualised with the same color as the traject they are riding just for fun
+Moving trains (dots) are visualised with the same color as the traject they are riding
+    note: the addition of the moving trains on the trajects has nothing to do with our case
+        they are here just for fun
 =================================================
 """
-
+from code_file.model import Model
 import plotly.graph_objects as go
 import csv
 
 
-def visualization_output(model):
-    "visualize the trajects with trains riding them"
+def visualization_output():
+    """
+    Visualizes the trajects with trains riding them
+    Reads data from csv file
+    Converts the data to corresponding train/connection objects for visualization
+
+    """
+    model = Model()
 
     # add the stations to the visualization
     stations_dict = {}
@@ -56,7 +64,7 @@ def visualization_output(model):
         )
         connection_list.append(connection)
 
-    # add station dots
+    # add station dots with corresponding station name
     connection_list.append(
         go.Scatter(
             x=x_cor,
@@ -71,10 +79,9 @@ def visualization_output(model):
     # extra adding the first connection at the beginning of the list so that this dot stays visible
     connection_list.insert(0, connection)
 
-    # ------------------------------------------moving trains------------------------
     # read the trajects from csv file and get the corresponding station objects
     traject_names = []
-    with open("best_nationaal.csv") as f:
+    with open("output/output_model.csv") as f:
         csv_reader = csv.reader(f, delimiter=",")
         next(csv_reader)
         for row in csv_reader:
@@ -97,7 +104,7 @@ def visualization_output(model):
     all_traject_x_cor = []
     all_traject_y_cor = []
 
-    # make the train move back and forth
+    # add a moving train and make the it move back and forth
     for i in range(len(traject_objects)):
         number_of_moves = 0
         traject_y_cor = []
