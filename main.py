@@ -21,7 +21,7 @@ from code_file.helpers import output_generate
 from code_file.visualize_output import visualization_output
 from code_file.plot import make_plot
 from code_file.classes import Dataclass
-from code_file.runs.run_algorithm import (
+from code_file.algorithms.run_algorithm import (
     run_repeated_hillclimber,
     run_repeated_simulated_annealing,
     run_simple,
