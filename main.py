@@ -43,10 +43,10 @@ class Model:
 
 
 if __name__ == "__main__":
+    # dataclass ?-------------------
     best_score, counter, best_fraction, best_traject = 0, 0, 0, 0
-    best_traject = []
-    all_data = []
-    hillclimber = None
+    best_traject, all_data = [], []
+    type_hillclimber = None
 
     key = int(
         input(
@@ -56,10 +56,10 @@ if __name__ == "__main__":
     )
 
     if key == 1:
-        hillclimber = int(input("random hillclimber(0) or regular hillclimber(1): "))
+        type_hillclimber = int(input("random(0) or worst traject removal(1): "))
 
     if key != 3:
-        choice = int(input("random(0) or greedy(1): "))
+        type_base = int(input("random(0) or greedy(1): "))
 
     if key == 3:
         visualization_output(Model())
@@ -71,10 +71,10 @@ if __name__ == "__main__":
                 while True:
                     model = Model()
 
-                    if choice == 0:
+                    if type_base == 0:
                         model.baseline()
 
-                    if choice == 1:
+                    if type_base == 1:
                         model.greedy()
 
                     writer = csv.writer(output_file)
@@ -100,10 +100,10 @@ if __name__ == "__main__":
         num_bins = 100  # <- number of bins for the histogram
         plt.hist(data, num_bins)
 
-        if choice == 0:
+        if type_base == 0:
             plt.title("Baseline algorithm: distribution of model data")
 
-        elif choice == 1:
+        elif type_base == 1:
             plt.title("Greedy algorithm: distribution of model data")
 
         plt.xlabel("Model quality score")
@@ -113,15 +113,15 @@ if __name__ == "__main__":
     # --------------------hillclimber or simulated annealing------------------------------
     if key == 1 or key == 2:
         model = Model()
-        if choice == 0:
+        if type_base == 0:
             model.baseline()
-        if choice == 1:
+        if type_base == 1:
             model.greedy()
 
         # hillclimber
         if key == 1:
             best_traject, best_score, best_fraction, all_data = run_hillclimber(
-                model, choice, hillclimber
+                model, type_base, type_hillclimber
             )
 
         # simulated annealing
@@ -129,7 +129,7 @@ if __name__ == "__main__":
             try:
                 while True:
                     traject, score, fraction, data = run_simulated_annealing(
-                        model, choice
+                        model, type_base
                     )
                     if score > best_score:
                         best_traject, best_score, best_fraction = replace_best(

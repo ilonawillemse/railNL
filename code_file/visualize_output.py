@@ -68,10 +68,10 @@ def visualization_output(model):
         )
     )
 
-    # extra adding the first connection at the beginning of the list so that this dot stays visible too
+    # extra adding the first connection at the beginning of the list so that this dot stays visible
     connection_list.insert(0, connection)
 
-    # ------------------------------------------moving trains---------------------------------------------
+    # ------------------------------------------moving trains------------------------
     # read the trajects from csv file and get the corresponding station objects
     traject_names = []
     with open("best_nationaal.csv") as f:
@@ -153,7 +153,8 @@ def visualization_output(model):
             )
         )
 
-    # making the trains of different trajects ride together by comprehending the first coordinates of every traject
+    # making the trains of different trajects ride together
+    # by comprehending the first coordinates of every traject
     # add train name
     traject_number = []
     for i in range(len(traject_objects)):

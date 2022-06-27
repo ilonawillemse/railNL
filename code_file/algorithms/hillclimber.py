@@ -31,30 +31,32 @@ def change_traject(model, t):
 
     return model
 
+    # misschien deze in reverse
 
-def single_traject(model, t, choice, hillclimber):
-    if hillclimber == 0:
+
+def single_traject(model, t, type_base, type_hillclimber):
+    if type_hillclimber == 0:
         for connection in range(len(model.visited_connections[t])):
             model.visited_connections[t][connection].visit -= 1
         model.total_time -= model.time_dict[t]
 
     station = random.choice(model.stations)
-    if choice == 0:
+    if type_base == 0:
         latest_traject, time, connections = make_baseline_traject(station)
 
-    if choice == 1:
+    if type_base == 1:
         latest_traject, time, connections = make_greedy_traject(station)
 
     model.traject[t] = latest_traject
     model.total_time += time
     model.time_dict[t] = time
     model.visited_connections[t] = connections
-    if hillclimber == 1:
+    if type_hillclimber == 1:
         model.number_traject += 1
     return model
 
 
-def run_hillclimber(model, choice, hillclimber):
+def run_hillclimber(model, type_base, type_hillclimber):
     # unchanged_counter = 0
     try:
         best_scores = []
@@ -62,23 +64,28 @@ def run_hillclimber(model, choice, hillclimber):
         best_version = copy.deepcopy(model)
         while True:
             change_version = copy.deepcopy(best_version)
-            if hillclimber == 1:
+            if type_hillclimber == 1:
                 changed_scores = []
+                # -------------------------functie slechtste trein...............<--
                 for i in range(len(best_version.traject)):
-                    copy_version = copy.deepcopy(best_version)
+                    copy_version = copy.deepcopy(
+                        best_version
+                    )  # voorkom deze deepcopy, sla dus wel 'weggegooide' traject op
                     removed_version = change_traject(copy_version, i)
                     quality_score(removed_version)
                     changed_scores.append(removed_version.score)
+                    # argmax (max en index)
                 max_index = changed_scores.index(max(changed_scores))
+                # -------------max_index returnen
                 change_version = change_traject(change_version, max_index)
                 new_model = single_traject(
-                    change_version, max_index, choice, hillclimber
+                    change_version, max_index, type_base, type_hillclimber
                 )
 
-            elif hillclimber == 0:
+            elif type_hillclimber == 0:
                 random_index = random.randint(0, len(model.traject) - 1)
                 new_model = single_traject(
-                    change_version, random_index, choice, hillclimber
+                    change_version, random_index, type_base, type_hillclimber
                 )
 
             quality_score(new_model)
