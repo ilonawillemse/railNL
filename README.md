@@ -28,7 +28,7 @@ make trainconnections of the Netherlands, max of 20 trajects within a timeframe 
 ```
 Make a visualization of the results
 ```
-![visualization](............gif)
+![visualization](railnl.gif)
 
 ### Assignment 5:
 ```
