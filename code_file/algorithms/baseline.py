@@ -23,61 +23,67 @@ import random
 #     return new_choice
 
 def make_baseline_traject(station):
-        time = 0
-        visited_stations = []
-        visited_connections = []
-        visited_stations.append(station)
-# ---------------------- limited connection use--------------
-        # while time < 180:
-        #     new_choice = next(station, visited_connections)
-        #     if new_choice == None:
-        #         break
+    "......................."
 
-        #     if station != new_choice.start:
-        #         new_station = new_choice.start
-        #     else:
-        #         new_station = new_choice.end
+    time = 0
+    visited_stations = []
+    visited_connections = []
+    visited_stations.append(station)
+
+# ---------------------- limited connection use--------------
+    # while time < 180:
+    #     new_choice = next(station, visited_connections)
+    #     if new_choice == None:
+    #         break
+
+    #     if station != new_choice.start:
+    #         new_station = new_choice.start
+    #     else:
+    #         new_station = new_choice.end
+
 
 # ------------------------ limited station use -----------------
-        while time <= 180:
-            connections = list(station.connections.values())
-            new_choice = random.choice(connections)
-            if new_choice == None:
-                break
+    while time <= 180:
+        connections = list(station.connections.values())
+        new_choice = random.choice(connections)
+        if new_choice == None:
+            break
 
+        if station != new_choice.start:
+            new_station = new_choice.start
+        else:
+            new_station = new_choice.end
+
+        counter = 0
+
+        while new_station in visited_stations and counter < 100:
+            new_choice = random.choice(connections)
             if station != new_choice.start:
                 new_station = new_choice.start
             else:
                 new_station = new_choice.end
+            counter += 1
+            
+        if counter == 100:
+            break
+# ---------------------------------------------------
 
-            counter = 0
+        time += int(float(new_choice.duration))
 
-            while new_station in visited_stations and counter < 100:
-                new_choice = random.choice(connections)
-                if station != new_choice.start:
-                    new_station = new_choice.start
-                else:
-                    new_station = new_choice.end
-                counter += 1
-                
-            if counter == 100:
-                break
-            # --------------------------------------
+        if time > 180:
+                time -= int(float(new_choice.duration))
+                break        
 
-            time += int(float(new_choice.duration))
+        new_choice.visit += 1
+        station = new_station
+        visited_stations.append(station)
+        visited_connections.append(new_choice)
 
-            if time > 180:
-                 time -= int(float(new_choice.duration))
-                 break        
-
-            new_choice.visit += 1
-            station = new_station
-            visited_stations.append(station)
-            visited_connections.append(new_choice)
-
-        return visited_stations, time, visited_connections
+    return visited_stations, time, visited_connections
 
 def starting_trajects(model):
+    "......................."
+
     # model.number_traject = random.randint(7,13)
     model.number_traject = 11
     for i in range(model.number_traject):

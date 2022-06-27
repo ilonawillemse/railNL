@@ -7,21 +7,25 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 No way, Railway
 
 Visualizes the best traject combinations found in a plotly simulation by using the output file
+All stations and connections are visualised with corresponding dots and lines
+The trajects are visualised with colored lines, another color for each traject
+Moving trains are visualised with the same color as the traject they are riding just for the fun effect
 =================================================
 """
 
 import plotly.graph_objects as go
 import csv
-import random
 
 
 def visualization_output(model):
     "visualize the trajects with trains riding them"
+    
     # add the stations to the visualization
     stations_dict = {}
     name = []
     x_cor = []
     y_cor = []
+    
     for station in model.stations:
         stations_dict[station.name] = station
         name.append(station.name)
@@ -56,6 +60,8 @@ def visualization_output(model):
                             hovertext = name,
                             marker = dict(color = "grey"),
                             opacity = 1 ))
+
+    # extra adding the first connection at the beginning of the list so that this dot stays visible too
     connection_list.insert(0, connection)
     
 
@@ -116,22 +122,20 @@ def visualization_output(model):
         all_traject_x_cor.append(traject_x_cor)
         all_traject_y_cor.append(traject_y_cor)
 
-# ----------------------------------------------------------------------------------------------
-        # add traject lines
-        colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'darkolivegreen', 'blueviolet', 'pink']
+        # add traject lines with different colors for every traject
+        colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'blueviolet', 'pink']
         colors = colors + colors + colors
         
 
         connection_list.append(go.Scatter(x = traject_x_cor, y = traject_y_cor, 
-                                mode = "markers + lines", 
+                                mode = "lines", 
                                 line = dict(color = colors[i]),
                                 opacity = 1 ))
 
 
-    # comprehend the first coordinates of the trains depending on the number of trains
-    # making them ride together
+    # making the trains of different trajects ride together by comprehending the first coordinates of every traject
+    # add train name
     traject_number = []
-    
     for i in range(len(traject_objects)):
         traject_number.append(f"train {i + 1}")
 
@@ -175,6 +179,7 @@ def visualization_output(model):
     # add moving trains
     frames = current_stations
     )
+
     # Add background image
     fig.add_layout_image(dict(
                 source = "https://cdn.pixabay.com/photo/2014/04/02/10/18/netherlands-303419_960_720.png",
