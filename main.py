@@ -31,12 +31,18 @@ if __name__ == "__main__":
     type_hillclimber = None
 
     # asks user what algorithm to run
-    key = int(
-        input(
+    while True:
+        key = input(
             "What would you like to run: simple run(0), with hillclimber(1), "
             + "simulated annealing(2), simulate output file(3): "
         )
-    )
+
+        if key == "0" or key == "1" or key == "2" or key == "3":
+            key = int(key)
+            break
+
+        else:
+            print("That is an invalid input, please try again")
 
     if key == 3:
         visualization_output()

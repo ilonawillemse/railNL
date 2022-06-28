@@ -2,9 +2,16 @@
 railNL programmeertheorie
 
 # Project
-Objective score:
+With this programm an algoritm using heuristics is written in which the best railnetwork is being searched for both North/South Holland and the Netherlands. Run the program to find the best (highest) objective score for this problem.
 
+Objective score can be calculated by:
 K = p * 10000 - (T * 100 + Min)
+
+in which the K is the objective score (quality score), T the number of trajects, Min the total duration and p the fraction of used connections.
+
+# Usage:
+Run "main.py" to enter the program and choose what algorithm you would like to run by following the instructions.
+
 
 ### Assignment 1:
 ```
@@ -47,9 +54,6 @@ Delete all Utrecht Centraal connections
 Removal other stations and its impact
 ```
 ![Removal station](............gif)
-
-# Usage:
-main.py
 
 # Authors:
 - Wesley Korff (12626465)
