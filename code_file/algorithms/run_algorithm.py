@@ -26,7 +26,6 @@ def choose_base_model(type_base):
     return model
 
 
-
 def run_simple(type_base, dataclass):
     """
     run the base algorithm multiple times and save the best output
@@ -84,7 +83,7 @@ def run_repeated_simulated_annealing(type_base, dataclass):
 
     start = time.time()
     while time.time() - start < 5:
-        traject, score, fraction, data, tmp = run_simulated_annealing(model, type_base, start)
+        traject, score, fraction, data, time = run_simulated_annealing(model, type_base, start)
         
         # keep track of the best output when multiple simulated annealings are run
         if score > dataclass.best_score:
@@ -95,7 +94,7 @@ def run_repeated_simulated_annealing(type_base, dataclass):
             ) = replace_best(score, traject, fraction)
         dataclass.all_data.extend(data)
         dataclass.counter += 1
-        dataclass.duration.extend(tmp)
+        dataclass.duration.extend(time)
     with open("output/histo_data.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.all_data)

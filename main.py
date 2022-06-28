@@ -6,7 +6,9 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
+Model for an object based railway traject
 Interactive for user, based on with what algorithm they would like to run the simulation
+The model contains two base algorithms to run the program with (random and greedy)
 The programm generates an output file with the best trajects found
     and its corresponding quality score
 Posibility to visualize the output file with trajects in a simulation
@@ -16,10 +18,10 @@ Posibility to visualize the output file with trajects in a simulation
 """
 
 from code_file.helpers import output_generate
-from code_file.visualize.visualize_output import visualization_output
-from code_file.visualize.plot import make_plot
-from code_file.classes.dataclass import Dataclass
-from code_file.algorithms.run_algorithm import (
+from code_file.visualize_output import visualization_output
+from code_file.plot import make_plot
+from code_file.classes import Dataclass
+from code_file.runs.run_algorithm import (
     run_hillclimber,
     run_repeated_simulated_annealing,
     run_simple,
@@ -30,29 +32,23 @@ if __name__ == "__main__":
     dataclass = Dataclass()
     type_hillclimber = None
 
-    # asks user what algorithm to run
-    while True:
-        key = input(
+    key = int(
+        input(
             "What would you like to run: simple run(0), with hillclimber(1), "
             + "simulated annealing(2), simulate output file(3): "
         )
+    )
 
-        if key == "0" or key == "1" or key == "2" or key == "3":
-            key = int(key)
-            break
+    if key == 1:
+        type_hillclimber = int(input("random(0) or worst traject removal(1): "))
 
-        else:
-            print("That is an invalid input, please try again")
+    if key != 3:
+        type_base = int(input("random(0) or greedy(1): "))
 
     if key == 3:
         visualization_output()
 
-    else:
-        if key == 1:
-            type_hillclimber = int(input("random(0) or worst traject removal(1): "))
-        type_base = int(input("random(0) or greedy(1): "))
-
-    # run wished algorithm
+    # ---------------------run algorithm--------------------
     if key == 0:
         run_simple(type_base, dataclass)
 
@@ -69,5 +65,4 @@ if __name__ == "__main__":
 
     if key != 3:
         # plot with the corresponding gattered data
-        make_plot(type_base, dataclass.all_data, key, dataclass.duration)
-        
+        make_plot(type_base, dataclass.all_data, key)
