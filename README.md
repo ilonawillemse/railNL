@@ -62,13 +62,21 @@ Removal other stations and its impact
 
 # Experiment
 ```
-We experimented with the maximum temperature for the simulated annealing. By increasing this temperature the acceptance chance for worse quality scores is increased. By testing different maximum temperatures we are able to find out what could be the best maximum temperature for running the simulated annealing with.
+We experimented with the maximum temperature for the simulated annealing.
+By increasing this temperature the acceptance chance for worse quality scores is increased.
+By testing different maximum temperatures we are able to find out what could be the best maximum temperature for running the simulated annealing with.
 
 - NOTE: To change the maximum temperature you must follow the instructions when running the programm and enter the desired temperature:
     - "Would you like to choose the Max temp yourself? no(0), yes(1)?: "
     - "What would you like to be the max temperature for the simulated annealing: "
 
-As you can see in the picture below, the spike amplitude increases with increased max temperature. The corresponding best scores first increased when increasing the max temperature from 15 to 20 and 25. After the max temperature of 25 the best scores did seem to look stable. with the max temperature of 35 or higher the spike amplitude got so big it seemed kind off useless to spike so much. The best score did not end up higher as well. This is why we think the optimum maximum temperature should lay between 25 and 35. Therefore, we chose our base max temperature to be 30.
+As you can see in the picture below, the spike amplitude increases with increased max temperature.
+The corresponding best scores first increased when increasing the max temperature from 15 to 20 and 25.
+After the max temperature of 25 the best scores did seem to look stable.
+With the max temperature of 35 or higher the spike amplitude got so big it seemed kind off useless to spike so much.
+The best score did not end up higher as well.
+This is why we think the optimum maximum temperature should lay between 25 and 35.
+Therefore, we chose our base max temperature to be 30.
 ```
 ![Experiment](/doc/experiment.png)
 
