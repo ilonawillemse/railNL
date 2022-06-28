@@ -16,6 +16,8 @@ from code_file.helpers import replace_best
 from code_file.algorithms.hillclimber import execute_hillclimber
 from code_file.algorithms.annealing import run_simulated_annealing
 import time
+import numpy as np
+
 
 def choose_base_model(type_base):
     model = Model()
@@ -32,7 +34,7 @@ def run_simple(type_base, dataclass):
     """
     with open("output/histo_data.csv", "w") as output_file:
         start = time.time()
-        while time.time() - start < 5:
+        while time.time() - start < dataclass.RUNNING_TIME:
             model = choose_base_model(type_base)
 
             writer = csv.writer(output_file)
@@ -51,7 +53,6 @@ def run_simple(type_base, dataclass):
             print(len(dataclass.best_traject))
             current_time = time.time() - start
             print(current_time)
-   
 
 
 def run_hillclimber(type_base, type_hillclimber, dataclass):
@@ -65,14 +66,11 @@ def run_hillclimber(type_base, type_hillclimber, dataclass):
         dataclass.best_score,
         dataclass.best_fraction,
         dataclass.all_data,
-        dataclass.duration
-    ) = execute_hillclimber(model, type_base, type_hillclimber)
+    ) = execute_hillclimber(model, type_base, type_hillclimber, dataclass)
     with open("output/histo_data.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.all_data)
-        writer.writerow(dataclass.duration)
-
-
+        writer.writerow(np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data)))
 
 
 def run_repeated_simulated_annealing(type_base, dataclass):
@@ -82,9 +80,17 @@ def run_repeated_simulated_annealing(type_base, dataclass):
     model = choose_base_model(type_base)
 
     start = time.time()
+<<<<<<< HEAD
     while time.time() - start < 5:
         traject, score, fraction, data, time = run_simulated_annealing(model, type_base, start)
         
+=======
+    while time.time() - start < dataclass.RUNNING_TIME:
+        traject, score, fraction, data = run_simulated_annealing(
+            model, type_base, start
+        )
+
+>>>>>>> e51d5decc092bcc96a58bb0de6386e6937d9070c
         # keep track of the best output when multiple simulated annealings are run
         if score > dataclass.best_score:
             (
@@ -94,11 +100,11 @@ def run_repeated_simulated_annealing(type_base, dataclass):
             ) = replace_best(score, traject, fraction)
         dataclass.all_data.extend(data)
         dataclass.counter += 1
+<<<<<<< HEAD
         dataclass.duration.extend(time)
+=======
+>>>>>>> e51d5decc092bcc96a58bb0de6386e6937d9070c
     with open("output/histo_data.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.all_data)
-        writer.writerow(dataclass.duration)
-        
-
-   
+        writer.writerow(np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data)))

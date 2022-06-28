@@ -11,11 +11,13 @@ Creates a histogram based of the data it receives
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 NUM_BINS = 100  # <- number of bins for the repeated base algorithm histogram
 
 
-def make_plot(type_base, all_data, key, time):
+def make_plot(type_base, all_data, key, RUNNING_TIME):
     """
     Receives the base type, the key and the data and plots the data into a histogram
     """
@@ -37,10 +39,10 @@ def make_plot(type_base, all_data, key, time):
 
     # histogram for when the hillclimber or simmulated annealing are run
     if key == 1 or key == 2:
-        # print(time)
-        # print(all_data)
+        # print(len(time))
+        time = np.linspace(0, RUNNING_TIME, len(all_data))
+        # print(len(all_data))
         plt.plot(time, all_data)
-        
 
         if key == 1:
             plt.title("Hillclimber algorithm: best scores over time")

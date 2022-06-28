@@ -25,35 +25,28 @@ import time
 
 def change_model_parameters(model, index):
     """
-    When removing a traject, this function changes some of the parameters
-    (visitedness of connections and total time of the model) of
-    the model to be able to add a new traject without taking on
-    the old values of the parameters
+    This function changes some of the models parameters
+    corresponding to the removal of a certain traject
     """
 
-    # looping over every connection of the specific traject
-    # (defined by the index) and decreasing the visitedness by one
+    # looping over every connection of the specific traject (index) and substracts visited by one
     for connection in range(len(model.visited_connections[index])):
         model.visited_connections[index][connection].visit -= 1
 
-    # decreasing the total time of the model by duration of
-    # the old traject
+    # substracting the duration of the specific traject (index) from the total time
     model.total_time -= model.time_dict[index]
     return model
 
 
 def remove_traject(model, index):
     """
-    ]Changing model parameters and emptying
-     the traject that corresponds with the input index
+    Changing model parameters and emptying the traject that corresponds with the input index
     """
 
     # decreasing the number of trajects
     model.number_traject -= 1
 
-    # decreasing the amount of visits of each connection with one
-    # and decreasing the total time with the traject time of the
-    # corresponding index
+    # change the model parameters corresponding to the removal of the traject
     model = change_model_parameters(model, index)
 
     # physical emptying the traject
@@ -64,33 +57,25 @@ def remove_traject(model, index):
 
 def replace_traject(model, index, type_base, type_hillclimber):
     """
-    Replaces a single traject (corresponding with a given index)
-    with a randomly generated one, for both random hillclimber and hillclimber
-    that replaces the 'worst' traject.
+    Replaces a single traject (index) with a randomly generated traject
     """
 
-    # Running random hillclimber
+    # changing model parameters when running random hillclimber
     if type_hillclimber == 0:
-
-        # decreasing the amount of visits of each connection with one
-        # and decreasing the total time with the traject time of the
-        # corresponding index
         model = change_model_parameters(model, index)
 
     # randomly choosing a starting station
     station = random.choice(model.stations)
 
-    # creating a baseline (randomly generated) traject
+    # creating a randomly generated traject
     if type_base == 0:
         latest_traject, time, connections = make_baseline_traject(station)
 
-    # creating a greedy (based on shortest distance
-    # between stations) trajects
+    # creating a greedy generated traject (based on shortest distance between stations)
     if type_base == 1:
         latest_traject, time, connections = make_greedy_traject(station)
 
-    # adapting model parameters to the newly added traject, thus
-    # changing the time and the visitedness of connections
+    # adapting model parameters to the newly added traject
     model.traject[index] = latest_traject
     model.total_time += time
     model.time_dict[index] = time
@@ -106,69 +91,53 @@ def replace_traject(model, index, type_base, type_hillclimber):
 def get_worst_traject_index(best_version):
     """
     This function looks through the different trajects
-    of the model. It removes them one by one, setting the
-    model back to its original state when the score of the
-    model without a traject is saved. It returns the index of
-    the traject without which the model score is the highest.
-    This traject is seen as the least contributing or 'worst'
-    traject of the model.
+    of the model. It removes them one by one, calculating each the quality score for each.
+    The model is then being set back to the original state with every traject.
+    The function returns the index of the traject that, when removed,
+    still generated the highest quality score.
+    This traject is seen as the least contributing or 'worst' traject of the model.
     """
 
     # creating list with scores of model without one traject
     changed_scores = []
 
-    # looping over every traject in the model
+    # looping over the trajects, saving the corresponding quality scores
+    # of when the i'th traject is removed from the input model
     for i in range(len(best_version.traject)):
-
-        # making a copy of the input model
         copy_version = copy.deepcopy(best_version)
 
-        # removing a traject and calculating the score of
-        # the model without the traject
+        # removing a traject and calculating the score of the model without the traject
         removed_version = remove_traject(copy_version, i)
         quality_score(removed_version)
-
-        # appending the scores to a list
         changed_scores.append(removed_version.score)
 
-    # finding the highest score of the list and
-    # returning this score
+    # returning the index of the traject with corresponding highest quality score of the list
     max_index = np.argmax(changed_scores)
     return max_index
 
 
-def execute_hillclimber(model, type_base, type_hillclimber):
+def execute_hillclimber(model, type_base, type_hillclimber, dataclass):
     """
-    Executing a hillclimber, dependant on
-    the input it gets, thus which type of hillclimber is
-    specified.
+    Executing a hillclimber, dependent on the type of hillclimber the user likes
     """
 
-    time_list = []
     start = time.time()
-    # initializing an empty list with the best scores to
-    # plot the hillclimber
     best_scores = []
-
-    # initializing a counter to print at 500 step
-    # intervals, to keep track of the score
     counter = 0
 
-    # initializing a best version for the first run and
-    # to change later on when a higer score is reached
+    # the current best model
     best_version = copy.deepcopy(model)
-    
-    while time.time() - start < 10:
-    # looping until KeyboardInterrupt
 
-        # creating a version to be changed of the current best version
+    while time.time() - start < dataclass.RUNNING_TIME:
+
+        # creating a version to make adaptions to the current best version
         change_version = copy.deepcopy(best_version)
 
-        # when the worst traject hillclimber is selected
+        # when the 'worst traject' hillclimber is selected
         if type_hillclimber == 1:
 
-            # getting the index of the perceived worst traject, removing this traject
-            # and replacing this with a newly generated traject
+            # getting the index of the perceived worst traject,
+            # removing this traject and replacing this with a newly generated traject
             max_index = get_worst_traject_index(best_version)
             change_version = remove_traject(change_version, max_index)
             new_model = replace_traject(
@@ -178,23 +147,18 @@ def execute_hillclimber(model, type_base, type_hillclimber):
         # when the random hillclimber is selected
         elif type_hillclimber == 0:
 
-            # choosing a random index that corresponds with the
-            # traject that should be changed
+            # select random traject (index) and replace that traject
             random_index = random.randint(0, len(model.traject) - 1)
-
-            # replace the respective traject
             new_model = replace_traject(
                 change_version, random_index, type_base, type_hillclimber
             )
 
-        # calculate quality score and compare with the best
-        # possible score, if new score is better,
-        # overwrite current best scoring model
+        # calculate quality score, overwrite best scoring model if new score is better
         quality_score(new_model)
         if new_model.score >= best_version.score:
             best_version = new_model
 
-        # print counter and score every 500 steps
+        # print counter and score every 500 steps to keep track of score and steps
         counter += 1
         if counter % 500 == 0:
             print(counter)
@@ -204,9 +168,10 @@ def execute_hillclimber(model, type_base, type_hillclimber):
 
         # append best score to list to plot
         best_scores.append(best_version.score)
-        current_time = time.time() - start
-        #print(current_time)
-        time_list.append(current_time)
-    print(time_list)
 
-    return best_version.traject, best_version.score, best_version.fraction, best_scores, time_list
+    return (
+        best_version.traject,
+        best_version.score,
+        best_version.fraction,
+        best_scores,
+    )

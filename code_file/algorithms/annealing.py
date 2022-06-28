@@ -16,17 +16,18 @@ taking on a worse score is dependant on the chance, which depends on the tempera
 from code_file.helpers import quality_score
 import random
 import copy
-import time
 from code_file.algorithms.hillclimber import replace_traject
 
+MAX_TEMPERATURE = 25
+TOTAL_ITERATIONS = 10000
 
-def temperature(start_temperature, total_iterations, iteration):
+
+def temperature(start_temperature, iteration):
     """
-    Calculating and returning the temperature per iteration,
-    using a linear function
+    Calculating and returning the temperature per iteration, using a linear function
     """
     temperature = start_temperature - (
-        (start_temperature / total_iterations) * iteration
+        (start_temperature / TOTAL_ITERATIONS) * iteration
     )
     return temperature
 
@@ -34,7 +35,7 @@ def temperature(start_temperature, total_iterations, iteration):
 def chance(score_old, score_new, temperature):
     """
     Calculating the acceptance chance of a model version
-    with a score worse than the best score
+    with a score worse than the best current score
     """
     chance = 2 ** ((score_new - score_old) / temperature)
     return chance
@@ -42,14 +43,12 @@ def chance(score_old, score_new, temperature):
 
 def change_model(current_version, type_base):
     """
-    Changes a random traject within a model and
-    recalculates model parameters
+    Changes a random traject within a model and recalculates model parameters
     """
 
     # choosing a random traject to be changed
     index = random.randint(0, (len(current_version.traject) - 1))
 
-    # copy the model to only make changes to the copy
     copy_version = copy.deepcopy(current_version)
 
     # replace traject and adapt model parameters
@@ -62,60 +61,50 @@ def change_model(current_version, type_base):
 
 def run_simulated_annealing(model, type_base, start):
     """
-    Running a simulated annealing, takes a model and
-    a base type algorithm as input, to change a traject based on
-    this base type
+    Simulated annealing takes a model and a base type algorithm as input,
+    changes a traject based on this base type algorithm
     """
-    
-    time_list = []
+
     # run the model unless there is an OverflowError
     try:
-
-        # initializing parameters of the simulated annealing such
-        # as the number of iterations, the temperature and a list to keep
-        # track of all scores, to be able to plot
-        
         scores = []
-        total_iterations = 1000
         current_version = copy.deepcopy(model)
         best_version = copy.deepcopy(model)
-        max_temperature = 25
-        current_temperature = max_temperature
+        current_temperature = MAX_TEMPERATURE
 
         # loops for every iteration
-        for i in range(total_iterations):
-            current_time = time.time() - start
-            time_list.append(current_time)
-
+        for iteration in range(TOTAL_ITERATIONS):
             # calculating the current temperature
-            current_temperature = temperature(max_temperature, total_iterations, i)
+            current_temperature = temperature(MAX_TEMPERATURE, iteration)
 
             # creating a new model
             new_model = change_model(current_version, type_base)
 
             # determining a random number and calculating the acceptance chance
             random_float = random.random()
-            chance_float = chance(
+            accepted_chance = chance(
                 current_version.score, new_model.score, current_temperature
             )
 
-            # when the newly generated model has a higher score than the best
-            # version, replacing the current and best version with the
-            # newly generated model
+            # when the new model has a higher quality score,
+            # replace the best version model with the new model
             if new_model.score > best_version.score:
                 current_version = new_model
                 best_version = new_model
 
-            # if the score of the new model is lower than the best score
-            # and the random float is lower than the chance, the new model
-            # will be the next current version and thus a new starting point
-            elif random_float < chance_float:
+            # when the random generated float is lower than the acceptance chance,
+            # the new model with lower quality score than the current score can be accepted too.
+            elif random_float < accepted_chance:
                 current_version = new_model
             scores.append(current_version.score)
 
-    # if the function reaches an OverflowError, do not execute but just pass and
-    # go into the next iteration
+    # when OverflowError, pass and go onto the next iteration
     except OverflowError:
         pass
 
-    return best_version.traject, best_version.score, best_version.fraction, scores, time_list
+    return (
+        best_version.traject,
+        best_version.score,
+        best_version.fraction,
+        scores,
+    )
