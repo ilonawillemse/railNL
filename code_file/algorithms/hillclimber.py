@@ -48,8 +48,7 @@ def remove_traject(model, index):
      the traject that corresponds with the input index
     """
 
-    # getting the time corresponding with the traject that is to
-    # be removed and decreasing the number of trajects
+    # decreasing the number of trajects
     model.number_traject -= 1
 
     # decreasing the amount of visits of each connection with one

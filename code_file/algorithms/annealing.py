@@ -6,7 +6,8 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-Repeatedly searching for other trajects based on the chance formula: 2** ((old score - new score) / temperature)
+Repeatedly searching for other trajects based on the chance formula:
+    2** ((old score - new score) / temperature)
 Trajects can have better or worse score than the previous best score, where
 taking on a worse score is dependant on the chance, which depends on the temperature
 =================================================

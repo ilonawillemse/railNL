@@ -12,7 +12,8 @@ Adds the connections between the stations to a dictionary with the connection nu
 =================================================
 """
 
-from code_file.classes import Station, Connection
+from code_file.classes.connection import Connection
+from code_file.classes.station import Station
 import csv
 
 

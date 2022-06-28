@@ -6,6 +6,7 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
+A file that make the chosen algoritm run
 =================================================
 """
 
@@ -16,19 +17,24 @@ from code_file.algorithms.hillclimber import execute_hillclimber
 from code_file.algorithms.annealing import run_simulated_annealing
 import time
 
+def choose_base_model(type_base):
+    model = Model()
+    if type_base == 0:
+        model.baseline()
+    if type_base == 1:
+        model.greedy()
+    return model
+
+
 
 def run_simple(type_base, dataclass):
-    """ """
+    """
+    run the base algorithm multiple times and save the best output
+    """
     with open("output/histo_data.csv", "w") as output_file:
         start = time.time()
         while time.time() - start < 5:
-            model = Model()
-
-            if type_base == 0:
-                model.baseline()
-
-            if type_base == 1:
-                model.greedy()
+            model = choose_base_model(type_base)
 
             writer = csv.writer(output_file)
 
@@ -50,12 +56,10 @@ def run_simple(type_base, dataclass):
 
 
 def run_hillclimber(type_base, type_hillclimber, dataclass):
-    
-    model = Model()
-    if type_base == 0:
-        model.baseline()
-    if type_base == 1:
-        model.greedy()
+    """
+    Run hillclimber algorithm
+    """
+    model = choose_base_model(type_base)
 
     (
         dataclass.best_traject,
@@ -73,15 +77,16 @@ def run_hillclimber(type_base, type_hillclimber, dataclass):
 
 
 def run_repeated_simulated_annealing(type_base, dataclass):
-    model = Model()
-    if type_base == 0:
-        model.baseline()
-    if type_base == 1:
-        model.greedy()
+    """
+    run the simulated annealing algorithm multiple times and save the best output
+    """
+    model = choose_base_model(type_base)
 
     start = time.time()
     while time.time() - start < 5:
         traject, score, fraction, data, tmp = run_simulated_annealing(model, type_base, start)
+        
+        # keep track of the best output when multiple simulated annealings are run
         if score > dataclass.best_score:
             (
                 dataclass.best_traject,

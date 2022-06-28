@@ -14,6 +14,8 @@ bias:   max of 180 min traject length
 
 import random
 
+MAX_TIME = 180
+
 # def next(station, visited_connections):
 #     new_choice = None
 #     for _, value in station.connections.items():
@@ -24,7 +26,9 @@ import random
 
 
 def make_baseline_traject(station):
-    "......................."
+    """
+    Creates new random traject
+    """
 
     time = 0
     visited_stations = []
@@ -32,7 +36,7 @@ def make_baseline_traject(station):
     visited_stations.append(station)
 
     # ---------------------- limited connection use--------------
-    # while time < 180:
+    # while time < MAX_TIME:
     #     new_choice = next(station, visited_connections)
     #     if new_choice == None:
     #         break
@@ -43,7 +47,8 @@ def make_baseline_traject(station):
     #         new_station = new_choice.end
 
     # ------------------------ limited station use -----------------
-    while time <= 180:
+    # add stations to the traject as long as the max duration of the traject is not yet reached
+    while time <= MAX_TIME:
         connections = list(station.connections.values())
         new_choice = random.choice(connections)
         if new_choice is None:
@@ -56,6 +61,7 @@ def make_baseline_traject(station):
 
         counter = 0
 
+        # try finding stations that have not yet visited, if not found for 100 times quit
         while new_station in visited_stations and counter < 100:
             new_choice = random.choice(connections)
             if station != new_choice.start:
@@ -70,7 +76,8 @@ def make_baseline_traject(station):
 
         time += int(float(new_choice.duration))
 
-        if time > 180:
+        # if duration time of the traject has exceeded the maximum time, remove last added station
+        if time > MAX_TIME:
             time -= int(float(new_choice.duration))
             break
 
@@ -83,7 +90,9 @@ def make_baseline_traject(station):
 
 
 def starting_trajects(model):
-    "......................."
+    """
+    run the baseline (random) algorithm
+    """
 
     # model.number_traject = random.randint(7,13)
     model.number_traject = 11

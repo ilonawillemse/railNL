@@ -6,14 +6,21 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-greedy constructive searching algorithm for trajects with lowest costs (shortest travel duration)
+Greedy constructive searching algorithm for trajects with lowest costs (shortest travel duration)
 =================================================
 """
 
 import random
 
+MAX_TIME = 180
+
 
 def next_shortest(station, visited_connections):
+    """
+    Looks for nexts shortest duration to next station where the connection has not yet been visited
+    and adds this station to its traject
+    """
+
     shortest_duration = None
     new_choice = None
     for _, value in station.connections.items():
@@ -29,6 +36,10 @@ def next_shortest(station, visited_connections):
 
 
 def make_greedy_traject(station):
+    """
+    makes a traject based on a greedy (lowest duration) algorithm
+    """
+
     visited_connections = []
     visited_stations = []
     time = 0
@@ -36,7 +47,7 @@ def make_greedy_traject(station):
     # add current station to visited stations list
     visited_stations.append(station)
 
-    while time <= 180:
+    while time <= MAX_TIME:
         new_choice = next_shortest(station, visited_connections)
         if new_choice is None:
             break
@@ -62,7 +73,7 @@ def make_greedy_traject(station):
         # generate time
         time += int(float(new_choice.duration))
 
-        if time > 180:
+        if time > MAX_TIME:
             time -= int(float(new_choice.duration))
             break
 
@@ -76,6 +87,10 @@ def make_greedy_traject(station):
 
 
 def get_started(model):
+    """
+    run the greedy algorithm
+    """
+
     model.number_traject = random.randint(1, 20)
     for i in range(model.number_traject):
         station = random.choice(model.stations)
