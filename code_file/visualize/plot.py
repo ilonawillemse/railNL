@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 NUM_BINS = 100  # <- number of bins for the repeated base algorithm histogram
 
 
-def make_plot(type_base, all_data, key):
+def make_plot(type_base, all_data, key, time):
     """
     Receives the base type, the key and the data and plots the data into a histogram
     """
@@ -37,7 +37,10 @@ def make_plot(type_base, all_data, key):
 
     # histogram for when the hillclimber or simmulated annealing are run
     if key == 1 or key == 2:
-        plt.plot(all_data)
+        # print(time)
+        # print(all_data)
+        plt.plot(time, all_data)
+        
 
         if key == 1:
             plt.title("Hillclimber algorithm: best scores over time")
@@ -45,6 +48,6 @@ def make_plot(type_base, all_data, key):
         elif key == 2:
             plt.title("Simulated annealing algorithm: scores over time")
 
-        plt.xlabel("Number of iterations")
+        plt.xlabel("Seconds")
         plt.ylabel("Model quality score")
         plt.savefig("output/histogramtest.png")

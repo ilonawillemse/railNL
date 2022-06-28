@@ -20,6 +20,9 @@ import copy
 import numpy as np
 from code_file.algorithms.greedy import make_greedy_traject
 from code_file.algorithms.baseline import make_baseline_traject
+import time
+
+RUNNING_TIME = 10
 
 
 def change_model_parameters(model, index):
@@ -120,63 +123,61 @@ def execute_hillclimber(model, type_base, type_hillclimber):
     Executing a hillclimber, dependent on the type of hillclimber the user likes
     """
 
-    try:
-        best_scores = []
-        counter = 0
+    time_list = []
+    start = time.time()
+    best_scores = []
+    counter = 0
 
-        # initializing a best version for the first run and
-        # to change later on when a higer score is reached
-        best_version = copy.deepcopy(model)
+    # the current best model
+    best_version = copy.deepcopy(model)
 
-        # looping until KeyboardInterrupt
-        while True:
+    while time.time() - start < RUNNING_TIME:
 
-            # creating a version to be changed of the current best version
-            change_version = copy.deepcopy(best_version)
+        # creating a version to make adaptions to the current best version
+        change_version = copy.deepcopy(best_version)
 
-            # when the worst traject hillclimber is selected
-            if type_hillclimber == 1:
+        # when the 'worst traject' hillclimber is selected
+        if type_hillclimber == 1:
 
-                # getting the index of the perceived worst traject, removing this traject
-                # and replacing this with a newly generated traject
-                max_index = get_worst_traject_index(best_version)
-                change_version = remove_traject(change_version, max_index)
-                new_model = replace_traject(
-                    change_version, max_index, type_base, type_hillclimber
-                )
+            # getting the index of the perceived worst traject,
+            # removing this traject and replacing this with a newly generated traject
+            max_index = get_worst_traject_index(best_version)
+            change_version = remove_traject(change_version, max_index)
+            new_model = replace_traject(
+                change_version, max_index, type_base, type_hillclimber
+            )
 
-            # when the random hillclimber is selected
-            elif type_hillclimber == 0:
+        # when the random hillclimber is selected
+        elif type_hillclimber == 0:
 
-                # choosing a random index that corresponds with the
-                # traject that should be changed
-                random_index = random.randint(0, len(model.traject) - 1)
+            # select random traject (index) and replace that traject
+            random_index = random.randint(0, len(model.traject) - 1)
+            new_model = replace_traject(
+                change_version, random_index, type_base, type_hillclimber
+            )
 
-                # replace the respective traject
-                new_model = replace_traject(
-                    change_version, random_index, type_base, type_hillclimber
-                )
+        # calculate quality score, overwrite best scoring model if new score is better
+        quality_score(new_model)
+        if new_model.score >= best_version.score:
+            best_version = new_model
 
-            # calculate quality score and compare with the best
-            # possible score, if new score is better,
-            # overwrite current best scoring model
-            quality_score(new_model)
-            if new_model.score >= best_version.score:
-                best_version = new_model
+        # print counter and score every 500 steps to keep track of score and steps
+        counter += 1
+        if counter % 500 == 0:
+            print(counter)
+            print(
+                best_version.score,
+            )
 
-            # print counter and score every 500 steps
-            counter += 1
-            if counter % 500 == 0:
-                print(counter)
-                print(
-                    best_version.score,
-                )
+        # append best score to list to plot
+        best_scores.append(best_version.score)
+        current_time = time.time() - start
+        time_list.append(current_time)
 
-            # append best score to list to plot
-            best_scores.append(best_version.score)
-
-    # stop loop when the user executes a KeyboardInterrupt
-    except KeyboardInterrupt:
-        pass
-
-    return best_version.traject, best_version.score, best_version.fraction, best_scores
+    return (
+        best_version.traject,
+        best_version.score,
+        best_version.fraction,
+        best_scores,
+        time_list,
+    )
