@@ -15,6 +15,7 @@ taking on a worse score is dependant on the chance, which depends on the tempera
 from code_file.helpers import quality_score
 import random
 import copy
+import time
 from code_file.algorithms.hillclimber import replace_traject
 
 
@@ -58,21 +59,23 @@ def change_model(current_version, type_base):
     return new_model
 
 
-def run_simulated_annealing(model, type_base):
+def run_simulated_annealing(model, type_base, start):
     """
     Running a simulated annealing, takes a model and
     a base type algorithm as input, to change a traject based on
     this base type
     """
-
-    # run the model unless tiher is an OverflowError
+    
+    time_list = []
+    # run the model unless there is an OverflowError
     try:
 
         # initializing parameters of the simulated annealing such
         # as the number of iterations, the temperature and a list to keep
         # track of all scores, to be able to plot
+        
         scores = []
-        total_iterations = 100000
+        total_iterations = 1000
         current_version = copy.deepcopy(model)
         best_version = copy.deepcopy(model)
         max_temperature = 25
@@ -80,6 +83,8 @@ def run_simulated_annealing(model, type_base):
 
         # loops for every iteration
         for i in range(total_iterations):
+            current_time = time.time() - start
+            time_list.append(current_time)
 
             # calculating the current temperature
             current_temperature = temperature(max_temperature, total_iterations, i)
@@ -112,4 +117,4 @@ def run_simulated_annealing(model, type_base):
     except OverflowError:
         pass
 
-    return best_version.traject, best_version.score, best_version.fraction, scores
+    return best_version.traject, best_version.score, best_version.fraction, scores, time_list

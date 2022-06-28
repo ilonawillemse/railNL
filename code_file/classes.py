@@ -41,3 +41,4 @@ class Dataclass:
         self.best_traject = 0
         self.best_traject = []
         self.all_data = []
+        self.duration = []
