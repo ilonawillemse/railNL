@@ -25,7 +25,6 @@ from code_file.algorithms.run_algorithm import (
     run_simple,
 )
 
-
 if __name__ == "__main__":
     dataclass = Dataclass()
     type_hillclimber = None
@@ -63,11 +62,8 @@ if __name__ == "__main__":
         run_repeated_simulated_annealing(type_base, dataclass)
 
     # generates an outputfile with the best trajects found and its corresponding quality score
-    output_generate(
-        dataclass.best_traject, dataclass.best_score, dataclass.best_fraction
-    )
+    output_generate(dataclass.best_traject, dataclass.best_score)
 
     if key != 3:
         # plot with the corresponding gattered data
-        make_plot(type_base, dataclass.all_data, key, dataclass.duration)
-        
+        make_plot(type_base, dataclass.all_data, key, dataclass.RUNNING_TIME)

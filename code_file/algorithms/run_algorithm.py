@@ -16,8 +16,7 @@ from code_file.helpers import replace_best
 from code_file.algorithms.hillclimber import execute_hillclimber
 from code_file.algorithms.annealing import run_simulated_annealing
 import time
-
-RUNNING_TIME = 5
+import numpy as np
 
 
 def choose_base_model(type_base):
@@ -35,7 +34,7 @@ def run_simple(type_base, dataclass):
     """
     with open("output/histo_data.csv", "w") as output_file:
         start = time.time()
-        while time.time() - start < RUNNING_TIME:
+        while time.time() - start < dataclass.RUNNING_TIME:
             model = choose_base_model(type_base)
 
             writer = csv.writer(output_file)
@@ -67,12 +66,11 @@ def run_hillclimber(type_base, type_hillclimber, dataclass):
         dataclass.best_score,
         dataclass.best_fraction,
         dataclass.all_data,
-        dataclass.duration,
-    ) = execute_hillclimber(model, type_base, type_hillclimber, RUNNING_TIME)
+    ) = execute_hillclimber(model, type_base, type_hillclimber, dataclass)
     with open("output/histo_data.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.all_data)
-        writer.writerow(dataclass.duration)
+        writer.writerow(np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data)))
 
 
 def run_repeated_simulated_annealing(type_base, dataclass):
@@ -82,8 +80,8 @@ def run_repeated_simulated_annealing(type_base, dataclass):
     model = choose_base_model(type_base)
 
     start = time.time()
-    while time.time() - start < RUNNING_TIME:
-        traject, score, fraction, data, tmp = run_simulated_annealing(
+    while time.time() - start < dataclass.RUNNING_TIME:
+        traject, score, fraction, data = run_simulated_annealing(
             model, type_base, start
         )
 
@@ -96,8 +94,7 @@ def run_repeated_simulated_annealing(type_base, dataclass):
             ) = replace_best(score, traject, fraction)
         dataclass.all_data.extend(data)
         dataclass.counter += 1
-        dataclass.duration.extend(tmp)
     with open("output/histo_data.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.all_data)
-        writer.writerow(dataclass.duration)
+        writer.writerow(np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data)))

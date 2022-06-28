@@ -116,12 +116,11 @@ def get_worst_traject_index(best_version):
     return max_index
 
 
-def execute_hillclimber(model, type_base, type_hillclimber, RUNNING_TIME):
+def execute_hillclimber(model, type_base, type_hillclimber, dataclass):
     """
     Executing a hillclimber, dependent on the type of hillclimber the user likes
     """
 
-    time_list = []
     start = time.time()
     best_scores = []
     counter = 0
@@ -129,7 +128,7 @@ def execute_hillclimber(model, type_base, type_hillclimber, RUNNING_TIME):
     # the current best model
     best_version = copy.deepcopy(model)
 
-    while time.time() - start < RUNNING_TIME:
+    while time.time() - start < dataclass.RUNNING_TIME:
 
         # creating a version to make adaptions to the current best version
         change_version = copy.deepcopy(best_version)
@@ -169,13 +168,10 @@ def execute_hillclimber(model, type_base, type_hillclimber, RUNNING_TIME):
 
         # append best score to list to plot
         best_scores.append(best_version.score)
-        current_time = time.time() - start
-        time_list.append(current_time)
 
     return (
         best_version.traject,
         best_version.score,
         best_version.fraction,
         best_scores,
-        time_list,
     )

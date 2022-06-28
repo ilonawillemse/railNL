@@ -29,7 +29,7 @@ def get_name(list):
     return names_list
 
 
-def output_generate(traject, score, fraction):
+def output_generate(traject, score):
     "generates an output file with the trajects formed and corresponding quality score"
 
     with open("output/output_model.csv", "w") as output_file:
