@@ -25,6 +25,9 @@ from code_file.algorithms.run_algorithm import (
     run_simple,
 )
 
+MAX_TEMPERATURE = 30
+
+
 if __name__ == "__main__":
     dataclass = Dataclass()
     type_hillclimber = None
@@ -59,7 +62,18 @@ if __name__ == "__main__":
         run_hillclimber(type_base, type_hillclimber, dataclass)
 
     if key == 2:
-        run_repeated_simulated_annealing(type_base, dataclass)
+        default = int(
+            input("Would you like to choose the Max temp yourself? no(0), yes(1)?: ")
+        )
+        if default == 0:
+            max_temp = MAX_TEMPERATURE
+        else:
+            max_temp = int(
+                input(
+                    "What would you like to be the max temperature for the simulated annealing?: "
+                )
+            )
+        run_repeated_simulated_annealing(type_base, dataclass, max_temp)
 
     # generates an outputfile with the best trajects found and its corresponding quality score
     output_generate(dataclass.best_traject, dataclass.best_score)
