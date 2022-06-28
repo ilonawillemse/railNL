@@ -23,7 +23,6 @@ MAX_TEMPERATURE = 25
 TOTAL_ITERATIONS = 1000
 
 
-
 def temperature(start_temperature, iteration):
     """
     Calculating and returning the temperature per iteration, using a linear function
@@ -92,13 +91,14 @@ def run_simulated_annealing(model, type_base, start):
                 current_version.score, new_model.score, current_temperature
             )
 
-            # when the new model has a higher quality score, replace the best version model with the new model
+            # when the new model has a higher quality score,
+            # replace the best version model with the new model
             if new_model.score > best_version.score:
                 current_version = new_model
                 best_version = new_model
 
             # when the random generated float is lower than the acceptance chance,
-            # the new model with lower quality score than the current score can be accepted as 'best model' too.
+            # the new model with lower quality score than the current score can be accepted too.
             elif random_float < accepted_chance:
                 current_version = new_model
             scores.append(current_version.score)
@@ -107,4 +107,10 @@ def run_simulated_annealing(model, type_base, start):
     except OverflowError:
         pass
 
-    return best_version.traject, best_version.score, best_version.fraction, scores, time_list
+    return (
+        best_version.traject,
+        best_version.score,
+        best_version.fraction,
+        scores,
+        time_list,
+    )
