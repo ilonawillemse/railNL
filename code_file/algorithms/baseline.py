@@ -15,6 +15,34 @@ bias:   max of 180 min traject length
 import random
 
 MAX_TIME = 180
+
+def check_end_start_station(station, new_choice):
+    """
+    Check if the new station is end or start station
+    """
+    if station != new_choice.start:
+        new_station = new_choice.start
+    else:
+        new_station = new_choice.end
+    return new_station
+
+def change_model_parameters(model, latest_traject, time, connections, i):
+    """
+    Change model parameters after generating new model
+    """
+    model.traject.append(latest_traject)
+    model.total_time += time
+    model.time_dict[i] = time
+    model.visited_connections.append(connections)
+    return model
+
+# def next(station, visited_connections):
+#     new_choice = None
+#     for _, value in station.connections.items():
+#         if value not in visited_connections:
+#             new_choice = value
+
+#     return new_choice
 MAX_TRIAL = 100
 
 
@@ -35,20 +63,14 @@ def make_baseline_traject(station):
         if new_choice is None:
             break
 
-        if station != new_choice.start:
-            new_station = new_choice.start
-        else:
-            new_station = new_choice.end
+        new_station = check_end_start_station(station, new_choice)
 
         counter = 0
 
         # try finding stations that have not yet visited, if not found for 100 times quit
         while new_station in visited_stations and counter < MAX_TRIAL:
             new_choice = random.choice(connections)
-            if station != new_choice.start:
-                new_station = new_choice.start
-            else:
-                new_station = new_choice.end
+            new_station = check_end_start_station(station, new_choice)
             counter += 1
 
         if counter == MAX_TRIAL:
@@ -79,7 +101,6 @@ def starting_trajects(model):
     for i in range(model.number_traject):
         station = random.choice(model.stations)
         latest_traject, time, connections = make_baseline_traject(station)
-        model.traject.append(latest_traject)
-        model.total_time += time
-        model.time_dict[i] = time
-        model.visited_connections.append(connections)
+        model = change_model_parameters(model, latest_traject, time, connections, i)
+
+
