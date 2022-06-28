@@ -22,8 +22,6 @@ from code_file.algorithms.greedy import make_greedy_traject
 from code_file.algorithms.baseline import make_baseline_traject
 import time
 
-RUNNING_TIME = 10
-
 
 def change_model_parameters(model, index):
     """
@@ -118,7 +116,7 @@ def get_worst_traject_index(best_version):
     return max_index
 
 
-def execute_hillclimber(model, type_base, type_hillclimber):
+def execute_hillclimber(model, type_base, type_hillclimber, RUNNING_TIME):
     """
     Executing a hillclimber, dependent on the type of hillclimber the user likes
     """

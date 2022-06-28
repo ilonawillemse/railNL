@@ -17,6 +17,9 @@ from code_file.algorithms.hillclimber import execute_hillclimber
 from code_file.algorithms.annealing import run_simulated_annealing
 import time
 
+RUNNING_TIME = 5
+
+
 def choose_base_model(type_base):
     model = Model()
     if type_base == 0:
@@ -26,14 +29,13 @@ def choose_base_model(type_base):
     return model
 
 
-
 def run_simple(type_base, dataclass):
     """
     run the base algorithm multiple times and save the best output
     """
     with open("output/histo_data.csv", "w") as output_file:
         start = time.time()
-        while time.time() - start < 5:
+        while time.time() - start < RUNNING_TIME:
             model = choose_base_model(type_base)
 
             writer = csv.writer(output_file)
@@ -52,7 +54,6 @@ def run_simple(type_base, dataclass):
             print(len(dataclass.best_traject))
             current_time = time.time() - start
             print(current_time)
-   
 
 
 def run_hillclimber(type_base, type_hillclimber, dataclass):
@@ -66,14 +67,12 @@ def run_hillclimber(type_base, type_hillclimber, dataclass):
         dataclass.best_score,
         dataclass.best_fraction,
         dataclass.all_data,
-        dataclass.duration
-    ) = execute_hillclimber(model, type_base, type_hillclimber)
+        dataclass.duration,
+    ) = execute_hillclimber(model, type_base, type_hillclimber, RUNNING_TIME)
     with open("output/histo_data.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.all_data)
         writer.writerow(dataclass.duration)
-
-
 
 
 def run_repeated_simulated_annealing(type_base, dataclass):
@@ -83,9 +82,11 @@ def run_repeated_simulated_annealing(type_base, dataclass):
     model = choose_base_model(type_base)
 
     start = time.time()
-    while time.time() - start < 5:
-        traject, score, fraction, data, tmp = run_simulated_annealing(model, type_base, start)
-        
+    while time.time() - start < RUNNING_TIME:
+        traject, score, fraction, data, tmp = run_simulated_annealing(
+            model, type_base, start
+        )
+
         # keep track of the best output when multiple simulated annealings are run
         if score > dataclass.best_score:
             (
@@ -100,6 +101,3 @@ def run_repeated_simulated_annealing(type_base, dataclass):
         writer = csv.writer(output_file)
         writer.writerow(dataclass.all_data)
         writer.writerow(dataclass.duration)
-        
-
-   
