@@ -22,6 +22,6 @@ class Dataclass:
         self.best_traject = []
         self.all_data = []
         self.duration = []
-        self.RUNNING_TIME = 10
+        self.RUNNING_TIME = 300
         self.plot_data = []
-        self.TOTAL_ITERATIONS = 4000
+        self.TOTAL_ITERATIONS = 180000

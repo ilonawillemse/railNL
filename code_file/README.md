@@ -10,4 +10,3 @@ It contains:
 - a folder containing the files for visualization (visualize)
 - a file for loading the data from the given csv files (loader.py)
 - a file which contains some helpers functions (helpers.py)
-- a file that holds the Model class (model.py)

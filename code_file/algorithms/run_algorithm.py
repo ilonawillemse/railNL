@@ -122,6 +122,7 @@ def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
             np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data))
         )
 
+
 def run_repeated_depth_hillclimber(type_base, dataclass):
     """
     Run hillclimber algorithm
@@ -145,4 +146,3 @@ def run_repeated_depth_hillclimber(type_base, dataclass):
                 dataclass.best_score,
                 dataclass.best_fraction,
             ) = replace_best(best_score, best_traject, best_fraction)
-

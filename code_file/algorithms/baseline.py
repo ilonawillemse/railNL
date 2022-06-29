@@ -15,6 +15,8 @@ bias:   max of 180 min traject length
 import random
 
 MAX_TIME = 180
+MAX_TRIAL = 100
+
 
 def check_end_start_station(station, new_choice):
     """
@@ -26,6 +28,7 @@ def check_end_start_station(station, new_choice):
         new_station = new_choice.end
     return new_station
 
+
 def change_model_parameters(model, latest_traject, time, connections, i):
     """
     Change model parameters after generating new model
@@ -35,6 +38,7 @@ def change_model_parameters(model, latest_traject, time, connections, i):
     model.time_dict[i] = time
     model.visited_connections.append(connections)
     return model
+
 
 # def next(station, visited_connections):
 #     new_choice = None
@@ -79,12 +83,12 @@ def make_baseline_traject(station):
         counter = 0
 
         # try finding stations that have not yet visited, if not found for 100 times quit
-        while new_station in visited_stations and counter < 100:
+        while new_station in visited_stations and counter < MAX_TRIAL:
             new_choice = random.choice(connections)
             new_station = check_end_start_station(station, new_choice)
             counter += 1
 
-        if counter == 100:
+        if counter == MAX_TRIAL:
             break
         # ---------------------------------------------------
 
@@ -108,12 +112,9 @@ def starting_trajects(model):
     run the baseline (random) algorithm
     """
 
-    model.number_traject = random.randint(1,20)
-    # model.number_traject = 3
+    # model.number_traject = random.randint(1,20)
+    model.number_traject = 11
     for i in range(model.number_traject):
         station = random.choice(model.stations)
         latest_traject, time, connections = make_baseline_traject(station)
         model = change_model_parameters(model, latest_traject, time, connections, i)
-     
-
-
