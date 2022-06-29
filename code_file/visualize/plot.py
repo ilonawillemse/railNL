@@ -1,12 +1,13 @@
 """
 =================================================
-make_hist.py
+plot.py
 
 Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-Creates a histogram based of the data it receives
+Creates a histogram based of the data from the saved data file
+Creates a line plot based on the data from the saved data file
 =================================================
 """
 
@@ -19,7 +20,7 @@ NUM_BINS = 20  # <- number of bins for the repeated base algorithm histogram
 
 def make_hist():
     """
-    Receives the base type, the key and the data and plots the data into a histogram
+    Plots the data into a histogram
     """
 
     # histogram for when the repeated base algorithm is run
@@ -81,6 +82,9 @@ def make_hist():
 
 
 def make_plot(key):
+    """
+    Plots the data into a line plot
+    """
     # plot for when the hillclimber or simmulated annealing are run
     # load data from csv file
     plot_data_annealing = []
@@ -121,7 +125,6 @@ def make_plot(key):
     plt.plot(time_annealing, plot_data_annealing, label="Simulated Annealing")
 
     plt.title("Hillclimber algorithm vs Simulated Annealing")
-
     plt.xlabel("Seconds")
     plt.ylabel("Model quality score")
     plt.legend()
