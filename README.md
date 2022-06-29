@@ -14,9 +14,9 @@ in which the K is the objective score (quality score), T the number of trajects,
 # Usage:
 ```
 Run "main.py" to enter the program and choose what algorithm you would like to run by following the instructions.
+Install requirements by running: pip install -r requirements.txt.
 ```
 
-<<<<<<< HEAD
 # Structure:
 -   /code_file: contains all code of the project
     - /code_file/algorithms: contains the code for the algorithms
@@ -29,8 +29,6 @@ Run "main.py" to enter the program and choose what algorithm you would like to r
 -   /output: stores the output files
 
 
-=======
->>>>>>> 9522a9a7f54ff49b16ee541ba81eeb92814c0825
 ### Assignment 1:
 ```
 Make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. All rails must be used.
