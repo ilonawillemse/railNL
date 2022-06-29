@@ -12,6 +12,7 @@ Creates a histogram based of the data it receives
 
 import matplotlib.pyplot as plt
 import numpy as np
+import csv
 
 
 NUM_BINS = 100  # <- number of bins for the repeated base algorithm histogram
@@ -44,19 +45,49 @@ def make_hist(type_base, all_data, key):
     plt.savefig("output/histogram.png")
 
 
-def make_plot(key, RUNNING_TIME, plot_data):
+def make_plot(key):
     # plot for when the hillclimber or simmulated annealing are run
-    if key == 1 or key == 2:
-        time = np.linspace(0, RUNNING_TIME, len(plot_data))
+    # load data from csv file
+    plot_data = []
+    time = []
+    with open("output/plot_data_annealing.csv") as f:
+        csv_reader = csv.reader(f, delimiter=",")
 
-        plt.plot(time, plot_data)
+        counter = 0
+        for row in csv_reader:
+            if counter == 0:
+                for score in row:
+                    plot_data.append(float(score))
+            else:
+                for time_data in row:
+                    time.append(float(time_data))
+            counter += 1
 
-        if key == 1:
-            plt.title("Hillclimber algorithm: best scores over time")
+    f.close()
 
-        elif key == 2:
-            plt.title("Simulated annealing algorithm: scores over time")
+    plot_data_hillclimber = []
+    time_hillclimber = []
+    with open("output/plot_data_hillclimber.csv") as f:
+        csv_reader = csv.reader(f, delimiter=",")
 
-        plt.xlabel("Seconds")
-        plt.ylabel("Model quality score")
-        plt.savefig("output/plot.png")
+        counter = 0
+        for row in csv_reader:
+            if counter == 0:
+                for score in row:
+                    plot_data_hillclimber.append(float(score))
+            else:
+                for time_data in row:
+                    time_hillclimber.append(float(time_data))
+            counter += 1
+
+    f.close()
+
+    plt.plot(time_hillclimber, plot_data_hillclimber)
+    plt.plot(time, plot_data)
+
+    plt.title("Hillclimber algorithm vs Simulated Annealing")
+
+    plt.xlabel("Seconds")
+    plt.ylabel("Model quality score")
+    # plt.legend()
+    plt.savefig("output/plot.png")

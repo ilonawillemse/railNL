@@ -44,11 +44,20 @@ if __name__ == "__main__":
     if key == 1:
         type_hillclimber = int(input("random(0) or worst traject removal(1): "))
 
-    if key != 3:
+    if key != 3 and key != 4:
         type_base = int(input("random(0) or greedy(1): "))
 
     if key == 3:
         visualization_output()
+
+    if key == 4:
+        plot_type = int(input("histogram (0) or plot(1): "))
+
+        # plot with the corresponding gattered data
+        if plot_type == 0:
+            make_hist(type_base, dataclass.all_data)
+        if plot_type == 1:
+            make_plot(key)
 
     # ---------------------run algorithm--------------------
     if key == 0:
@@ -73,12 +82,3 @@ if __name__ == "__main__":
 
     # generates an outputfile with the best trajects found and its corresponding quality score
     output_generate(dataclass.best_traject, dataclass.best_score)
-
-    if key != 3:
-        plot_type = int(input("histogram (0) or plot(1): "))
-
-        # plot with the corresponding gattered data
-        if plot_type == 0:
-            make_hist(type_base, dataclass.all_data, key)
-        if plot_type == 1:
-            make_plot(key, dataclass.RUNNING_TIME, dataclass.plot_data)
