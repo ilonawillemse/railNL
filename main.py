@@ -25,6 +25,7 @@ from code_file.algorithms.run_algorithm import (
     run_repeated_hillclimber,
     run_repeated_simulated_annealing,
     run_simple,
+    run_repeated_depth_hillclimber,
 )
 
 MAX_TEMPERATURE = 30
@@ -37,18 +38,28 @@ if __name__ == "__main__":
     key = int(
         input(
             "What would you like to run: simple run(0), with hillclimber(1), "
-            + "simulated annealing(2), simulate output file(3): "
+            + "simulated annealing(2), simulate output file(3), plot(4), depth hillclimber(5) (Still bugged): "
         )
     )
+
 
     if key == 1:
         type_hillclimber = int(input("random(0) or worst traject removal(1): "))
 
-    if key != 3:
+    if key != 3 and key != 4:
         type_base = int(input("random(0) or greedy(1): "))
 
     if key == 3:
         visualization_output()
+
+    if key == 4:
+        plot_type = int(input("histogram of best scores (0) or plot of scores over time(1): "))
+
+        # plot with the corresponding gathered data
+        if plot_type == 0:
+            make_hist()
+        if plot_type == 1:
+            make_plot(key)
 
     # ---------------------run algorithm--------------------
     if key == 0:
@@ -71,14 +82,8 @@ if __name__ == "__main__":
             )
         run_repeated_simulated_annealing(type_base, dataclass, max_temp)
 
+    if key == 5:
+        run_repeated_depth_hillclimber(type_base, dataclass)
+
     # generates an outputfile with the best trajects found and its corresponding quality score
     output_generate(dataclass.best_traject, dataclass.best_score)
-
-    if key != 3:
-        plot_type = int(input("histogram (0) or scores over time(1): "))
-
-        # plot with the corresponding gattered data
-        if plot_type == 0:
-            make_hist(type_base, dataclass.all_data, key)
-        if plot_type == 1:
-            make_plot(key, dataclass.RUNNING_TIME, dataclass.plot_data)

@@ -12,7 +12,9 @@ Dataclass class to initialize some variables
 
 
 class Dataclass:
-    "Dataclass Object"
+    """
+    Dataclass object
+    """
 
     def __init__(self):
         self.best_score = 0
@@ -22,6 +24,6 @@ class Dataclass:
         self.best_traject = []
         self.all_data = []
         self.duration = []
-        self.RUNNING_TIME = 30
+        self.RUNNING_TIME = 5
         self.plot_data = []
-        self.TOTAL_ITERATIONS = 4000
+        self.TOTAL_ITERATIONS = 150

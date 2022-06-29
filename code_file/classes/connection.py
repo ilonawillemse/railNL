@@ -14,7 +14,9 @@ to travel the connection and an id
 
 
 class Connection:
-    "Connection Object"
+    """
+    Object for a connection between stations
+    """
 
     def __init__(self, station_1, station_2, time, id):
         self.start = station_1

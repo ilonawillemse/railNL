@@ -13,7 +13,9 @@ Stations have a name, xcor and ycor and know the adjacent connecting stations
 
 
 class Station:
-    "Station Object"
+    """
+    Station object
+    """
 
     def __init__(self, name, xcor, ycor):
         self.name = name

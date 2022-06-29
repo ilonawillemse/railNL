@@ -17,9 +17,13 @@ from code_file.algorithms.hillclimber import execute_hillclimber
 from code_file.algorithms.annealing import run_simulated_annealing
 import time
 import numpy as np
+from code_file.algorithms.depth_hillclimber import depth_hillclimber
 
 
 def choose_base_model(type_base):
+    """
+    Chooses whether the model is made with trajects based on the random or the greedy algorithm
+    """
     model = Model()
     if type_base == 0:
         model.baseline()
@@ -49,10 +53,6 @@ def run_simple(type_base, dataclass):
             score = model.score
             dataclass.all_data.append(score)
             writer.writerow([score])
-            print(dataclass.best_score)
-            print(len(dataclass.best_traject))
-            current_time = time.time() - start
-            print(current_time)
 
 
 def run_repeated_hillclimber(type_base, type_hillclimber, dataclass):
@@ -81,13 +81,21 @@ def run_repeated_hillclimber(type_base, type_hillclimber, dataclass):
             ) = replace_best(best_score, best_traject, best_fraction)
         dataclass.plot_data.extend(data)
 
-    with open("output/histo_data.csv", "w") as output_file:
+    # Saves the best scores for the histogram
+    with open("output/histo_data_hillclimber.csv", "w") as output_file:
+        writer = csv.writer(output_file)
+        writer.writerow(dataclass.all_data)
+        writer.writerow(
+            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data))
+        )
+
+    # Saves all the scores for the scores over time plot
+    with open("output/plot_data_hillclimber.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.plot_data)
         writer.writerow(
             np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data))
         )
-
 
 def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
     """
@@ -113,9 +121,42 @@ def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
         dataclass.plot_data.extend(data)
         dataclass.counter += 1
 
-    with open("output/histo_data.csv", "w") as output_file:
+    # Saves the best scores for the histogram
+    with open("output/histo_data_annealing.csv", "w") as output_file:
+        writer = csv.writer(output_file)
+        writer.writerow(dataclass.all_data)
+        writer.writerow(
+            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data))
+        )
+    
+    # Saves the scores for the scores over time plot
+    with open("output/plot_data_annealing.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.plot_data)
         writer.writerow(
             np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data))
         )
+
+def run_repeated_depth_hillclimber(type_base, dataclass):
+    """
+    Run hillclimber algorithm
+    """
+    model = choose_base_model(type_base)
+
+    start = time.time()
+    while time.time() - start < dataclass.RUNNING_TIME:
+        (
+            best_traject,
+            best_score,
+            best_fraction,
+        ) = depth_hillclimber(model)
+
+        dataclass.all_data.append(best_score)
+
+        # keep track of the best output when multiple hillclimbers are run
+        if best_score > dataclass.best_score:
+            (
+                dataclass.best_traject,
+                dataclass.best_score,
+                dataclass.best_fraction,
+            ) = replace_best(best_score, best_traject, best_fraction)

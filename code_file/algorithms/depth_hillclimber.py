@@ -9,31 +9,33 @@ Depth Hillclimber
 - Highly recommended to run with the Holland data instead of the National data due to runtime
 - Print station_names in the depth function (see commented code) to see the algorithm go through all the possible trajects
 
-"""""
+""" ""
 
 from code_file.helpers import quality_score
 import copy
 import random
 
+
 def remove_traject(model, index):
     """""
     Removes a traject from all of the trajects and changes the total time of the model accordingly
-    """""
-    
+    """ ""
+
     time = model.time_dict[index]
     model.total_time -= time
-    
+
     for connection in range(len(model.visited_connections[index])):
         model.visited_connections[index][connection].visit -= 1
-    
+
     model.traject[index] = []
-    
+
     return model
+
 
 def depth_hillclimber(model):
     """""
     Runs the depth algorithm on a randomly created model and keeps track of the best model that is created
-    """""
+    """ ""
     best_version = copy.deepcopy(model)
     try:
         while True:
@@ -42,25 +44,25 @@ def depth_hillclimber(model):
             removed_version = remove_traject(change_version, index)
             new_model = depth(removed_version, index)
 
-
             if new_model.score >= best_version.score:
                 best_version = copy.deepcopy(new_model)
-            print(best_version.score, 'best')
-            print(new_model.score, 'new')
-    except:
-        KeyboardInterrupt
+            print(best_version.score, "best")
+            print(new_model.score, "new")
+    except KeyboardInterrupt:
+        pass
 
     return best_version.traject, best_version.score, best_version.fraction
+
 
 def depth(model, index):
     """""
     Depth search, goes through all possible trajects of a randomly chosen starting station and returns the best model
-    """""
+    """ ""
 
     stack = [[random.choice(model.stations)]]
     time_stack = [0]
     best_model = model
-    print('Starting station:', stack[0][0].name)
+    print("Starting station:", stack[0][0].name)
 
     while len(stack) > 0:
         state = stack.pop()
@@ -83,11 +85,11 @@ def depth(model, index):
             for station in child:
                 station_names.append(station.name)
 
-            # Adding the next station would result in a valid traject, create a new child including this station and add it to the stack
+            # Adding the next station would result in a valid traject
+            # Create a new child including this station and add it to the stack
             if new_station.name not in station_names and time <= 120:
                 # Uncomment the following print statement to see the depth search
-                # print(station.name)
-
+                print(station_names)
                 child.append(new_station)
                 stack.append(child)
                 time_stack.append(time)
@@ -99,14 +101,22 @@ def depth(model, index):
                 # Turns the stations into pairs to be able to 'visit' their connections
                 station_pairs = []
                 for i in range(len(model.traject[index]) - 1):
-                    station_pairs.append([model.traject[index][i], model.traject[index][i + 1]])
+                    station_pairs.append(
+                        [model.traject[index][i], model.traject[index][i + 1]]
+                    )
 
                 # Visits the connections for score calculation purposes
                 for connection in model.all_connections.values():
                     for station_pair in station_pairs:
-                        if connection.start.name == station_pair[0].name and connection.end.name == station_pair[1].name:
+                        if (
+                            connection.start.name == station_pair[0].name
+                            and connection.end.name == station_pair[1].name
+                        ):
                             connection.visit += 1
-                        elif connection.end.name == station_pair[0].name and connection.start.name == station_pair[1].name:
+                        elif (
+                            connection.end.name == station_pair[0].name
+                            and connection.start.name == station_pair[1].name
+                        ):
                             connection.visit += 1
 
                 quality_score(model)
@@ -114,9 +124,15 @@ def depth(model, index):
                 # Unvisit the connections
                 for connection in model.all_connections.values():
                     for station_pair in station_pairs:
-                        if connection.start.name == station_pair[0].name and connection.end.name == station_pair[1].name:
+                        if (
+                            connection.start.name == station_pair[0].name
+                            and connection.end.name == station_pair[1].name
+                        ):
                             connection.visit -= 1
-                        elif connection.end.name == station_pair[0].name and connection.start.name == station_pair[1].name:
+                        elif (
+                            connection.end.name == station_pair[0].name
+                            and connection.start.name == station_pair[1].name
+                        ):
                             connection.visit -= 1
 
                 # Substracts the time of the traject from the model again
@@ -127,5 +143,3 @@ def depth(model, index):
                     best_model = copy.deepcopy(model)
 
     return best_model
-
-                

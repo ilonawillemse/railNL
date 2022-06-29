@@ -55,19 +55,6 @@ def make_greedy_traject(station):
       
         new_station = check_end_start_station(station, new_choice)
 
-        # counter = 0
-
-        # while new_station in visited_stations and counter < 100:
-        #     new_choice = next_shortest(station, visited_connections)
-        #     if station != new_choice.start:
-        #         new_station = new_choice.start
-        #     else:
-        #         new_station = new_choice.end
-        #     counter += 1
-
-        # if counter == 100:
-        #     break
-
         # generate time
         time += int(float(new_choice.duration))
 
