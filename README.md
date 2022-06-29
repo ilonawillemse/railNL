@@ -68,30 +68,6 @@ fraction,0.989
 ```
 ![Netherlands with high K value](............png)
 
-### Assignment 4:
-```
-Make a visualization of the results
-```
-![visualization](/doc/railnl.gif)
-
-### Assignment 5:
-```
-Change 3 connections and look at the scores
-```
-![Change connections](............gif)
-
-### Assignment 6:
-```
-Delete all Utrecht Centraal connections
-```
-![Remove Utrecht Centraal connections](............gif)
-
-### Assignment 7:
-```
-Removal other stations and its impact
-```
-![Removal station](............gif)
-
 
 # Experiment
 ```
