@@ -17,32 +17,42 @@ import numpy as np
 NUM_BINS = 100  # <- number of bins for the repeated base algorithm histogram
 
 
-def make_plot(type_base, all_data, key, RUNNING_TIME):
+def make_hist(type_base, all_data, key):
     """
     Receives the base type, the key and the data and plots the data into a histogram
     """
 
     # histogram for when the repeated base algorithm is run
-    if key == 0:
-        data = all_data
-        plt.hist(data, NUM_BINS)
+    data = all_data
+    plt.hist(data, NUM_BINS)
 
+    if key == 0:
         if type_base == 0:
             plt.title("Baseline algorithm: distribution of model data")
 
         elif type_base == 1:
             plt.title("Greedy algorithm: distribution of model data")
 
-        plt.xlabel("Model quality score")
-        plt.ylabel("Occurence of score")
-        plt.savefig("output/histogramtest.png")
+    if key == 1:
+        plt.title("Hillclimber algorithm")
 
-    # histogram for when the hillclimber or simmulated annealing are run
+    if key == 2:
+        plt.title("Simulated Annealing algorithm")
+
+    plt.xlabel("Model quality score")
+    plt.ylabel("Occurence of score")
+    plt.savefig("output/histogram.png")
+
+
+def make_plot(key, RUNNING_TIME, plot_data):
+    # plot for when the hillclimber or simmulated annealing are run
     if key == 1 or key == 2:
-        # print(len(time))
-        time = np.linspace(0, RUNNING_TIME, len(all_data))
-        # print(len(all_data))
-        plt.plot(time, all_data)
+        print('running', RUNNING_TIME)
+        time = np.linspace(0, RUNNING_TIME, len(plot_data))
+        # print(time)
+
+        print(len(plot_data))
+        plt.plot(time, plot_data)
 
         if key == 1:
             plt.title("Hillclimber algorithm: best scores over time")
@@ -52,4 +62,4 @@ def make_plot(type_base, all_data, key, RUNNING_TIME):
 
         plt.xlabel("Seconds")
         plt.ylabel("Model quality score")
-        plt.savefig("output/histogramtest.png")
+        plt.savefig("output/plot.png")

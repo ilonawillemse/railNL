@@ -17,9 +17,9 @@ Posibility to visualize the output file with trajects in a simulation
 =================================================
 """
 
-from code_file.helpers import output_generate
+from code_file.algorithms.helpers import output_generate
 from code_file.visualize.visualize_output import visualization_output
-from code_file.visualize.plot import make_plot
+from code_file.visualize.plot import make_plot, make_hist
 from code_file.classes.dataclass import Dataclass
 from code_file.algorithms.run_algorithm import (
     run_hillclimber,
@@ -50,6 +50,9 @@ if __name__ == "__main__":
     if key == 3:
         visualization_output()
 
+    # if key == 4:
+        # histogram_plot()
+
     # ---------------------run algorithm--------------------
     if key == 0:
         run_simple(type_base, dataclass)
@@ -76,4 +79,5 @@ if __name__ == "__main__":
 
     if key != 3:
         # plot with the corresponding gattered data
-        make_plot(type_base, dataclass.all_data, key, dataclass.RUNNING_TIME)
+        make_hist(type_base, dataclass.all_data, key)
+        # make_plot(key, dataclass.RUNNING_TIME, dataclass.plot_data)

@@ -22,4 +22,5 @@ class Dataclass:
         self.best_traject = []
         self.all_data = []
         self.duration = []
-        self.RUNNING_TIME = 180
+        self.RUNNING_TIME = 5
+        self.plot_data = []

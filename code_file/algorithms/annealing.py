@@ -13,12 +13,12 @@ taking on a worse score is dependant on the chance, which depends on the tempera
 =================================================
 """
 
-from code_file.helpers import quality_score
+from code_file.algorithms.helpers import quality_score
 import random
 import copy
 from code_file.algorithms.hillclimber import replace_traject
 
-TOTAL_ITERATIONS = 30000
+TOTAL_ITERATIONS = 30
 
 
 def temperature(start_temperature, iteration):

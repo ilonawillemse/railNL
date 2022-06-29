@@ -14,7 +14,7 @@ generated traject
 =================================================
 """
 
-from code_file.helpers import quality_score
+from code_file.algorithms.helpers import quality_score
 import random
 import copy
 import numpy as np

@@ -14,7 +14,7 @@ The model contains two base algorithms to run the program with (random and greed
 
 from code_file.loader import load_stations, add_connections
 from code_file.algorithms.baseline import starting_trajects
-from code_file.helpers import quality_score
+from code_file.algorithms.helpers import quality_score
 from code_file.algorithms.greedy import get_started
 
 
