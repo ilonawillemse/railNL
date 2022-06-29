@@ -75,7 +75,7 @@ if __name__ == "__main__":
     output_generate(dataclass.best_traject, dataclass.best_score)
 
     if key != 3:
-        plot_type = int(input("histogram (0) or plot(1): "))
+        plot_type = int(input("histogram (0) or scores over time(1): "))
 
         # plot with the corresponding gattered data
         if plot_type == 0:
