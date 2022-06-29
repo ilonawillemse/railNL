@@ -19,7 +19,7 @@ Run "main.py" to enter the program and choose what algorithm you would like to r
 
 ### Assignment 1:
 ```
-make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. All rails must be used.
+Make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. All rails must be used.
 
 train,stations
 train_1,"[Schiphol Airport, Amsterdam Zuid, Amsterdam Amstel, Amsterdam Centraal, Amsterdam Sloterdijk, Haarlem, Beverwijk, Zaandam, Castricum, Alkmaar, Hoorn]"
@@ -34,7 +34,7 @@ fraction,1.000
 
 ### Assignment 2:
 ```
-make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. Try to get K as high as possible.
+Make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. Try to get K as high as possible.
 
 train,stations
 train_1,"[Beverwijk, Zaandam, Castricum, Alkmaar, Den Helder]"
