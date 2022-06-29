@@ -24,6 +24,7 @@ from code_file.classes.dataclass import Dataclass
 
 dataclass = Dataclass()
 
+
 def change_model_parameters(model, index):
     """
     This function changes some of the models parameters

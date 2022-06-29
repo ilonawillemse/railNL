@@ -49,10 +49,11 @@ def run_simple(type_base, dataclass):
             score = model.score
             dataclass.all_data.append(score)
             writer.writerow([score])
+
             print(dataclass.best_score)
             print(len(dataclass.best_traject))
-            current_time = time.time() - start
-            print(current_time)
+            
+            
 
 
 def run_repeated_hillclimber(type_base, type_hillclimber, dataclass):
@@ -81,11 +82,11 @@ def run_repeated_hillclimber(type_base, type_hillclimber, dataclass):
             ) = replace_best(best_score, best_traject, best_fraction)
         dataclass.plot_data.extend(data)
 
-    with open("output/histo_data.csv", "w") as output_file:
+    with open("output/histo_data_hillclimber.csv", "w") as output_file:
         writer = csv.writer(output_file)
-        writer.writerow(dataclass.plot_data)
+        writer.writerow(dataclass.all_data)
         writer.writerow(
-            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data))
+            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data))
         )
 
 
@@ -113,9 +114,9 @@ def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
         dataclass.plot_data.extend(data)
         dataclass.counter += 1
 
-    with open("output/histo_data.csv", "w") as output_file:
+    with open("output/histo_data_annealing.csv", "w") as output_file:
         writer = csv.writer(output_file)
-        writer.writerow(dataclass.plot_data)
+        writer.writerow(dataclass.all_data)
         writer.writerow(
-            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data))
+            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data))
         )
