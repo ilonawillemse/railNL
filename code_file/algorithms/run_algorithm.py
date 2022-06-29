@@ -10,7 +10,7 @@ A file that make the chosen algoritm run
 =================================================
 """
 
-from code_file.model import Model
+from code_file.classes.model import Model
 import csv
 from code_file.helpers import replace_best
 from code_file.algorithms.hillclimber import execute_hillclimber

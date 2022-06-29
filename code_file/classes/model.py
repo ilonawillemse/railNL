@@ -46,3 +46,26 @@ class Model:
     def greedy(self):
         get_started(self)
         quality_score(self)
+    
+    def name_copy(self):
+        name_list = []
+        for i in self.traject:
+            tmp_list = []
+            for j in i:
+                tmp_list.append(j.name)
+            name_list.append(tmp_list)
+        print(name_list)
+
+    # def model_copy(self, name_copy_list):
+    #     model = Model()
+    #     for i in range(name_copy_list):
+    #         tmp_list = []
+    #         for j in model.stations:
+    #             if i[0] == j.name:
+    #                 tmp_list.append(j)
+    #         for k in i:
+
+
+
+        
+

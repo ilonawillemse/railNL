@@ -19,7 +19,7 @@ import copy
 from code_file.algorithms.hillclimber import replace_traject
 
 MAX_TEMPERATURE = 25
-TOTAL_ITERATIONS = 10000
+TOTAL_ITERATIONS = 100
 
 
 def temperature(start_temperature, iteration):
