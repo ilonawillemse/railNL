@@ -17,6 +17,7 @@ Posibility to visualize the output file with trajects in a simulation
 =================================================
 """
 
+from check50 import data
 from code_file.helpers import output_generate
 from code_file.visualize.visualize_output import visualization_output
 from code_file.visualize.plot import make_plot, make_hist
@@ -25,6 +26,7 @@ from code_file.algorithms.run_algorithm import (
     run_repeated_hillclimber,
     run_repeated_simulated_annealing,
     run_simple,
+    run_repeated_depth_hillclimber
 )
 
 MAX_TEMPERATURE = 30
@@ -79,6 +81,10 @@ if __name__ == "__main__":
                 )
             )
         run_repeated_simulated_annealing(type_base, dataclass, max_temp)
+
+    if key == 5:
+        run_repeated_depth_hillclimber(type_base, dataclass)
+
 
     # generates an outputfile with the best trajects found and its corresponding quality score
     output_generate(dataclass.best_traject, dataclass.best_score)
