@@ -16,6 +16,7 @@ in which the K is the objective score (quality score), T the number of trajects,
 Run "main.py" to enter the program and choose what algorithm you would like to run by following the instructions.
 ```
 
+<<<<<<< HEAD
 # Structure:
 -   /code_file: contains all code of the project
     - /code_file/algorithms: contains the code for the algorithms
@@ -28,6 +29,8 @@ Run "main.py" to enter the program and choose what algorithm you would like to r
 -   /output: stores the output files
 
 
+=======
+>>>>>>> 9522a9a7f54ff49b16ee541ba81eeb92814c0825
 ### Assignment 1:
 ```
 Make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. All rails must be used.
@@ -59,7 +62,7 @@ fraction,1.000
 ```
 Make trainconnections of the Netherlands, max of 20 trajects within a timeframe of 3 hours. Try to get K as high as possible.
 
-Zie hieronder de traject van de beste lijnvoering die we gevonden hebben. Alle connecties worden hierbij bereden behalve die van Sittard naar Heerlen. Een extra traject toevoegen alleen om deze connectie mee te nemen zou ook niet voor een verbetering in de score zorgen. Aangezien dit 1/89*10000 - 100 - 15 = -2.64 punten op zou leveren. Echter zijn er mogelijk nog wel andere samenstellingen van trajecten die voor een betere score zouden zorgen.  
+Zie hieronder de traject van de beste lijnvoering die we gevonden hebben. Alle connecties worden hierbij bereden behalve die van Sittard naar Heerlen. Een extra traject toevoegen alleen om deze connectie mee te nemen zou ook niet voor een verbetering in de score zorgen. Aangezien dit 1/89*10000 - 100 - 15 = -2.64 punten op zou leveren. Echter zijn er mogelijk nog wel andere samenstellingen van trajecten die voor een betere score zouden zorgen.
 
 train,stations
 train_1,"Lelystad Centrum, Almere Centrum, Amsterdam Amstel, Amsterdam Centraal, Amsterdam Sloterdijk, Amsterdam Zuid, Schiphol Airport, Leiden Centraal, Den Haag Laan v NOI, Delft, Den Haag Centraal, Gouda, Den Haag HS"

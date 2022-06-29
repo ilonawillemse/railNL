@@ -46,4 +46,3 @@ class Model:
     def greedy(self):
         get_started(self)
         quality_score(self)
-

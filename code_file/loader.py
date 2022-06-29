@@ -18,7 +18,10 @@ import csv
 
 
 def load_stations():
-    "load the stations from database and add them to a list of stations"
+    """
+    Loads the stations from database and add them to a list of stations
+    """
+
     stations = []
     with open("data/data_nationaal/StationsNationaal.csv") as f:
         csv_reader = csv.reader(f, delimiter=",")
@@ -34,7 +37,10 @@ def load_stations():
 
 
 def add_connections(stations):
-    "add the connections of the stations to a dictionary with the connection number as key"
+    """
+    Adds the connections of the stations to a dictionary with the connection number as key
+    """
+    
     all_connections = {}
 
     with open("data/data_nationaal/ConnectiesNationaal.csv") as f:

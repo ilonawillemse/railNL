@@ -11,7 +11,10 @@ Greedy constructive searching algorithm for trajects with lowest costs (shortest
 """
 
 import random
-from code_file.algorithms.baseline import check_end_start_station, change_model_parameters
+from code_file.algorithms.baseline import (
+    check_end_start_station,
+    change_model_parameters,
+)
 
 MAX_TIME = 180
 
@@ -52,7 +55,7 @@ def make_greedy_traject(station):
         new_choice = next_shortest(station, visited_connections)
         if new_choice is None:
             break
-      
+
         new_station = check_end_start_station(station, new_choice)
 
         # generate time
@@ -81,6 +84,3 @@ def get_started(model):
         station = random.choice(model.stations)
         latest_traject, time, connections = make_greedy_traject(station)
         model = change_model_parameters(model, latest_traject, time, connections, i)
-
-    
-
