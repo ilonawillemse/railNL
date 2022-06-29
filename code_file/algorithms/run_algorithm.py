@@ -85,9 +85,7 @@ def run_repeated_hillclimber(type_base, type_hillclimber, dataclass):
     with open("output/histo_data_hillclimber.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.all_data)
-        writer.writerow(
-            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data))
-        )
+        writer.writerow(np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data)))
 
     # Saves all the scores for the scores over time plot
     with open("output/plot_data_hillclimber.csv", "w") as output_file:
@@ -96,6 +94,7 @@ def run_repeated_hillclimber(type_base, type_hillclimber, dataclass):
         writer.writerow(
             np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data))
         )
+
 
 def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
     """
@@ -125,10 +124,8 @@ def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
     with open("output/histo_data_annealing.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.all_data)
-        writer.writerow(
-            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data))
-        )
-    
+        writer.writerow(np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data)))
+
     # Saves the scores for the scores over time plot
     with open("output/plot_data_annealing.csv", "w") as output_file:
         writer = csv.writer(output_file)
@@ -136,6 +133,7 @@ def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
         writer.writerow(
             np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data))
         )
+
 
 def run_repeated_depth_hillclimber(type_base, dataclass):
     """

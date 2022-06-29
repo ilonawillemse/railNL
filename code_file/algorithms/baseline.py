@@ -39,6 +39,7 @@ def change_model_parameters(model, latest_traject, time, connections, i):
     model.visited_connections.append(connections)
     return model
 
+
 def make_baseline_traject(station):
     """
     Creates new random traject
@@ -89,7 +90,7 @@ def starting_trajects(model):
     run the baseline (random) algorithm
     """
     # Decide how many trajects to make, either fixed or random
-    model.number_traject = random.randint(1,20)
+    model.number_traject = random.randint(1, 20)
     # model.number_traject = 11
     for i in range(model.number_traject):
         station = random.choice(model.stations)
