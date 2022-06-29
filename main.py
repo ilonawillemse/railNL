@@ -50,9 +50,6 @@ if __name__ == "__main__":
     if key == 3:
         visualization_output()
 
-    # if key == 4:
-        # histogram_plot()
-
     # ---------------------run algorithm--------------------
     if key == 0:
         run_simple(type_base, dataclass)
@@ -78,6 +75,10 @@ if __name__ == "__main__":
     output_generate(dataclass.best_traject, dataclass.best_score)
 
     if key != 3:
+        plot_type = int(input("histogram (0) or plot(1): "))
+
         # plot with the corresponding gattered data
-        make_hist(type_base, dataclass.all_data, key)
-        # make_plot(key, dataclass.RUNNING_TIME, dataclass.plot_data)
+        if plot_type == 0:
+            make_hist(type_base, dataclass.all_data, key)
+        if plot_type == 1:
+            make_plot(key, dataclass.RUNNING_TIME, dataclass.plot_data)

@@ -21,6 +21,7 @@ from code_file.classes.dataclass import Dataclass
 
 dataclass = Dataclass()
 
+
 def temperature(start_temperature, iteration):
     """
     Calculating and returning the temperature per iteration, using a linear function
