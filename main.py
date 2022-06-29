@@ -17,12 +17,12 @@ Posibility to visualize the output file with trajects in a simulation
 =================================================
 """
 
-from code_file.algorithms.helpers import output_generate
+from code_file.helpers import output_generate
 from code_file.visualize.visualize_output import visualization_output
 from code_file.visualize.plot import make_plot, make_hist
 from code_file.classes.dataclass import Dataclass
 from code_file.algorithms.run_algorithm import (
-    run_hillclimber,
+    run_repeated_hillclimber,
     run_repeated_simulated_annealing,
     run_simple,
 )
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         run_simple(type_base, dataclass)
 
     if key == 1:
-        run_hillclimber(type_base, type_hillclimber, dataclass)
+        run_repeated_hillclimber(type_base, type_hillclimber, dataclass)
 
     if key == 2:
         default = int(

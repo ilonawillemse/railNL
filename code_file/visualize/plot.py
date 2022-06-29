@@ -47,11 +47,8 @@ def make_hist(type_base, all_data, key):
 def make_plot(key, RUNNING_TIME, plot_data):
     # plot for when the hillclimber or simmulated annealing are run
     if key == 1 or key == 2:
-        print('running', RUNNING_TIME)
         time = np.linspace(0, RUNNING_TIME, len(plot_data))
-        # print(time)
 
-        print(len(plot_data))
         plt.plot(time, plot_data)
 
         if key == 1:

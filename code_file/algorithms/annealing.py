@@ -13,20 +13,20 @@ taking on a worse score is dependant on the chance, which depends on the tempera
 =================================================
 """
 
-from code_file.algorithms.helpers import quality_score
+from code_file.helpers import quality_score
 import random
 import copy
 from code_file.algorithms.hillclimber import replace_traject
+from code_file.classes.dataclass import Dataclass
 
-TOTAL_ITERATIONS = 30
-
+dataclass = Dataclass()
 
 def temperature(start_temperature, iteration):
     """
     Calculating and returning the temperature per iteration, using a linear function
     """
     temperature = start_temperature - (
-        (start_temperature / TOTAL_ITERATIONS) * iteration
+        (start_temperature / dataclass.TOTAL_ITERATIONS) * iteration
     )
     return temperature
 
@@ -58,7 +58,7 @@ def change_model(current_version, type_base):
     return new_model
 
 
-def run_simulated_annealing(model, type_base, start, max_temperature):
+def run_simulated_annealing(model, type_base, max_temperature):
     """
     Simulated annealing takes a model and a base type algorithm as input,
     changes a traject based on this base type algorithm
@@ -72,7 +72,7 @@ def run_simulated_annealing(model, type_base, start, max_temperature):
         current_temperature = max_temperature
 
         # loops for every iteration
-        for iteration in range(TOTAL_ITERATIONS):
+        for iteration in range(dataclass.TOTAL_ITERATIONS):
             # calculating the current temperature
             current_temperature = temperature(max_temperature, iteration)
 

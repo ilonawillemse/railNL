@@ -12,7 +12,7 @@ A file that make the chosen algoritm run
 
 from code_file.classes.model import Model
 import csv
-from code_file.algorithms.helpers import replace_best
+from code_file.helpers import replace_best
 from code_file.algorithms.hillclimber import execute_hillclimber
 from code_file.algorithms.annealing import run_simulated_annealing
 import time
@@ -55,22 +55,38 @@ def run_simple(type_base, dataclass):
             print(current_time)
 
 
-def run_hillclimber(type_base, type_hillclimber, dataclass):
+def run_repeated_hillclimber(type_base, type_hillclimber, dataclass):
     """
     Run hillclimber algorithm
     """
     model = choose_base_model(type_base)
 
-    (
-        dataclass.best_traject,
-        dataclass.best_score,
-        dataclass.best_fraction,
-        dataclass.plot_data,
-    ) = execute_hillclimber(model, type_base, type_hillclimber, dataclass)
+    start = time.time()
+    while time.time() - start < dataclass.RUNNING_TIME:
+        (
+            best_traject,
+            best_score,
+            best_fraction,
+            data,
+        ) = execute_hillclimber(model, type_base, type_hillclimber)
+
+        dataclass.all_data.append(best_score)
+
+        # keep track of the best output when multiple hillclimbers are run
+        if best_score > dataclass.best_score:
+            (
+                dataclass.best_traject,
+                dataclass.best_score,
+                dataclass.best_fraction,
+            ) = replace_best(best_score, best_traject, best_fraction)
+        dataclass.plot_data.extend(data)
+
     with open("output/histo_data.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.plot_data)
-        writer.writerow(np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data)))
+        writer.writerow(
+            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data))
+        )
 
 
 def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
@@ -82,7 +98,7 @@ def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
     start = time.time()
     while time.time() - start < dataclass.RUNNING_TIME:
         traject, score, fraction, data = run_simulated_annealing(
-            model, type_base, start, max_temperature
+            model, type_base, max_temperature
         )
 
         dataclass.all_data.append(score)
@@ -100,4 +116,6 @@ def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
     with open("output/histo_data.csv", "w") as output_file:
         writer = csv.writer(output_file)
         writer.writerow(dataclass.plot_data)
-        writer.writerow(np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data)))
+        writer.writerow(
+            np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.plot_data))
+        )

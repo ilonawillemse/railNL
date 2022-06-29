@@ -14,14 +14,15 @@ generated traject
 =================================================
 """
 
-from code_file.algorithms.helpers import quality_score
+from code_file.helpers import quality_score
 import random
 import copy
 import numpy as np
 from code_file.algorithms.greedy import make_greedy_traject
 from code_file.algorithms.baseline import make_baseline_traject
-import time
+from code_file.classes.dataclass import Dataclass
 
+dataclass = Dataclass()
 
 def change_model_parameters(model, index):
     """
@@ -116,19 +117,18 @@ def get_worst_traject_index(best_version):
     return max_index
 
 
-def execute_hillclimber(model, type_base, type_hillclimber, dataclass):
+def execute_hillclimber(model, type_base, type_hillclimber):
     """
     Executing a hillclimber, dependent on the type of hillclimber the user likes
     """
 
-    start = time.time()
     best_scores = []
     counter = 0
 
     # the current best model
     best_version = copy.deepcopy(model)
 
-    while time.time() - start < dataclass.RUNNING_TIME:
+    for _ in range(dataclass.TOTAL_ITERATIONS):
 
         # creating a version to make adaptions to the current best version
         change_version = copy.deepcopy(best_version)
