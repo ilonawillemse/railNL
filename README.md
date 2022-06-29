@@ -16,6 +16,17 @@ in which the K is the objective score (quality score), T the number of trajects,
 Run "main.py" to enter the program and choose what algorithm you would like to run by following the instructions.
 ```
 
+# Structure:
+-   /code_file: contains all code of the project
+    - /code_file/algorithms: contains the code for the algorithms
+    - /code_file/classes: contains the code for the classes
+    - /code_file/visualize: contains the code for the visualization
+-   /data: contains the data for loading in the stations and connections of the model
+    - /data/data_holland: contains the stations and connections for north- and south- Holland
+    - /data/data_nationaal: contains the stations and connections for the Netherlands
+-   /doc: stores the pictures for the repository
+-   /output: stores the output files
+
 
 ### Assignment 1:
 ```
