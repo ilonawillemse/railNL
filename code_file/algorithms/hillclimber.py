@@ -6,86 +6,173 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-implements a hillclimber algorithm to search for best score by creating trajects
+Implements two hillclimber algorithms to search for best score by creating trajects:
+- A hillclimber that removes the 'worst functioning' traject and replaces it
+with a randomly generated traject
+- A hillclimber that randomly removes a traject and replaces it with a randomly
+generated traject
 =================================================
 """
 
 from code_file.helpers import quality_score
 import random
 import copy
+import numpy as np
 from code_file.algorithms.greedy import make_greedy_traject
 from code_file.algorithms.baseline import make_baseline_traject
-import pickle
-from code_file.helpers import quality_score
-        
+from code_file.classes.dataclass import Dataclass
 
-def change_traject(model, t):
+dataclass = Dataclass()
 
-    time = model.time_dict[t]
-    model.total_time -= time
+
+def change_model_parameters(model, index):
+    """
+    This function changes some of the models parameters
+    corresponding to the removal of a certain traject
+    """
+
+    # looping over every connection of the specific traject (index) and substracts visited by one
+    for connection in range(len(model.visited_connections[index])):
+        model.visited_connections[index][connection].visit -= 1
+
+    # substracting the duration of the specific traject (index) from the total time
+    model.total_time -= model.time_dict[index]
+    return model
+
+
+def remove_traject(model, index):
+    """
+    Changing model parameters and emptying the traject that corresponds with the input index
+    """
+
+    # decreasing the number of trajects
     model.number_traject -= 1
 
-    for connection in range(len(model.visited_connections[t])):
-        model.visited_connections[t][connection].visit -= 1
+    # change the model parameters corresponding to the removal of the traject
+    model = change_model_parameters(model, index)
 
-    model.traject[t] = []
-    
+    # physical emptying the traject
+    model.traject[index] = []
+
     return model
 
-def single_traject(model, t, choice, hillclimber):
-    if hillclimber == 0:
-        for connection in range(len(model.visited_connections[t])):
-            model.visited_connections[t][connection].visit -= 1
-        model.total_time -= model.time_dict[t]
-    
-        
+
+def replace_traject(model, index, type_base, type_hillclimber):
+    """
+    Replaces a single traject (index) with a randomly generated traject
+    """
+
+    # changing model parameters when running random hillclimber
+    if type_hillclimber == 0:
+        model = change_model_parameters(model, index)
+
+    # randomly choosing a starting station
     station = random.choice(model.stations)
-    if choice == 0:
+
+    # creating a randomly generated traject
+    if type_base == 0:
         latest_traject, time, connections = make_baseline_traject(station)
-    
-    if choice == 1:
+
+    # creating a greedy generated traject (based on shortest distance between stations)
+    if type_base == 1:
         latest_traject, time, connections = make_greedy_traject(station)
 
-    model.traject[t] = latest_traject
+    # adapting model parameters to the newly added traject
+    model.traject[index] = latest_traject
     model.total_time += time
-    model.time_dict[t] = time
-    model.visited_connections[t] = connections
-    if hillclimber == 1:
+    model.time_dict[index] = time
+    model.visited_connections[index] = connections
+
+    # changing number of trajects for worst traject hillclimber
+    if type_hillclimber == 1:
         model.number_traject += 1
+
     return model
 
-def run_hillclimber(model, choice, hillclimber):
-    #unchanged_counter = 0
-    try:
-        best_scores = []
-        counter = 0
-        best_version = copy.deepcopy(model)
-        while True:
-            change_version = copy.deepcopy(best_version) 
-            if hillclimber == 1:
-                changed_scores = []
-                for i in range(len(best_version.traject)):
-                    copy_version = copy.deepcopy(best_version)      
-                    removed_version = change_traject(copy_version, i)
-                    quality_score(removed_version)
-                    changed_scores.append(removed_version.score) 
-                max_index = changed_scores.index(max(changed_scores)) 
-                change_version = change_traject(change_version, max_index)
-                new_model = single_traject(change_version, max_index, choice, hillclimber)
-            
-            elif hillclimber == 0:
-                random_index = random.randint(0, len(model.traject) - 1)
-                new_model = single_traject(change_version, random_index, choice, hillclimber)
-            
-            quality_score(new_model)
-            if new_model.score >= best_version.score:
-                best_version = new_model
-            counter += 1
-            if counter % 500 == 0:
-                print(counter)
-                print(best_version.score,)
-            best_scores.append(best_version.score)
-    except KeyboardInterrupt:
-        pickle.dump(best_version, open("saved", "wb"))
-        pass
-    return best_version.traject, best_version.score, best_version.fraction, best_scores
+
+def get_worst_traject_index(best_version):
+    """
+    This function looks through the different trajects
+    of the model. It removes them one by one, calculating each the quality score for each.
+    The model is then being set back to the original state with every traject.
+    The function returns the index of the traject that, when removed,
+    still generated the highest quality score.
+    This traject is seen as the least contributing or 'worst' traject of the model.
+    """
+
+    # creating list with scores of model without one traject
+    changed_scores = []
+
+    # looping over the trajects, saving the corresponding quality scores
+    # of when the i'th traject is removed from the input model
+    for i in range(len(best_version.traject)):
+        copy_version = copy.deepcopy(best_version)
+
+        # removing a traject and calculating the score of the model without the traject
+        removed_version = remove_traject(copy_version, i)
+        quality_score(removed_version)
+        changed_scores.append(removed_version.score)
+
+    # returning the index of the traject with corresponding highest quality score of the list
+    max_index = np.argmax(changed_scores)
+    return max_index
+
+
+def execute_hillclimber(model, type_base, type_hillclimber):
+    """
+    Executing a hillclimber, dependent on the type of hillclimber the user likes
+    """
+
+    best_scores = []
+    counter = 0
+
+    # the current best model
+    best_version = copy.deepcopy(model)
+
+    for _ in range(dataclass.TOTAL_ITERATIONS):
+
+        # creating a version to make adaptions to the current best version
+        change_version = copy.deepcopy(best_version)
+
+        # when the 'worst traject' hillclimber is selected
+        if type_hillclimber == 1:
+
+            # getting the index of the perceived worst traject,
+            # removing this traject and replacing this with a newly generated traject
+            max_index = get_worst_traject_index(best_version)
+            change_version = remove_traject(change_version, max_index)
+            new_model = replace_traject(
+                change_version, max_index, type_base, type_hillclimber
+            )
+
+        # when the random hillclimber is selected
+        elif type_hillclimber == 0:
+
+            # select random traject (index) and replace that traject
+            random_index = random.randint(0, len(model.traject) - 1)
+            new_model = replace_traject(
+                change_version, random_index, type_base, type_hillclimber
+            )
+
+        # calculate quality score, overwrite best scoring model if new score is better
+        quality_score(new_model)
+        if new_model.score >= best_version.score:
+            best_version = new_model
+
+        # print counter and score every 500 steps to keep track of score and steps
+        counter += 1
+        if counter % 500 == 0:
+            print(counter)
+            print(
+                best_version.score,
+            )
+
+        # append best score to list to plot
+        best_scores.append(best_version.score)
+
+    return (
+        best_version.traject,
+        best_version.score,
+        best_version.fraction,
+        best_scores,
+    )

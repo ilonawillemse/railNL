@@ -6,152 +6,79 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-Object based railway traject
-made interactive for used based on what algorithm they would like to run the programm
+Model for an object based railway traject
+Interactive for user, based on with what algorithm they would like to run the simulation
+The model contains two base algorithms to run the program with (random and greedy)
+The programm generates an output file with the best trajects found
+    and its corresponding quality score
+Posibility to visualize the output file with trajects in a simulation
+    - the moving dots are shown for fun, they repesent trains riding the trajects
+    - dots move randomly across the traject, no transportations are meant to be visualized
 =================================================
 """
 
-import csv
-import matplotlib.pyplot as plt
-from code_file.helpers import output_generate, quality_score, replace_best
-from code_file.loader import load_stations, add_connections
-from code_file.algorithms.baseline import starting_trajects
-from code_file.algorithms.hillclimber import run_hillclimber
-from code_file.algorithms.greedy import get_started
-from code_file.algorithms.annealing import run_simulated_annealing
-from code_file.visualize_output import visualization_output
-from code_file.algorithms.depth_hillclimber import depth_hillclimber
-import copy
+from code_file.helpers import output_generate
+from code_file.visualize.visualize_output import visualization_output
+from code_file.visualize.plot import make_plot, make_hist
+from code_file.classes.dataclass import Dataclass
+from code_file.algorithms.run_algorithm import (
+    run_repeated_hillclimber,
+    run_repeated_simulated_annealing,
+    run_simple,
+)
 
+MAX_TEMPERATURE = 30
 
-
-class Model():
-    "Railway Model"
-    def __init__(self):
-        self.stations = load_stations()
-        self.all_connections = add_connections(self.stations)
-        self.visited_connections = []
-        self.traject = []
-        self.time_dict = {}
-        self.score = 0
-        self.fraction = 0
-        self.number_traject = 0
-        self.total_time = 0
-
-    def baseline(self):
-        starting_trajects(self)
-        quality_score(self)  
-    
-    def greedy(self):
-        get_started(self)
-        quality_score(self) 
-    
 
 if __name__ == "__main__":
+    dataclass = Dataclass()
+    type_hillclimber = None
 
-    best_score = 0
-    counter = 0
-    best_fraction = 0
-    best_traject = [] 
-    all_data = []
+    key = int(
+        input(
+            "What would you like to run: simple run(0), with hillclimber(1), "
+            + "simulated annealing(2), simulate output file(3): "
+        )
+    )
 
-    key = int(input("What would you like to run: simple run(0), with hillclimber(1), simulated annealing(2): "))
-    hillclimber = None
-    if key == 1:    
-        hillclimber = int(input("random hillclimber(0) or regular hillclimber(1): "))
-    
-    if key != 30:
-        choice = int(input("random(0) or greedy(1): "))
+    if key == 1:
+        type_hillclimber = int(input("random(0) or worst traject removal(1): "))
 
-    # ophalen van opgeslagen data
-    if key == 20:
-        file = open("saved", "rb")
-        print(pickle.load(file))
-    
-    # visualize the output file
-    if key == 30:
-        visualization_output(Model())
+    if key != 3:
+        type_base = int(input("random(0) or greedy(1): "))
 
-    model = Model()
-    model.baseline()
-    best_traject, best_score, best_fraction = depth_hillclimber(model)
+    if key == 3:
+        visualization_output()
 
-    output_generate(best_traject, best_score, best_fraction)
-    # print(new_model)
+    # ---------------------run algorithm--------------------
+    if key == 0:
+        run_simple(type_base, dataclass)
 
-    # if key == 0:
-    # # ---------------------run without hillclimber---------------------
-    #     with open('output/histo_data.csv', 'w') as output_file:
-    #         try:
-    #             i = 0
-    #             while True:
-    #                 i += 1
-    #                 model = Model()
-    #                 if choice == 0:
-    #                     model.baseline()
-    #                 if choice == 1:
-    #                     model.greedy()
-    #                 writer = csv.writer(output_file) 
-    #                 if model.score > best_score:
-    #                     best_traject, best_score, best_fraction = replace_best(model.score, model.traject, model.fraction)
-    #                 score = model.score
-    #                 all_data.append(score)
-    #                 writer.writerow([score])
-    #                 # print(i)
-    #                 print(best_score)
-    #                 print(len(best_traject))
-    #                 i += 1
-    #         except KeyboardInterrupt:
-    #             pickle.dump(best_traject, open("saved", "wb"))
-    #             pass
-            
-    #     output_generate(best_traject, best_score, best_fraction)
-    #     data = all_data
-    #     num_bins = 100 # <- number of bins for the histogram
-    #     plt.hist(data, num_bins)
-    #     if choice == 0:
-    #         plt.title("Baseline algorithm: distribution of model data")
-    #     elif choice == 1:
-    #         plt.title("Greedy algorithm: distribution of model data")
-    #     plt.xlabel("Model quality score")
-    #     plt.ylabel("Occurence of score")
-    #     plt.savefig("output/histogramtest.png")
+    if key == 1:
+        run_repeated_hillclimber(type_base, type_hillclimber, dataclass)
 
-    
-    # if key == 1 or key == 2:
-    # # --------------------hillclimber or simulated annealing------------------------------
-        
+    if key == 2:
+        default = int(
+            input("Would you like to choose the Max temp yourself? no(0), yes(1)?: ")
+        )
+        if default == 0:
+            max_temp = MAX_TEMPERATURE
+        else:
+            max_temp = int(
+                input(
+                    "What would you like to be the max temperature for the simulated annealing?: "
+                )
+            )
+        run_repeated_simulated_annealing(type_base, dataclass, max_temp)
 
-    #     model = Model()
-    #     if choice == 0:
-    #         model.baseline()
-    #     if choice == 1:
-    #         model.greedy()
+    # generates an outputfile with the best trajects found and its corresponding quality score
+    output_generate(dataclass.best_traject, dataclass.best_score)
 
-    #     if key == 1:
-    #         best_traject, best_score, best_fraction, all_data = run_hillclimber(model, choice, hillclimber)
-    #     if key == 2:
-    #         try:
-    #             while counter < 2:
-    #                 traject, score, fraction, data = run_simulated_annealing(model, choice)
-    #                 if score > best_score:
-    #                     best_traject, best_score, best_fraction = replace_best(score, traject, fraction)
-    #                 print(counter)
-    #                 print(best_score)
-    #                 all_data.extend(data)
-    #                 counter += 1
-    #         except:
-    #             KeyboardInterrupt
-                    
-    #     output_generate(best_traject, best_score, best_fraction)
-            
-    
-    #     plt.plot(all_data)
-    #     if key == 1:
-    #         plt.title("Hillclimber algorithm: best scores over time")
-    #     elif key == 2:
-    #         plt.title("Simulated annealing algorithm: scores over time")
-    #     plt.xlabel("Number of iterations")
-    #     plt.ylabel("Model quality score")
-    #     plt.savefig("output/histogramtest.png")
-        
+    if key != 3:
+        plot_type = int(input("histogram (0) or plot(1): "))
+
+        # plot with the corresponding gattered data
+        if plot_type == 0:
+            make_hist(type_base, dataclass.all_data, key)
+        if plot_type == 1:
+            make_plot(key, dataclass.RUNNING_TIME, dataclass.plot_data)

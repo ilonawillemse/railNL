@@ -6,24 +6,41 @@ Ilona Willemse, Wesley Korff, Anouk Van Valkengoed
 
 No way, Railway
 
-greedy constructive searching algorithm for trajects with lowest costs (shortest travel duration)
+Greedy constructive searching algorithm for trajects with lowest costs (shortest travel duration)
 =================================================
 """
 
 import random
+from code_file.algorithms.baseline import check_end_start_station, change_model_parameters
+
+MAX_TIME = 180
+
 
 def next_shortest(station, visited_connections):
+    """
+    Looks for nexts shortest duration to next station where the connection has not yet been visited
+    and adds this station to its traject
+    """
+
     shortest_duration = None
     new_choice = None
     for _, value in station.connections.items():
         # look for connections that have not been visited yet
         if value not in visited_connections:
-            if shortest_duration == None or int(float(value.duration)) < shortest_duration :
+            if (
+                shortest_duration is None
+                or int(float(value.duration)) < shortest_duration
+            ):
                 shortest_duration = int(float(value.duration))
-                new_choice = value       
+                new_choice = value
     return new_choice
 
+
 def make_greedy_traject(station):
+    """
+    makes a traject based on a greedy (lowest duration) algorithm
+    """
+
     visited_connections = []
     visited_stations = []
     time = 0
@@ -31,15 +48,12 @@ def make_greedy_traject(station):
     # add current station to visited stations list
     visited_stations.append(station)
 
-    while time <= 180:
+    while time <= MAX_TIME:
         new_choice = next_shortest(station, visited_connections)
-        if new_choice == None:
+        if new_choice is None:
             break
-
-        if station != new_choice.start:
-            new_station = new_choice.start
-        else:
-            new_station = new_choice.end
+      
+        new_station = check_end_start_station(station, new_choice)
 
         # counter = 0
 
@@ -50,32 +64,36 @@ def make_greedy_traject(station):
         #     else:
         #         new_station = new_choice.end
         #     counter += 1
-            
 
         # if counter == 100:
         #     break
-                            
+
         # generate time
         time += int(float(new_choice.duration))
 
-        if time > 180:
+        if time > MAX_TIME:
             time -= int(float(new_choice.duration))
-            break        
+            break
 
-        # add station to visited stations 
+        # add station to visited stations
         station = new_station
         new_choice.visit += 1
         visited_stations.append(station)
         visited_connections.append(new_choice)
-    
+
     return visited_stations, time, visited_connections
 
+
 def get_started(model):
-    model.number_traject = random.randint(1,20)
+    """
+    run the greedy algorithm
+    """
+
+    model.number_traject = random.randint(1, 20)
     for i in range(model.number_traject):
         station = random.choice(model.stations)
         latest_traject, time, connections = make_greedy_traject(station)
-        model.traject.append(latest_traject)
-        model.total_time += time
-        model.time_dict[i] = time
-        model.visited_connections.append(connections)
+        model = change_model_parameters(model, latest_traject, time, connections, i)
+
+    
+

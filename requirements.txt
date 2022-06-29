@@ -1,4 +1,7 @@
-csv == 0.013
-import random
-import matplotlib.pyplot as plt
-import plotly.graph_objects
+matplotlib==3.5.1
+pandas==1.4.2
+plotly==5.8.0
+snakeviz==2.1.1
+
+# random
+# copy
