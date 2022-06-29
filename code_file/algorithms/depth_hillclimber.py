@@ -88,8 +88,7 @@ def depth(model, index):
             # Adding the next station would result in a valid traject, create a new child including this station and add it to the stack
             if new_station.name not in station_names and time <= 120:
                 # Uncomment the following print statement to see the depth search
-                # print(station.name)
-
+                print(station_names)
                 child.append(new_station)
                 stack.append(child)
                 time_stack.append(time)

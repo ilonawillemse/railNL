@@ -25,6 +25,7 @@ from code_file.algorithms.run_algorithm import (
     run_repeated_hillclimber,
     run_repeated_simulated_annealing,
     run_simple,
+    run_repeated_depth_hillclimber,
 )
 
 MAX_TEMPERATURE = 30
@@ -55,7 +56,7 @@ if __name__ == "__main__":
 
         # plot with the corresponding gathered data
         if plot_type == 0:
-            make_hist(type_base, dataclass.all_data)
+            make_hist()
         if plot_type == 1:
             make_plot(key)
 
@@ -79,6 +80,9 @@ if __name__ == "__main__":
                 )
             )
         run_repeated_simulated_annealing(type_base, dataclass, max_temp)
+
+    if key == 5:
+        run_repeated_depth_hillclimber(type_base, dataclass)
 
     # generates an outputfile with the best trajects found and its corresponding quality score
     output_generate(dataclass.best_traject, dataclass.best_score)

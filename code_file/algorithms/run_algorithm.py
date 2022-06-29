@@ -17,6 +17,7 @@ from code_file.algorithms.hillclimber import execute_hillclimber
 from code_file.algorithms.annealing import run_simulated_annealing
 import time
 import numpy as np
+from code_file.algorithms.depth_hillclimber import depth_hillclimber
 
 
 def choose_base_model(type_base):
@@ -120,3 +121,28 @@ def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
         writer.writerow(
             np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data))
         )
+
+
+def run_repeated_depth_hillclimber(type_base, dataclass):
+    """
+    Run hillclimber algorithm
+    """
+    model = choose_base_model(type_base)
+
+    start = time.time()
+    while time.time() - start < dataclass.RUNNING_TIME:
+        (
+            best_traject,
+            best_score,
+            best_fraction,
+        ) = depth_hillclimber(model)
+
+        dataclass.all_data.append(best_score)
+
+        # keep track of the best output when multiple hillclimbers are run
+        if best_score > dataclass.best_score:
+            (
+                dataclass.best_traject,
+                dataclass.best_score,
+                dataclass.best_fraction,
+            ) = replace_best(best_score, best_traject, best_fraction)
