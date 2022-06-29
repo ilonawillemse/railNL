@@ -59,7 +59,7 @@ def change_model(current_version, type_base):
     return new_model
 
 
-def run_simulated_annealing(model, type_base, start):
+def run_simulated_annealing(model, type_base, start, max_temperature):
     """
     Simulated annealing takes a model and a base type algorithm as input,
     changes a traject based on this base type algorithm
@@ -70,12 +70,12 @@ def run_simulated_annealing(model, type_base, start):
         scores = []
         current_version = copy.deepcopy(model)
         best_version = copy.deepcopy(model)
-        current_temperature = MAX_TEMPERATURE
+        current_temperature = max_temperature
 
         # loops for every iteration
         for iteration in range(TOTAL_ITERATIONS):
             # calculating the current temperature
-            current_temperature = temperature(MAX_TEMPERATURE, iteration)
+            current_temperature = temperature(max_temperature, iteration)
 
             # creating a new model
             new_model = change_model(current_version, type_base)

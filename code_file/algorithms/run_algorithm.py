@@ -73,7 +73,7 @@ def run_hillclimber(type_base, type_hillclimber, dataclass):
         writer.writerow(np.linspace(0, dataclass.RUNNING_TIME, len(dataclass.all_data)))
 
 
-def run_repeated_simulated_annealing(type_base, dataclass):
+def run_repeated_simulated_annealing(type_base, dataclass, max_temperature):
     """
     run the simulated annealing algorithm multiple times and save the best output
     """
@@ -82,7 +82,7 @@ def run_repeated_simulated_annealing(type_base, dataclass):
     start = time.time()
     while time.time() - start < dataclass.RUNNING_TIME:
         traject, score, fraction, data = run_simulated_annealing(
-            model, type_base, start
+            model, type_base, start, max_temperature
         )
 
         # keep track of the best output when multiple simulated annealings are run
