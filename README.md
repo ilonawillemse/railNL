@@ -19,21 +19,51 @@ Run "main.py" to enter the program and choose what algorithm you would like to r
 
 ### Assignment 1:
 ```
-make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. All rails must be used.
+Make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. All rails must be used.
+
+train,stations
+train_1,"[Schiphol Airport, Amsterdam Zuid, Amsterdam Amstel, Amsterdam Centraal, Amsterdam Sloterdijk, Haarlem, Beverwijk, Zaandam, Castricum, Alkmaar, Hoorn]"
+train_2,"[Rotterdam Centraal, Schiedam Centrum, Delft, Den Haag Centraal, Gouda, Alphen a/d Rijn, Leiden Centraal, Heemstede-Aerdenhout, Haarlem, Beverwijk, Castricum]"
+train_3,"[Amsterdam Sloterdijk, Haarlem, Beverwijk, Castricum, Zaandam, Hoorn, Alkmaar, Den Helder]"
+train_4,"[Dordrecht, Rotterdam Centraal, Rotterdam Alexander, Gouda, Den Haag Centraal, Leiden Centraal, Schiphol Airport, Amsterdam Zuid, Amsterdam Sloterdijk, Amsterdam Centraal, Amsterdam Amstel]"
+train_5,"[Alphen a/d Rijn, Gouda, Den Haag Centraal, Leiden Centraal, Heemstede-Aerdenhout, Haarlem, Beverwijk, Castricum, Zaandam, Amsterdam Sloterdijk, Amsterdam Zuid]"
+score,8864.0
+fraction,1.000
 ```
-![All rails used](............png)
 
 ### Assignment 2:
 ```
-make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. Try to get K as high as possible.
+Make trainconnections of North and South Holland, max of 7 trajects within a timeframe of 2 hours. Try to get K as high as possible.
+
+train,stations
+train_1,"[Beverwijk, Zaandam, Castricum, Alkmaar, Den Helder]"
+train_2,"[Haarlem, Amsterdam Sloterdijk, Amsterdam Zuid, Schiphol Airport, Leiden Centraal, Den Haag Centraal, Gouda, Rotterdam Alexander, Rotterdam Centraal, Dordrecht]"
+train_3,"[Amsterdam Zuid, Amsterdam Amstel, Amsterdam Centraal, Amsterdam Sloterdijk, Zaandam, Hoorn, Alkmaar, Castricum, Beverwijk, Haarlem, Heemstede-Aerdenhout]"
+train_4,"[Heemstede-Aerdenhout, Leiden Centraal, Alphen a/d Rijn, Gouda, Rotterdam Alexander, Rotterdam Centraal, Schiedam Centrum, Delft, Den Haag Centraal]"
+score,9192.0
+fraction,1.000
 ```
-![Holland with high K value](............png)
 
 ### Assignment 3:
 ```
-make trainconnections of the Netherlands, max of 20 trajects within a timeframe of 3 hours. Try to get K as high as possible.
+Make trainconnections of the Netherlands, max of 20 trajects within a timeframe of 3 hours. Try to get K as high as possible.
+
+Zie hieronder de traject van de beste lijnvoering die we gevonden hebben. Alle connecties worden hierbij bereden behalve die van Sittard naar Heerlen. Een extra traject toevoegen alleen om deze connectie mee te nemen zou ook niet voor een verbetering in de score zorgen. Aangezien dit 1/89*10000 - 100 - 15 = -2.64 punten op zou leveren. Echter zijn er mogelijk nog wel andere samenstellingen van trajecten die voor een betere score zouden zorgen.  
+
+train,stations
+train_1,"Lelystad Centrum, Almere Centrum, Amsterdam Amstel, Amsterdam Centraal, Amsterdam Sloterdijk, Amsterdam Zuid, Schiphol Airport, Leiden Centraal, Den Haag Laan v NOI, Delft, Den Haag Centraal, Gouda, Den Haag HS"
+train_2,"Enschede, Hengelo, Almelo, Deventer, Apeldoorn, Amersfoort, Utrecht Centraal, Hilversum, Amsterdam Amstel, Amsterdam Zuid, Schiphol Airport, Leiden Centraal, Den Haag Centraal"
+train_3,"Almelo, Zwolle, Assen, Groningen, Leeuwarden, Heerenveen, Steenwijk"
+train_4,"Venlo, Helmond, Eindhoven, s-Hertogenbosch, Oss, Nijmegen, Arnhem Centraal, Dieren, Zutphen, Deventer, Zwolle, Steenwijk"
+train_5,"Maastricht, Sittard, Roermond, Weert, Eindhoven, Tilburg, Breda, Dordrecht, Rotterdam Blaak, Rotterdam Alexander, Rotterdam Centraal, Schiedam Centrum, Delft, Den Haag HS, Leiden Centraal"
+train_6,"Den Helder, Alkmaar, Castricum, Beverwijk, Zaandam, Amsterdam Sloterdijk, Haarlem, Heemstede-Aerdenhout, Leiden Centraal, Alphen a/d Rijn, Gouda, Utrecht Centraal"
+train_7,"Hilversum, Almere Centrum, Amsterdam Centraal, Amsterdam Amstel, Utrecht Centraal, s-Hertogenbosch, Tilburg, Breda, Etten-Leur, Roosendaal, Dordrecht"
+train_8,"Alkmaar, Hoorn, Zaandam, Castricum, Beverwijk, Haarlem, Amsterdam Sloterdijk, Amsterdam Centraal, Utrecht Centraal, Schiphol Airport, Amsterdam Zuid"
+train_9,"Alphen a/d Rijn, Utrecht Centraal, Ede-Wageningen, Arnhem Centraal, Dieren, Zutphen, Apeldoorn, Amersfoort, Zwolle"
+train_10,"Den Haag Laan v NOI, Gouda, Rotterdam Alexander, Rotterdam Blaak, Schiedam Centrum, Rotterdam Centraal, Dordrecht, Roosendaal, Vlissingen"
+score,7193.640449438202
+fraction,0.989
 ```
-![Netherlands with high K value](............png)
 
 ### Assignment 4:
 ```
@@ -41,23 +71,6 @@ Make a visualization of the results
 ```
 ![visualization](/doc/railnl.gif)
 
-### Assignment 5:
-```
-Change 3 connections and look at the scores
-```
-![Change connections](............gif)
-
-### Assignment 6:
-```
-Delete all Utrecht Centraal connections
-```
-![Remove Utrecht Centraal connections](............gif)
-
-### Assignment 7:
-```
-Removal other stations and its impact
-```
-![Removal station](............gif)
 
 
 # Experiment

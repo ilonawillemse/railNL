@@ -11,7 +11,6 @@ Creates a histogram based of the data it receives
 """
 
 import matplotlib.pyplot as plt
-import numpy as np
 import csv
 
 
