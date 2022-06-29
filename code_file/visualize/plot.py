@@ -23,7 +23,7 @@ def make_hist():
     Plots the data into a histogram
     """
 
-    # histogram for when the repeated base algorithm is run
+    # histogram for when the repeated simulated annealing algorithm is run
     hist_data_annealing = []
     with open("output/histo_data_annealing.csv") as f:
         csv_reader = csv.reader(f, delimiter=",")
@@ -37,6 +37,7 @@ def make_hist():
 
     f.close()
 
+    # histogram for when the repeated hillclimber algorithm is run
     hist_data_hillclimber = []
     with open("output/histo_data_hillclimber.csv") as f:
         csv_reader = csv.reader(f, delimiter=",")
@@ -50,6 +51,7 @@ def make_hist():
 
     f.close()
 
+    # histogram for when the repeated baseline algorithm is run
     hist_data_simple = []
     with open("output/histo_data.csv") as f:
         csv_reader = csv.reader(f, delimiter=",")
