@@ -64,6 +64,7 @@ def quality_score(model):
         model.number_traject * 100 + model.total_time
     )
 
+
 def replace_best(score, traject, fraction):
     "keeps track of the best trajects and returns the best"
 

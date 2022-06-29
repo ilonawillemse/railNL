@@ -38,10 +38,10 @@ if __name__ == "__main__":
     key = int(
         input(
             "What would you like to run: simple run(0), with hillclimber(1), "
-            + "simulated annealing(2), simulate output file(3), plot(4), depth hillclimber(5) (Still bugged): "
+            + "simulated annealing(2), simulate output file(3), plot(4), "
+            + "depth hillclimber(5) (Still bugged): "
         )
     )
-
 
     if key == 1:
         type_hillclimber = int(input("random(0) or worst traject removal(1): "))
@@ -53,7 +53,9 @@ if __name__ == "__main__":
         visualization_output()
 
     if key == 4:
-        plot_type = int(input("histogram of best scores (0) or plot of scores over time(1): "))
+        plot_type = int(
+            input("histogram of best scores (0) or plot of scores over time(1): ")
+        )
 
         # plot with the corresponding gathered data
         if plot_type == 0:
