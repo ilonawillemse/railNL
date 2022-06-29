@@ -12,6 +12,7 @@ Visualizes the best traject combinations found in a plotly simulation by using t
 
 import plotly.graph_objects as go
 import csv
+import random
 
 
 def visualization_output(model):
@@ -45,21 +46,23 @@ def visualization_output(model):
 
         connection = go.Scatter(x = connection_x_cor, y = connection_y_cor, 
                                         mode = "markers + lines",
-                                        line=dict(color="grey"))
+                                        line = dict(color="grey", dash = "dot"),
+                                        opacity = 1)
         connection_list.append(connection)
 
     # add station dots
     connection_list.append(go.Scatter(x = x_cor, y = y_cor, 
                             mode = "markers", 
                             hovertext = name,
-                            marker = dict(color = "black"),
-                            opacity = 0.6 ))
+                            marker = dict(color = "grey"),
+                            opacity = 1 ))
     connection_list.insert(0, connection)
     
-    # add moving trains to the trajects
+
+# ------------------------------------------moving trains---------------------------------------------
     # read the trajects from csv file and get the corresponding station objects to obtain the information about the stations
     traject_names = []
-    with open(f"output/output_model.csv") as f:
+    with open(f"national_trajects.csv") as f:
         csv_reader = csv.reader(f, delimiter=',')
         next(csv_reader)
         for row in csv_reader:
@@ -113,11 +116,25 @@ def visualization_output(model):
         all_traject_x_cor.append(traject_x_cor)
         all_traject_y_cor.append(traject_y_cor)
 
-    colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'black']
-    colors = colors + colors + colors
+# ----------------------------------------------------------------------------------------------
+        # add traject lines
+        colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'darkolivegreen', 'blueviolet', 'pink']
+        colors = colors + colors + colors
+        
+
+        connection_list.append(go.Scatter(x = traject_x_cor, y = traject_y_cor, 
+                                mode = "markers + lines", 
+                                line = dict(color = colors[i]),
+                                opacity = 1 ))
+
 
     # comprehend the first coordinates of the trains depending on the number of trains
     # making them ride together
+    traject_number = []
+    
+    for i in range(len(traject_objects)):
+        traject_number.append(f"train {i + 1}")
+
     list_x_cor = []
     list_y_cor = []
     current_stations = []
@@ -130,9 +147,11 @@ def visualization_output(model):
                             x = list_x_cor, 
                             y = list_y_cor, 
                             mode = "markers", 
-                            # hovertext = ....,
-                            marker = dict(color = colors, size = 15))], 
+                            hovertext = traject_number,
+                            marker = dict(color = colors, size = 13),
+                            opacity = 1)], 
                             layout = go.Layout(title_text = "No way, railway"))
+
 
         current_stations.append(current)
 
@@ -170,9 +189,6 @@ def visualization_output(model):
                 layer = "below"))
 
     fig.show()
-    
-    # to do:
-    # gif maken
 
 
 

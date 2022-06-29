@@ -16,6 +16,7 @@ import copy
 from code_file.algorithms.greedy import make_greedy_traject
 from code_file.algorithms.baseline import make_baseline_traject
 import pickle
+from code_file.helpers import quality_score
         
 
 def change_traject(model, t):
