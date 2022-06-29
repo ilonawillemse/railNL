@@ -62,14 +62,13 @@ def make_hist():
 
     f.close()
     plt.hist(
-        hist_data_hillclimber, NUM_BINS, alpha=0.5, label="Hillclimber", density=True
+        hist_data_hillclimber, NUM_BINS, alpha=0.5, label="Hillclimber"
     )
     plt.hist(
         hist_data_annealing,
         NUM_BINS,
         alpha=0.5,
         label="Simulated Annealing",
-        density=True,
     )
     # plt.hist(hist_data_simple, NUM_BINS, alpha=0.5, label="Repeated Random")
 

@@ -26,4 +26,4 @@ class Dataclass:
         self.duration = []
         self.RUNNING_TIME = 5
         self.plot_data = []
-        self.TOTAL_ITERATIONS = 150
+        self.TOTAL_ITERATIONS = 15000

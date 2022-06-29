@@ -20,7 +20,9 @@ import csv
 
 
 def get_name(list):
-    "takes the station objects and returns the names of the stations"
+    """
+    Takes the station objects and returns the names of the stations
+    """
 
     names_list = []
     for i in range(len(list)):
@@ -30,7 +32,9 @@ def get_name(list):
 
 
 def output_generate(traject, score):
-    "generates an output file with the trajects formed and corresponding quality score"
+    """
+    Generates an output file with the trajects formed and corresponding quality score
+    """
 
     with open("output/output_model.csv", "w") as output_file:
         writer = csv.writer(output_file)
@@ -46,7 +50,9 @@ def output_generate(traject, score):
 
 
 def fraction_visited(model):
-    "calculated fraction of visited stations"
+    """
+    Calculates fraction of visited stations
+    """
 
     visited_connections = 0
     for connection in model.all_connections:
@@ -57,7 +63,9 @@ def fraction_visited(model):
 
 
 def quality_score(model):
-    "calculate quality score of model"
+    """
+    Calculates quality score of model
+    """
 
     fraction_visited(model)
     model.score = model.fraction * 10000 - (
@@ -65,7 +73,9 @@ def quality_score(model):
     )
 
 def replace_best(score, traject, fraction):
-    "keeps track of the best trajects and returns the best"
+    """
+    Keeps track of the best trajects and returns the best
+    """
 
     best_traject = traject
     best_score = score
