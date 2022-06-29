@@ -14,7 +14,7 @@ Moving trains (dots) are visualised with the same color as the traject they are 
         they are here just for fun
 =================================================
 """
-from code_file.model import Model
+from code_file.classes.model import Model
 import plotly.graph_objects as go
 import csv
 
