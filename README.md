@@ -30,7 +30,6 @@ train_5,"[Alphen a/d Rijn, Gouda, Den Haag Centraal, Leiden Centraal, Heemstede-
 score,8864.0
 fraction,1.000
 ```
-![All rails used](............png)
 
 ### Assignment 2:
 ```
@@ -44,7 +43,6 @@ train_4,"[Heemstede-Aerdenhout, Leiden Centraal, Alphen a/d Rijn, Gouda, Rotterd
 score,9192.0
 fraction,1.000
 ```
-![Holland with high K value](............png)
 
 ### Assignment 3:
 ```
@@ -66,7 +64,13 @@ train_10,"Den Haag Laan v NOI, Gouda, Rotterdam Alexander, Rotterdam Blaak, Schi
 score,7193.640449438202
 fraction,0.989
 ```
-![Netherlands with high K value](............png)
+
+### Assignment 4:
+```
+Make a visualization of the results
+```
+![visualization](/doc/railnl.gif)
+
 
 
 # Experiment
